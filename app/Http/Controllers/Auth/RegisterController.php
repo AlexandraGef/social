@@ -3,6 +3,7 @@
 namespace Bevy\Http\Controllers\Auth;
 
 use Bevy\User;
+use Bevy\profile;
 use Bevy\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -63,12 +64,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        if($data['gender']=='kobieta')
+        {
+            $pic_path = 'http://localhost:8000/img/female.gif';
+        }
+        else
+        {
+            $pic_path = 'http://localhost:8000/img/male.gif';
+        }
+
+        $user =  User::create([
             'name' => $data['name'],
             'gender' => $data['gender'],
+            'pic' => $pic_path,
             'slug' => str_slug($data['name'],'-'),
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+        Profile::create(['user_id' => $user->id]);
+
+        return $user;
     }
+
+
 }

@@ -16,5 +16,22 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::group(['middleware' => 'auth'], function (){
+    Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/profil/{slug}', 'ProfileController@index');
+
+    Route::get('/zmienZdjecie',[
+        'uses' => '\Bevy\Http\Controllers\ProfileController@getPic',
+    ]);
+
+    Route::post('/wgrajZdjecie','ProfileController@uploadPhoto');
+
+    Route::get('editProfile', function() {
+        return view('profile.editProfile');
+    });
+});
+
+
+
+
