@@ -8,8 +8,8 @@ class profile extends Model
 {
     protected $fillable = ['city','country','about','user_id'];
 
-    public function profile()
+    public function user()
     {
-        return $this->hasOne('Bevy\profile');
+        return $this->hasOne('Bevy\User');
     }
 }

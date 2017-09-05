@@ -9,7 +9,7 @@ use DB;
 class ProfileController extends Controller
 {
     public function index($slug){
-        return view('profile.index');
+        return view('profile.index')->with('data',Auth::user()->profile);
     }
     public function getPic()
     {
@@ -30,5 +30,9 @@ class ProfileController extends Controller
         DB::table('users')->where('id', $user_id)->update(['pic'=>'http://localhost:8000/img/'.$filename]);
 
         return back();
+    }
+
+    public function editProfileForm(){
+        return view('profile.editProfile')->with('data',Auth::user()->profile);
     }
 }

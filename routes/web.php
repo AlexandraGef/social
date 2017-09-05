@@ -21,15 +21,12 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::get('/profil/{slug}', 'ProfileController@index');
 
-    Route::get('/zmienZdjecie',[
-        'uses' => '\Bevy\Http\Controllers\ProfileController@getPic',
-    ]);
-
+    Route::get('/zmienZdjecie', function(){
+        return view('profile.pic');
+    });
     Route::post('/wgrajZdjecie','ProfileController@uploadPhoto');
 
-    Route::get('editProfile', function() {
-        return view('profile.editProfile');
-    });
+    Route::get('/edytujProfil', 'ProfileController@editProfileForm');
 });
 
 

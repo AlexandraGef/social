@@ -49,13 +49,13 @@
 
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                    <img src="{{ Auth::user()->pic }}" width="40" height="40"/>
+                                    <img class="img-circle" src="{{ Auth::user()->pic }}" width="40" height="40"/>
                                     {{ ucwords(Auth::user()->name) }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
                                     <li class="text-center"><a href="{{ url('/profil') }}/{{Auth::user()->slug}}">Twój profil</a></li>
-                                    <li class="text-center"><a href="{{route('editProfile')}}">Edytuj profil</a></li>
+                                    <li class="text-center"><a href="{{url('/edytujProfil')}}">Edytuj profil</a></li>
                                     <li class="text-center">
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();

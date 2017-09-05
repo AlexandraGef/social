@@ -28,8 +28,8 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function user()
+    public function profile()
     {
-        return $this->hasOne('Bevy\User');
+        return $this->hasOne('Bevy\profile');
     }
 }
