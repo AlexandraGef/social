@@ -19,7 +19,6 @@ class CreateProfileTable extends Migration
             $table->string('city')->nullable;
             $table->string('country')->nullable;
             $table->string('about')->nullable;
-            $table->rememberToken();
             $table->timestamps();
         });
     }

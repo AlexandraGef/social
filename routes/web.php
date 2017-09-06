@@ -27,6 +27,8 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('/wgrajZdjecie','ProfileController@uploadPhoto');
 
     Route::get('/edytujProfil', 'ProfileController@editProfileForm');
+
+    Route::post('/aktualizujProfil', 'ProfileController@updateProfile');
 });
 
 

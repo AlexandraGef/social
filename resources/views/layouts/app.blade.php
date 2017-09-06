@@ -74,8 +74,20 @@
                 </div>
             </div>
         </nav>
+<div class="container">
+<div clas="row">
+    <div class="col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">Sidebar</div>
 
+        </div>
+    </div>
+    <div class="col-md-9">
         @yield('content')
+    </div>
+</div>
+</div>
+
     </div>
 
     <!-- Scripts -->
