@@ -1,6 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="container">
+        <div clas="row">
+            @include('layouts.partials.sidebar')
+            <div class="col-md-9">
 
                 <div class="panel panel-default">
                     <div class="panel-heading">{{ Auth::user()->name }}</div>
@@ -13,6 +17,10 @@
                         <hr>
                         <div class="form-group" style="width: 40% ; margin: 0 auto; ">
                             <form action="{{url('/aktualizujProfil')}}" method="post">
+                            <label for="name">Imię i nazwisko</label>
+                            <input type="text" id="name" class="form-control" name="name" value="{{Auth::user()->name}}">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" name="email" value="{{Auth::user()->email}}">
                             <label for="city">Miasto</label>
                             <input type="text" id="city" class="form-control" name="city" placeholder="{{$data->city}}">
                             <label for="city">Kraj</label>
@@ -26,6 +34,9 @@
                         </div>
 
                 </div>
+                </div>
+            </div>
+        </div>
             </div>
 
     @stop

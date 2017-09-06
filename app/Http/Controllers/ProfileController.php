@@ -2,6 +2,7 @@
 
 namespace Bevy\Http\Controllers;
 
+use Bevy\friendships;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -29,7 +30,7 @@ class ProfileController extends Controller
 
         DB::table('users')->where('id', $user_id)->update(['pic'=>'http://localhost:8000/img/'.$filename]);
 
-        return back();
+        return back()->with('msg','Zdjęcie zostało zmienione');
     }
 
     public function editProfileForm(){
@@ -39,9 +40,52 @@ class ProfileController extends Controller
     public function updateProfile(Request $request)
     {
         $user_id = Auth::user()->id;
-
-        DB('profiles')->where('user_id',$user_id)->update($request->except('_token'));
+        DB::table('users')->leftJoin('profiles','users.id','=','profiles.user_id')->where('user_id','=', $user_id)->update($request->except('_token'));
 
         return back();
+    }
+    public function findFriends(){
+        $uid = Auth::user()->id;
+        $allUsers = DB::table('profiles')->leftJoin('users','users.id','=','profiles.user_id')->where('user_id','!=', $uid)->get();
+
+       return view('profile.findFriends', compact('allUsers'));
+    }
+
+    public function sendRequest($id){
+       Auth::user()->addFriend($id);
+
+       return back();
+
+    }
+
+    public function requests(){
+        $uid = Auth::user()->id;
+
+        $FriendRequests = DB::table('friendships')
+            ->rightJoin('users', 'users.id','=','friendships.requester')
+            ->where('status', 0)
+            ->where('friendships.user_requested', '=', $uid)->get();
+
+       return view('profile.requests', compact('FriendRequests'));
+    }
+
+    public function accept($id)
+    {
+        $uid = Auth::user()->id;
+        $checkRequest = friendships::where('requester',$id)
+            ->where('user_requested',$uid)
+            ->first();
+        if($checkRequest){
+          $updateFriendship = DB::table('friendships')
+               ->where('user_requested',$uid)
+               ->where('requester',$id)
+               ->update(['status' => 1]);
+    if($updateFriendship)
+              return back()->with('msg','Zaproszenie zostało zaakceptowane');
+
+        }
+        else{
+            echo "nie";
+        }
     }
 }

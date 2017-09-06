@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+
+
 Auth::routes();
 Route::group(['middleware' => 'auth'], function (){
     Route::get('/home', 'HomeController@index')->name('home');
@@ -29,6 +33,15 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/edytujProfil', 'ProfileController@editProfileForm');
 
     Route::post('/aktualizujProfil', 'ProfileController@updateProfile');
+
+    Route::get('/znajdzZnajomych', 'ProfileController@findFriends');
+
+    Route::get('/dodajZnajomego/{id}', 'ProfileController@sendRequest');
+
+    Route::get('/zaproszenia', 'ProfileController@requests');
+
+    Route::get('/akceptuj/{id}', 'ProfileController@accept');
+
 });
 
 

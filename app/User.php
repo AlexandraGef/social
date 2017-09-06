@@ -4,11 +4,14 @@ namespace Bevy;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Bevy\Traits\Friendable;
 use Bevy\profile;
 
 class User extends Authenticatable
 {
+
     use Notifiable;
+    use Friendable;
 
     /**
      * The attributes that are mass assignable.

@@ -36,7 +36,8 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-
+<li><a href="{{ url('/znajdzZnajomych') }}">Znajdź znajomych</a></li>
+                        <li><a href="{{ url('/zaproszenia') }}">Moje zaproszenia</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -74,21 +75,9 @@
                 </div>
             </div>
         </nav>
-<div class="container">
-<div clas="row">
-    <div class="col-md-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">Sidebar</div>
-
-        </div>
-    </div>
-    <div class="col-md-9">
         @yield('content')
-    </div>
-</div>
 </div>
 
-    </div>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>

@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-
+    <div class="container">
+        <div class="container">
+            <div clas="row">
+                @include('layouts.partials.sidebar')
+            <div class="col-md-9">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="row">
@@ -20,5 +24,9 @@
                         </div>
                 </div>
             </div>
+            </div>
+        </div>
+    </div>
+    </div>
 
     @stop
