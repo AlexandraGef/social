@@ -13,7 +13,7 @@
                       @foreach($allUsers as $uList)
                           <a href="{{ url('/profil') }}/{{$uList->slug}}">
                           <div class="thumbnail col-md-4" style="margin: 5px;">
-                              <img class="img-circle" src="{{ Auth::user()->pic }}" width="60" height="60"/>
+                              <img class="img-circle" src="{{ $uList->pic }}" width="60" height="60"/>
                               <h3>{{$uList->name}}</h3>
                               <div class="caption">
                                   <p>{{$uList->country}} - {{$uList->city}}</p>

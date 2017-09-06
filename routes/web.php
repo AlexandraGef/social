@@ -40,7 +40,9 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::get('/zaproszenia', 'ProfileController@requests');
 
-    Route::get('/akceptuj/{id}', 'ProfileController@accept');
+    Route::get('/akceptuj/{name}/{id}', 'ProfileController@accept');
+
+    Route::get('/znajomi', 'ProfileController@friends');
 
 });
 

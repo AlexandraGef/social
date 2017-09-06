@@ -69,7 +69,7 @@ class ProfileController extends Controller
        return view('profile.requests', compact('FriendRequests'));
     }
 
-    public function accept($id)
+    public function accept($name,$id)
     {
         $uid = Auth::user()->id;
         $checkRequest = friendships::where('requester',$id)
@@ -81,11 +81,29 @@ class ProfileController extends Controller
                ->where('requester',$id)
                ->update(['status' => 1]);
     if($updateFriendship)
-              return back()->with('msg','Zaproszenie zostało zaakceptowane');
+              return back()->with('msg','Ty i '.$name.' zostaliście znajomymi !');
 
         }
-        else{
-            echo "nie";
-        }
+    }
+
+    public function friends()
+    {
+        $uid = Auth::user()->id;
+
+        $friends1 = DB::table('friendships')
+            ->leftJoin('users','users.id','friendships.user_requested')//wysylajacy zaproszenie
+            ->where('status',1)
+            ->where('requester',$uid) //zalogowany
+            ->get();
+
+        $friends2 = DB::table('friendships')
+            ->leftJoin('users','users.id','friendships.requester')
+            ->where('status',1)
+            ->where('user_requested',$uid)
+            ->get();
+
+        $friends = array_merge($friends1->toArray(),$friends2->toArray());
+
+        dd($friends);
     }
 }

@@ -16,10 +16,11 @@
                         @foreach($FriendRequests as $uList)
                             <a href="{{ url('/profil') }}/{{$uList->slug}}">
                                 <div class="thumbnail col-md-4" style="margin: 5px;">
-                                    <img class="img-circle" src="{{ Auth::user()->pic }}" width="60" height="60"/>
+                                    <img class="img-circle" src="{{ $uList->pic }}" width="60" height="60"/>
                                     <h3>{{$uList->name}}</h3>
-                                    <div class="caption">
-                                   <a href="{{url('/akceptuj')}}/{{$uList->id}}" class="btn btn-primary">Potwierdź</a>
+                                    <div class="caption form-inline">
+                                   <a href="{{url('/akceptuj')}}/{{$uList->name}}/{{$uList->id}}" class="btn btn-success">Potwierdź</a>
+                                        <a href="{{url('/odrzuc')}}/{{$uList->id}}" class="btn btn-danger">Odrzuć</a>
                                     </div>
                                 </div>
                             </a>

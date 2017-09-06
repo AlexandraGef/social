@@ -36,8 +36,15 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-<li><a href="{{ url('/znajdzZnajomych') }}">Znajdź znajomych</a></li>
-                        <li><a href="{{ url('/zaproszenia') }}">Moje zaproszenia</a></li>
+                        @if(Auth::check())
+                        <li><a href="{{ url('/znajdzZnajomych') }}">Znajdź znajomych</a></li>
+                        <li><a href="{{ url('/zaproszenia') }}">Moje zaproszenia  <span style="color:green; font-weight:bold;
+                                       font-size:16px">({{Bevy\friendships::where('status', 0)
+                                                  ->where('user_requested', Auth::user()->id)
+                                                  ->count()}})</span></a></li>
+                            <li><a href="{{ url('/znajomi') }}">Znajomi</a></li>
+                            @endif
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
