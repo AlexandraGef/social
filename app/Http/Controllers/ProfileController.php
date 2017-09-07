@@ -129,7 +129,7 @@ class ProfileController extends Controller
           ->where('requester',$id)
           ->delete();
 
-      return back()->with('msg','Usunięto użytkownika ze znajomych');
+      return back()->with('msg','Odrzucono zaproszenie');
     }
 
     public function notifications($id)
@@ -148,4 +148,19 @@ class ProfileController extends Controller
 
         return view('profile.notifications',compact('notes'));
     }
+ public function friendRemove($id){
+        $loggedUser = Auth::user()->id;
+
+        DB::table('friendships')
+            ->where('requester',$loggedUser)
+            ->where('user_requested', $id)
+            ->delete();
+
+        DB::table('friendships')
+         ->where('requester',$id)
+         ->where('user_requested', $loggedUser)
+         ->delete();
+
+     return back()->with('msg','Usunięto użytkownika ze znajomych');
+ }
 }

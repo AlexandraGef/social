@@ -21,7 +21,6 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::group(['middleware' => 'auth'], function (){
-    Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/profil/{slug}', 'ProfileController@index');
 
@@ -47,6 +46,10 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/odrzuc/{id}', 'ProfileController@requestRemove');
 
     Route::get('/powiadomienia/{id}', 'ProfileController@notifications');
+
+    Route::get('/home', 'PostsController@index');
+
+    Route::get('/usun/{id}', 'ProfileController@friendRemove');
 
 });
 

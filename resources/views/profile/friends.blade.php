@@ -19,7 +19,7 @@
                                     <img class="img-circle" src="{{ $uList->pic }}" width="60" height="60"/>
                                     <h3>{{$uList->name}}</h3>
                                     <div class="caption form-inline">
-                                        <a href="{{url('/odrzuc')}}/{{$uList->id}}" class="btn btn-danger">Usuń ze znajomych</a>
+                                        <a href="{{url('/usun')}}/{{$uList->id}}" class="btn btn-danger">Usuń ze znajomych</a>
                                     </div>
                                 </div>
                             </a>
