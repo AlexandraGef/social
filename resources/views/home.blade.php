@@ -13,8 +13,16 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    Zostałeś zalogowany!
+<div class="row">
+    <div class="col-md-2 pull-left">
+        <img src="" alt="username" style="width:100px; margin:10px">
+    </div>
+    <div class="col-md-10">
+        <h3>user name</h3>
+        <p>city and country</p>
+    </div>
+    <p class="col-md-12">status</p>
+</div>
                 </div>
             </div>
             </div>

@@ -38,6 +38,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         @if(Auth::check())
+                            <li><a href="{{ url('/home') }}">Tablica</a></li>
                         <li><a href="{{ url('/znajdzZnajomych') }}">Znajdź znajomych</a></li>
                         <li><a href="{{ url('/zaproszenia') }}">Moje zaproszenia  <span style="color:green; font-weight:bold;
                                        font-size:16px">({{Bevy\friendships::where('status', 0)
@@ -75,7 +76,7 @@
 
                                     <ul class="dropdown-menu" role="menu">
                                         @foreach($notes as $note)
-                                        <li><a href="{{url('/powiadomienia')}}/{{$note->id}}"><b style="color: green;" >{{ucwords($note->name)}}</b>{{$note->note}}</a> </li>
+                                        <li><a href="{{url('/powiadomienia')}}/{{$note->id}}"><img class="img-circle" alt="{{$note->name }}" src="{{ $note->pic }}" width="40" height="40" style="margin-right: 10px;"><b style="color: green;" >{{ucwords($note->name)}}</b>{{$note->note}}</a> </li>
                                         @endforeach
                                     </ul>
                                 </li>

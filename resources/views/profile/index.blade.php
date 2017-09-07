@@ -19,7 +19,7 @@
                                         <h4><span class="label label-primary">Kraj: </span></h4><p>{{$uData -> country}}</p>
                                         <h4><span class="label label-primary">Miasto: </span></h4><p>{{$uData -> city}}</p>
                                         <h4><span class="label label-primary">O mnie : </span></h4><p>{{$uData -> about}}</p>
-                                        @if(Auth::user()->id !== $uData->id)
+                                        @if ($uData->user_id == Auth::user()->id)
                                         <p><a href="{{url('/edytujProfil')}}" class="btn btn-primary" role="button">Edytuj profil</a></p>
                                         @endif
                                     </div>
