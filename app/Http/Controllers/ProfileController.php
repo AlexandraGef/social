@@ -6,11 +6,17 @@ use Bevy\friendships;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
+use Bevy\notifications;
 
 class ProfileController extends Controller
 {
     public function index($slug){
-        return view('profile.index')->with('data',Auth::user()->profile);
+        $userData = DB::table('users')
+            ->leftJoin('profiles','profiles.user_id','users.id')
+            ->where('slug', $slug)
+            ->get();
+
+        return view('profile.index', compact('userData'));
     }
     public function getPic()
     {
@@ -71,6 +77,7 @@ class ProfileController extends Controller
 
     public function accept($name,$id)
     {
+
         $uid = Auth::user()->id;
         $checkRequest = friendships::where('requester',$id)
             ->where('user_requested',$uid)
@@ -80,7 +87,15 @@ class ProfileController extends Controller
                ->where('user_requested',$uid)
                ->where('requester',$id)
                ->update(['status' => 1]);
-    if($updateFriendship)
+
+            $notifications = new notifications;
+            $notifications->user_hero = $id;
+            $notifications->note = ' zaakceptował/a Twoje zaprosznie';
+            $notifications->user_logged = Auth::user()->id;
+            $notifications->status = '1'; // nieodczytane powiadomienie
+            $notifications->save();
+
+    if($notifications)
               return back()->with('msg','Ty i '.$name.' zostaliście znajomymi !');
 
         }
@@ -104,6 +119,33 @@ class ProfileController extends Controller
 
         $friends = array_merge($friends1->toArray(),$friends2->toArray());
 
-        dd($friends);
+        return view('profile.friends',compact('friends'));
+    }
+
+    public function requestRemove($id)
+    {
+      DB::table('friendships')
+          ->where('user_requested',Auth::user()->id)
+          ->where('requester',$id)
+          ->delete();
+
+      return back()->with('msg','Usunięto użytkownika ze znajomych');
+    }
+
+    public function notifications($id)
+    {
+        $uid = Auth::user()->id;
+        $notes = DB::table('notifications')
+            ->leftJoin('users', 'users.id', 'notifications.user_logged')
+            ->where('notifications.id', $id)
+            ->where('user_hero', $uid)
+            ->orderBy('notifications.created_at', 'desc')
+            ->get();
+
+        $updateNote = DB::table('notifications')
+            ->where('notifications.id', $id)
+            ->update(['status'=> 0]);
+
+        return view('profile.notifications',compact('notes'));
     }
 }

@@ -12,6 +12,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <div id="app">
@@ -42,7 +43,6 @@
                                        font-size:16px">({{Bevy\friendships::where('status', 0)
                                                   ->where('user_requested', Auth::user()->id)
                                                   ->count()}})</span></a></li>
-                            <li><a href="{{ url('/znajomi') }}">Znajomi</a></li>
                             @endif
 
                     </ul>
@@ -54,7 +54,31 @@
                             <li><a href="{{ route('login') }}">Logowanie</a></li>
                             <li><a href="{{ route('register') }}">Rejestracja</a></li>
                         @else
+                                <li><a href="{{ url('/znajomi') }}"><i class="fa fa-users fa-2x" aria-hidden="true"></i>
+                                    </a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                        <i class="fa fa-globe fa-2x" aria-hidden="true"></i>
+                                        <span class="badge" style="background: red; position: relative;top: -15px;left: -10px;">
+                                            {{Bevy\notifications::where('status',1)->where('user_hero',Auth::user()->id)->count()}}</span>
 
+                                    </a>
+
+                                    <?php
+                                    $notes = DB::table('users')
+                                        ->leftJoin('notifications', 'users.id', 'notifications.user_logged')
+                                        ->where('user_hero', Auth::user()->id)
+                                        ->where('status', 1)
+                                        ->orderBy('notifications.created_at', 'desc')
+                                        ->get();
+                                    ?>
+
+                                    <ul class="dropdown-menu" role="menu">
+                                        @foreach($notes as $note)
+                                        <li><a href="{{url('/powiadomienia')}}/{{$note->id}}"><b style="color: green;" >{{ucwords($note->name)}}</b>{{$note->note}}</a> </li>
+                                        @endforeach
+                                    </ul>
+                                </li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     <img class="img-circle" src="{{ Auth::user()->pic }}" width="40" height="40"/>
@@ -77,6 +101,7 @@
                                     </li>
                                 </ul>
                             </li>
+
                         @endguest
                     </ul>
                 </div>

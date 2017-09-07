@@ -12,14 +12,14 @@
                         @if(session()->has('msg'))
                             <div class="alert alert-success">{{session()->get('msg')}}</div>
                         @endif
-                        <h3>Zaproszenia do znajomych</h3><br>
-                        @foreach($FriendRequests as $uList)
+                        <h3>Znajomi</h3><br>
+                        @foreach($friends as $uList)
                             <a href="{{ url('/profil') }}/{{$uList->slug}}">
-                                <div class="thumbnail col-md-4" style="margin: 5px;">
+                                <div class="thumbnail col-md-12">
                                     <img class="img-circle" src="{{ $uList->pic }}" width="60" height="60"/>
                                     <h3>{{$uList->name}}</h3>
                                     <div class="caption form-inline">
-                                   <a href="{{url('/akceptuj')}}/{{$uList->name}}/{{$uList->id}}" class="btn btn-success">Potwierdź</a>
+                                        <a href="{{url('/odrzuc')}}/{{$uList->id}}" class="btn btn-danger">Usuń ze znajomych</a>
                                     </div>
                                 </div>
                             </a>

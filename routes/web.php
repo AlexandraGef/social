@@ -44,6 +44,10 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::get('/znajomi', 'ProfileController@friends');
 
+    Route::get('/odrzuc/{id}', 'ProfileController@requestRemove');
+
+    Route::get('/powiadomienia/{id}', 'ProfileController@notifications');
+
 });
 
 
