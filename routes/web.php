@@ -47,9 +47,20 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::get('/powiadomienia/{id}', 'ProfileController@notifications');
 
-    Route::get('/home', 'PostsController@index');
+
 
     Route::get('/usun/{id}', 'ProfileController@friendRemove');
+
+    Route::get('/home','PostsController@index');
+    Route::get('/posty', function(){
+        $posts_json = DB::table('posts')
+            ->leftJoin('users','posts.user_id','users.id')
+            ->orderBy('posts.created_at', 'desc')->take(3)
+            ->get();
+
+        return $posts_json;
+
+    });
 
 });
 

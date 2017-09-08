@@ -23,8 +23,23 @@ const app = new Vue({
     data: {
         message: 'Nowy post',
         content: '',
+        posts:[],
     },
+    ready:function(){
+      this.created();
+    },
+    created(){
+            axios.get('http://localhost:8000/posty')
+                .then(response => {
+                    console.log(response);
+                    this.posts = response.data;
+                })
+                .catch(function (error){
+                    console.log(error);
+                });
+        },
     methods: {
+
         addPost() {
             axios.post('http://localhost:8000/dodajPost',{
                 content: this.content

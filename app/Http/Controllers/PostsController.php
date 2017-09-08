@@ -10,10 +10,11 @@ class PostsController extends Controller
     public function index()
     {
         $posts = DB::table('posts')
-            ->leftJoin('users','users.id','posts.user_id')
+            ->leftJoin('users','posts.user_id','users.id')
+            ->orderBy('posts.created_at', 'desc')->take(3)
             ->get();
 
-        return view('home',compact('posts'));
+        return view('home', compact('posts'));
     }
 
     public function addPost(Request $request) {
