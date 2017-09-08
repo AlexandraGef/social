@@ -79,6 +79,9 @@
             @endif
 
             <div class="content">
+                <div id="app">
+
+            </div>
                 <div class="title m-b-md">
                     Bevy
                 </div>

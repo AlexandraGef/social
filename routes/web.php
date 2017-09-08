@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 
-
+Route::post('/dodajPost', 'PostsController@addPost');
 
 
 Auth::routes();

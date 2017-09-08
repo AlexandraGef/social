@@ -15,6 +15,13 @@
                             <div class="panel-heading">Najnowsze posty</div>
 
                             <div class="panel-body">
+                                @{{ message }}<h3>@{{ content }}</h3>
+                                <form method="post" enctype="multipart/form-data" v-on:submit.prevent="addPost">
+                                 <textarea v-model="content"></textarea>
+
+                                    <input type="submit" class="btn btn-success">submit</input>
+
+                                </form>
 @foreach($posts as $post)
                                     <div class="col-md-12" style="margin-bottom:15px; border-bottom: 1px solid #bdbdbd">
                                         <div class="col-md-2 pull-left" style="margin-bottom: 10px;">
