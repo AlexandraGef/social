@@ -22,5 +22,14 @@ class PostsController extends Controller
         $createPost = DB::table('posts')
             ->insert(['content' =>$content, 'user_id' =>Auth::user()->id,
                 'status'=>0, 'created_at' =>date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s") ]);
+        if($createPost){
+            $posts_json = DB::table('posts')
+                ->leftJoin('users','posts.user_id','users.id')
+                ->orderBy('posts.created_at', 'desc')
+                ->get();
+
+            return $posts_json;
+        }
+
     }
 }

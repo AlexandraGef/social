@@ -55,7 +55,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/posty', function(){
         $posts_json = DB::table('posts')
             ->leftJoin('users','posts.user_id','users.id')
-            ->orderBy('posts.created_at', 'desc')->take(3)
+            ->orderBy('posts.created_at', 'desc')
             ->get();
 
         return $posts_json;

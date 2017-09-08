@@ -802,7 +802,7 @@ Vue.component('example', __webpack_require__(36));
 var app = new Vue({
     el: '#app',
     data: {
-        message: 'Nowy post',
+        message: 'Napisz co u Ciebie !',
         content: '',
         posts: []
     },
@@ -826,6 +826,9 @@ var app = new Vue({
                 content: this.content
             }).then(function (response) {
                 console.log('Post został udostępniony');
+                if (response.status === 200) {
+                    app.posts = response.data;
+                }
             }).catch(function (error) {
                 console.log(error);
             });

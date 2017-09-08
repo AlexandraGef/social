@@ -21,7 +21,7 @@ Vue.component('example', require('./components/Example.vue'));
 const app = new Vue({
     el: '#app',
     data: {
-        message: 'Nowy post',
+        message: 'Napisz co u Ciebie !',
         content: '',
         posts:[],
     },
@@ -33,6 +33,8 @@ const app = new Vue({
                 .then(response => {
                     console.log(response);
                     this.posts = response.data;
+
+
                 })
                 .catch(function (error){
                     console.log(error);
@@ -46,6 +48,10 @@ const app = new Vue({
             })
                 .then(function (response){
                     console.log('Post został udostępniony');
+                    if(response.status===200){
+                       app.posts = response.data;
+
+                    }
                 })
                 .catch(function (error){
                     console.log(error);

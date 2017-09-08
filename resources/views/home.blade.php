@@ -17,18 +17,19 @@
                             <div class="panel-body">
                                 @{{ message }}<h3>@{{ content }}</h3>
                                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="addPost">
-                                 <textarea v-model="content"></textarea>
+                                 <textarea v-model="content" rows="4" cols="100"></textarea><br><br>
 
                                     <input type="submit" class="btn btn-success" value="Udostępnij">
+                                    <hr>
 
                                 </form>
                        <div v-for="post in posts">
                                     <div class="col-md-12" style="margin-bottom:15px; border-bottom: 1px solid #bdbdbd">
                                         <div class="col-md-2 pull-left" style="margin-bottom: 10px;">
-                                            <a href="{{ url('/profil') }}/@{{post.slug}}"><img src=@{{post.pic}} alt="@{{$post.name}}" width="90" height="90"/></a>
+                                            <a :href="'{{Config::get('url')}}/profil/' + post.slug"><img :src="'{{Config::get('url')}}' + post.pic" :alt="post.name" width="90" height="90"/></a>
                                         </div>
                                         <div class="col-md-10 ">
-                                            <h3><a href="{{ url('/profil') }}/@{{post.slug}}">@{{post.name}}</a></h3>
+                                            <h3><a :href="'{{Config::get('url')}}/profil/' + post.slug">@{{post.name}}</a></h3>
                                             <small>@{{ post.created_at }}</small>
                                         </div>
                                         <p class="col-md-12">@{{post.content}}
