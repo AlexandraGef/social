@@ -15,7 +15,6 @@
                             <div class="panel-heading">Najnowsze posty</div>
 
                             <div class="panel-body">
-                                @{{ message }}<h3>@{{ content }}</h3>
                                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="addPost">
                                  <textarea placeholder="Napisz co u Ciebie !" v-model="content" rows="5" style="min-width: 80%"></textarea><br><br>
 
