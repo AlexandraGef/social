@@ -17,7 +17,8 @@
                             <div class="panel-body">
                                 @{{ message }}<h3>@{{ content }}</h3>
                                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="addPost">
-                                 <textarea v-model="content" rows="4" cols="100"></textarea><br><br>
+                                 <textarea placeholder="Napisz co u Ciebie !" v-model="content" rows="5" style="min-width: 80%"></textarea><br><br>
+
 
                                     <input type="submit" class="btn btn-success" value="Udostępnij">
                                     <hr>

@@ -802,7 +802,6 @@ Vue.component('example', __webpack_require__(36));
 var app = new Vue({
     el: '#app',
     data: {
-        message: 'Napisz co u Ciebie !',
         content: '',
         posts: []
     },

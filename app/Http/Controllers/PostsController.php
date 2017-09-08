@@ -11,7 +11,7 @@ class PostsController extends Controller
     {
         $posts = DB::table('posts')
             ->leftJoin('users','posts.user_id','users.id')
-            ->orderBy('posts.created_at', 'desc')->take(3)
+            ->orderBy('posts.created_at', 'desc')
             ->get();
 
         return view('home', compact('posts'));

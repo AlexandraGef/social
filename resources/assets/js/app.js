@@ -21,7 +21,6 @@ Vue.component('example', require('./components/Example.vue'));
 const app = new Vue({
     el: '#app',
     data: {
-        message: 'Napisz co u Ciebie !',
         content: '',
         posts:[],
     },

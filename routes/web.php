@@ -16,9 +16,6 @@ Route::get('/', function () {
 });
 
 
-Route::post('/dodajPost', 'PostsController@addPost');
-
-
 Auth::routes();
 Route::group(['middleware' => 'auth'], function (){
 
@@ -60,6 +57,11 @@ Route::group(['middleware' => 'auth'], function (){
 
         return $posts_json;
 
+    });
+    Route::post('/dodajPost', 'PostsController@addPost');
+
+    Route::get('/wiadomosci', function(){
+        return view('messages');
     });
 
 });
