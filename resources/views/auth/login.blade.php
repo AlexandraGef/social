@@ -55,7 +55,7 @@
                                     Zaloguj
                                 </button>
 
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                <a class="btn btn-link" href="{{ url('/zapomnianeHaslo') }}">
                                     Zapomniałeś hasła?
                                 </a>
                             </div>

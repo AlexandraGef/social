@@ -47,11 +47,6 @@
 
         </div>
 
-        <div style="background-color:#fff; min-height:600px; border-left:5px solid #F5F8FA"
-             class="col-md-3 pull-right">
-            <h3 align="center">User Information</h3>
-            <hr>
-        </div>
 
     </div>
 

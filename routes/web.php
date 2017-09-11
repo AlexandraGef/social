@@ -14,7 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/zapomnianeHaslo', function () {
+    return view('auth.forgotPassword');
+});
 
+Route::post('setToken', 'AuthController@setToken');
 
 Auth::routes();
 Route::group(['middleware' => 'auth'], function (){
@@ -63,7 +67,8 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/wiadomosci', function(){
         return view('messages');
     });
-
+/////////////////////////////WIADOMOSCI
+/// ///////////////////////////////////////////////
     Route::get('/getMessages', function(){
         $allUsers1 = DB::table('users')
             ->Join('conversation','users.id', 'conversation.user_one')

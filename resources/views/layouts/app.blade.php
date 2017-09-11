@@ -57,6 +57,8 @@
                             <li><a href="{{ route('login') }}">Logowanie</a></li>
                             <li><a href="{{ route('register') }}">Rejestracja</a></li>
                         @else
+                                <li><a href="{{ url('/wiadomosci') }}"><i class="fa fa-envelope fa-2x" aria-hidden="true"></i>
+                                    </a></li>
                                 <li><a href="{{ url('/znajomi') }}"><i class="fa fa-users fa-2x" aria-hidden="true"></i>
                                     </a></li>
                                 <li class="dropdown">

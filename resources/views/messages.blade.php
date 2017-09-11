@@ -10,8 +10,6 @@
     <li @click="messages(privateMsg.id)">
         <img :src="'{{Config::get('url')}}' + privateMsg.pic" :alt="privateMsg.name" width="40" height="40" class="img-circle"/>
         @{{ privateMsg.name }}
-        <p>tresc wiadomosci</p>
-
     </li>
     </ul>
 </div>
