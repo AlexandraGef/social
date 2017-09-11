@@ -41957,6 +41957,9 @@ module.exports = __webpack_require__(42);
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var _data;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -41978,12 +41981,10 @@ Vue.component('example', __webpack_require__(34));
 
 var profile = new Vue({
     el: '#profile',
-    data: {
+    data: (_data = {
         content: '',
-        msg: 'heheh',
-        privateMsgs: [],
-        singleMsgs: []
-    },
+        msg: 'Aby rozpocząć nową konwersację, kliknij na użytkownika po lewej stronie'
+    }, _defineProperty(_data, 'content', ''), _defineProperty(_data, 'privateMsgs', []), _defineProperty(_data, 'singleMsgs', []), _defineProperty(_data, 'msgForm', ''), _defineProperty(_data, 'conID', ''), _defineProperty(_data, 'friend_id', ''), _defineProperty(_data, 'seen', false), _defineProperty(_data, 'newMsgFrom', ''), _data),
     ready: function ready() {
         this.created();
     },
@@ -42001,11 +42002,51 @@ var profile = new Vue({
             axios.get('http://localhost:8000/getMessages/' + id).then(function (response) {
                 console.log(response.data);
                 profile.singleMsgs = response.data;
+                profile.conID = response.data[0].conversation_id;
             }).catch(function (error) {
                 console.log(error);
             });
-        }
+        },
 
+        inputHandler: function inputHandler(e) {
+            if (e.keyCode === 13 && !e.shiftKey) {
+                e.preventDefault();
+                this.sendMsg();
+            }
+        },
+        sendMsg: function sendMsg() {
+            if (this.msgForm) {
+                axios.post('http://localhost:8000/wyslijWiadomosc', {
+                    conID: this.conID,
+                    msg: this.msgForm
+                }).then(function (response) {
+                    console.log(response.data);
+                    if (response.status === 200) {
+                        profile.singleMsgs = response.data;
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+        },
+
+        friendID: function friendID(id) {
+            profile.friend_id = id;
+        },
+        sendNewMsg: function sendNewMsg() {
+            axios.post('http://localhost:8000/wyslijNowaWiadomosc', {
+                friend_id: this.friend_id,
+                msg: this.newMsgFrom
+            }).then(function (response) {
+                console.log(response.data); // show if success
+                if (response.status === 200) {
+                    window.location.replace('http://localhost:8000/wiadomosci');
+                    profile.msg = 'Twoja wiadomość została wysłana';
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        }
     }
 });
 

@@ -22,9 +22,15 @@ const profile = new Vue({
     el: '#profile',
     data: {
   content:'',
-        msg:'heheh',
-        privateMsgs:[],
-        singleMsgs:[]
+        msg: 'Aby rozpocząć nową konwersację, kliknij na użytkownika po lewej stronie',
+        content: '',
+        privateMsgs: [],
+        singleMsgs: [],
+        msgForm: '',
+        conID: '',
+        friend_id: '',
+        seen: false,
+        newMsgFrom: ''
     },
     ready:function(){
       this.created();
@@ -47,11 +53,61 @@ const profile = new Vue({
                 .then(response => {
                     console.log(response.data);
                     profile.singleMsgs = response.data;
+                    profile.conID = response.data[0].conversation_id;
 
 
                 })
                 .catch(function (error){
                     console.log(error);
+                });
+        },
+
+        inputHandler(e){
+            if(e.keyCode ===13 && !e.shiftKey){
+                e.preventDefault();
+                this.sendMsg();
+            }
+
+        },
+
+        sendMsg(){
+            if(this.msgForm){
+                axios.post('http://localhost:8000/wyslijWiadomosc',{
+                    conID: this.conID,
+                    msg: this.msgForm
+                })
+                    .then(function (response){
+                        console.log(response.data);
+                        if(response.status===200){
+                            profile.singleMsgs = response.data;
+
+                        }
+
+                    })
+                    .catch(function (error){
+                        console.log(error);
+                    });
+            }
+
+        },
+        friendID: function(id){
+            profile.friend_id = id;
+        },
+        sendNewMsg(){
+            axios.post('http://localhost:8000/wyslijNowaWiadomosc', {
+                friend_id: this.friend_id,
+                msg: this.newMsgFrom,
+            })
+                .then(function (response) {
+                    console.log(response.data); // show if success
+                    if(response.status===200){
+                        window.location.replace('http://localhost:8000/wiadomosci');
+                        profile.msg = 'Twoja wiadomość została wysłana';
+                    }
+
+                })
+                .catch(function (error) {
+                    console.log(error); // run if we have error
                 });
         }
 

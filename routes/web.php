@@ -65,26 +65,44 @@ Route::group(['middleware' => 'auth'], function (){
     });
 
     Route::get('/getMessages', function(){
-        $allUsers = DB::table('users')->where('id','!=', Auth::user()->id)->get();
-        return $allUsers;
+        $allUsers1 = DB::table('users')
+            ->Join('conversation','users.id', 'conversation.user_one')
+            ->where('conversation.user_two', Auth::user()->id)
+            ->get();
+
+
+        $allUsers2 = DB::table('users')
+            ->Join('conversation','users.id', 'conversation.user_two')
+            ->where('conversation.user_one', Auth::user()->id)
+            ->get();
+        return array_merge($allUsers1->toArray(), $allUsers2->toArray());
     });
 
     Route::get('/getMessages/{id}', function($id){
         //check conversation
-        $checkCon = DB::table('conversation')
+      /*  $checkCon = DB::table('conversation')
             ->where('user_one',Auth::user()->id)
             ->where('user_two',$id)
             ->get();
             //fetch msgs
             if(count($checkCon)!=0){
                // echo $checkCon[0]->id;
-                $userMsg = DB::table('messages')->where('messages.conversation_id', $checkCon[0]->id)->get();
+                $userMsg = DB::table('messages')
+                    ->where('messages.conversation_id', $checkCon[0]->id)->get();
                 return $userMsg;
 
         }else{
             echo "Brak wiadomości";
-        }
+        }*/
+        $userMsg = DB::table('messages')
+            ->join('users', 'users.id','messages.user_from')
+            ->where('messages.conversation_id', $id)->get();
+        return $userMsg;
     });
+
+    Route::post('/wyslijWiadomosc', 'ProfileController@sendMessage');
+    Route::get('/noweWiadomosci','ProfileController@newMessage');
+    Route::post('/wyslijNowaWiadomosc', 'ProfileController@sendNewMessage');
 });
 
 
