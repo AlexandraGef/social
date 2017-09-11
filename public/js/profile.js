@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 38);
+/******/ 	return __webpack_require__(__webpack_require__.s = 41);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -41944,15 +41944,17 @@ if (false) {
 }
 
 /***/ }),
-/* 38 */
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(39);
-module.exports = __webpack_require__(40);
+module.exports = __webpack_require__(42);
 
 
 /***/ }),
-/* 39 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -41974,44 +41976,38 @@ window.Vue = __webpack_require__(33);
 
 Vue.component('example', __webpack_require__(34));
 
-var app = new Vue({
-    el: '#app',
+var profile = new Vue({
+    el: '#profile',
     data: {
-        posts: []
+        content: '',
+        msg: 'heheh',
+        privateMsgs: [],
+        singleMsgs: []
     },
     ready: function ready() {
         this.created();
     },
     created: function created() {
-        axios.get('http://localhost:8000/posty').then(function (response) {
-            console.log(response);
-            app.posts = response.data;
+        axios.get('http://localhost:8000/getMessages').then(function (response) {
+            console.log(response.data);
+            profile.privateMsgs = response.data;
         }).catch(function (error) {
             console.log(error);
         });
     },
 
     methods: {
-        addPost: function addPost() {
-            axios.post('http://localhost:8000/dodajPost', {
-                content: this.content
-            }).then(function (response) {
-                console.log('Post został udostępniony');
-                if (response.status === 200) {
-                    app.posts = response.data;
-                }
+        messages: function messages(id) {
+            axios.get('http://localhost:8000/getMessages/' + id).then(function (response) {
+                console.log(response.data);
+                profile.singleMsgs = response.data;
             }).catch(function (error) {
                 console.log(error);
             });
         }
+
     }
 });
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

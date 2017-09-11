@@ -64,6 +64,27 @@ Route::group(['middleware' => 'auth'], function (){
         return view('messages');
     });
 
+    Route::get('/getMessages', function(){
+        $allUsers = DB::table('users')->where('id','!=', Auth::user()->id)->get();
+        return $allUsers;
+    });
+
+    Route::get('/getMessages/{id}', function($id){
+        //check conversation
+        $checkCon = DB::table('conversation')
+            ->where('user_one',Auth::user()->id)
+            ->where('user_two',$id)
+            ->get();
+            //fetch msgs
+            if(count($checkCon)!=0){
+               // echo $checkCon[0]->id;
+                $userMsg = DB::table('messages')->where('messages.conversation_id', $checkCon[0]->id)->get();
+                return $userMsg;
+
+        }else{
+            echo "Brak wiadomości";
+        }
+    });
 });
 
 

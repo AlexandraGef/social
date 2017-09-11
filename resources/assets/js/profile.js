@@ -18,19 +18,22 @@ window.Vue = require('vue');
 
 Vue.component('example', require('./components/Example.vue'));
 
-const app = new Vue({
-    el: '#app',
+const profile = new Vue({
+    el: '#profile',
     data: {
-        posts:[],
+  content:'',
+        msg:'heheh',
+        privateMsgs:[],
+        singleMsgs:[]
     },
     ready:function(){
       this.created();
     },
     created(){
-            axios.get('http://localhost:8000/posty')
+            axios.get('http://localhost:8000/getMessages')
                 .then(response => {
-                    console.log(response);
-                    app.posts = response.data;
+                    console.log(response.data);
+                profile.privateMsgs = response.data;
 
 
                 })
@@ -39,21 +42,19 @@ const app = new Vue({
                 });
         },
     methods: {
+        messages: function(id){
+            axios.get('http://localhost:8000/getMessages/'+ id)
+                .then(response => {
+                    console.log(response.data);
+                    profile.singleMsgs = response.data;
 
-        addPost() {
-            axios.post('http://localhost:8000/dodajPost',{
-                content: this.content
-            })
-                .then(function (response){
-                    console.log('Post został udostępniony');
-                    if(response.status===200){
-                       app.posts = response.data;
 
-                    }
                 })
                 .catch(function (error){
                     console.log(error);
                 });
         }
+
+
     }
 });
