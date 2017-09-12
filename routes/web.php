@@ -125,15 +125,17 @@ Route::group(['middleware' => 'auth'], function (){
 });
 
 Route::group(['prefix' => 'company', 'middleware' => ['auth','company']],function() {
-    Route::get('/', function () {
-        echo " hell from company";
+    Route::get('/', 'companyController@index');
+
+    Route::get('/addJobForm', function(){
+        return view('company.addJob');
     });
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth','admin']],function() {
-    Route::get('/', function () {
-        echo " hell from admin";
-    });
+    Route::get('/', 'adminController@index)');
+
+
 });
 
 
