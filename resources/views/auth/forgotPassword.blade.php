@@ -11,6 +11,9 @@
                         @if(session()->has('info'))
                             <div class="alert alert-info">{{session()->get('info')}}</div>
                         @endif
+                            @if(session()->has('err'))
+                                <div class="alert alert-danger">{{session()->get('err')}}</div>
+                            @endif
                         <form class="form-horizontal" method="post" action="{{url('/setToken')}}">
                             {{ csrf_field() }}
 

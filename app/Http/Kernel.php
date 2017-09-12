@@ -57,5 +57,7 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \Bevy\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'admin'=> \Bevy\Http\Middleware\admin::class,
+        'company'=> \Bevy\Http\Middleware\company::class,
     ];
 }

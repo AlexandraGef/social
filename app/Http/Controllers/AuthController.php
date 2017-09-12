@@ -46,7 +46,7 @@ class AuthController extends Controller
            if($pass == $cpass){
            DB::table('users')->where('email', $email)->update(['password' =>bcrypt($pass)]);
            DB::table('password_resets')->where('email', $email)->delete();
-           return view('auth.login')->with('msg','Zdjęcie zostało zmienione');
+           return redirect('/login')->with('msg','Hasło zostało zresetowane. Możesz się zalogować.');
            }else{
                return back()->with('err','Hasła do siebie nie pasują !');
            }

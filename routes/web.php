@@ -14,23 +14,25 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/zapomnianeHaslo', function () {
-    return view('auth.forgotPassword');
-});
 
-Route::post('setToken', 'AuthController@setToken');
+Route::group(['middleware' => 'guest'], function () {
+    Route::get('/zapomnianeHaslo', function () {
+        return view('auth.forgotPassword');
+    });
+
+    Route::post('setToken', 'AuthController@setToken');
 //get random token by email
-Route::get('/getToken/{token}', function($token){
-    $getData = DB::table('password_resets')->where('token',$token)->get();
-if(count($getData)!=0) {
-    return view('auth.setPassword')->with('data', $getData);
-}else {
-    return view('auth.forgotPassword')->with('info', 'Podany token już wygasł !');
-}
+    Route::get('/getToken/{token}', function ($token) {
+        $getData = DB::table('password_resets')->where('token', $token)->get();
+        if (count($getData) != 0) {
+            return view('auth.setPassword')->with('data', $getData);
+        } else {
+            return redirect('/zapomnianeHaslo')->with('err', 'Podany token już wygasł !');
+        }
+    });
+    //update password
+    Route::get('setPass', 'AuthController@setPass');
 });
-
-//update password
-Route::get('setPass', 'AuthController@setPass');
 
 Auth::routes();
 Route::group(['middleware' => 'auth'], function (){
@@ -122,6 +124,17 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('/wyslijNowaWiadomosc', 'ProfileController@sendNewMessage');
 });
 
+Route::group(['prefix' => 'company', 'middleware' => ['auth','company']],function() {
+    Route::get('/', function () {
+        echo " hell from company";
+    });
+});
+
+Route::group(['prefix' => 'admin', 'middleware' => ['auth','admin']],function() {
+    Route::get('/', function () {
+        echo " hell from admin";
+    });
+});
 
 
 
