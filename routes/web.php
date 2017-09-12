@@ -19,6 +19,18 @@ Route::get('/zapomnianeHaslo', function () {
 });
 
 Route::post('setToken', 'AuthController@setToken');
+//get random token by email
+Route::get('/getToken/{token}', function($token){
+    $getData = DB::table('password_resets')->where('token',$token)->get();
+if(count($getData)!=0) {
+    return view('auth.setPassword')->with('data', $getData);
+}else {
+    return view('auth.forgotPassword')->with('info', 'Podany token już wygasł !');
+}
+});
+
+//update password
+Route::get('setPass', 'AuthController@setPass');
 
 Auth::routes();
 Route::group(['middleware' => 'auth'], function (){

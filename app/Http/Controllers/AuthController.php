@@ -7,26 +7,48 @@ use DB;
 use Mail;
 
 
+
 class AuthController extends Controller
 {
     public function setToken(Request $request)
     {
+
         $email = $request->email_address;
-        //check any user have this email adress
+        //check any user have this email adress$data_toview = array();
 
         $checkEmail = DB::table('users')->where('email', $email)->get();
+        $user = DB::table('users')->where('email', $email)->value('name');
         if (count($checkEmail) == 0) {
             echo "Podany adres email ne istnieje !";
         } else {
- $to = $email;
- $subject = "Reset Hasła";
- $message= "chuj";
-  $headers =  'MIME-Version: 1.0' . "\r\n";
- $headers .= 'From: Your name <info@address.com>' . "\r\n";
-$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+            $randomNumber = rand(1,500);
+            $token_sl = bcrypt($randomNumber);
+            $token = str_replace('/','',$token_sl);
+            $baseUrl='http://localhost:8000/getToken/'.$token;
+            $insert_token = DB::table('password_resets')->insert(['email'=> $email, 'token' => $token,'created_at'
+            => \Carbon\Carbon::now()->toDateTimeString()]);
 
- mail($to,$subject,$message,$headers);
+     Mail::send('auth.mail.mail', ['user' => $user, 'baseUrl'=> $baseUrl], function($message) use ($email, $user){
+     $message->from('admin@bevy.com','BEVY');
+     $message->to($email,$user )->subject('Link resetujący hasło');
+
+});
+            return back()->with('info','Link pozwalający zresetować hasło został wysłany na wybrany adres email.');
+
 
         }
+    }
+    public function setPass(Request $request){
+           $email = $request->email;
+           $pass = $request->pass;
+           $cpass = $request->confirm_pass;
+
+           if($pass == $cpass){
+           DB::table('users')->where('email', $email)->update(['password' =>bcrypt($pass)]);
+           DB::table('password_resets')->where('email', $email)->delete();
+           return view('auth.login')->with('msg','Zdjęcie zostało zmienione');
+           }else{
+               return back()->with('err','Hasła do siebie nie pasują !');
+           }
     }
 }

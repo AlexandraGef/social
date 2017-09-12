@@ -8,12 +8,9 @@
                     <div class="panel-heading">Resetuj hasło</div>
 
                     <div class="panel-body">
-                        @if (session('status'))
-                            <div class="alert alert-success">
-                                {{ session('status') }}
-                            </div>
+                        @if(session()->has('info'))
+                            <div class="alert alert-info">{{session()->get('info')}}</div>
                         @endif
-
                         <form class="form-horizontal" method="post" action="{{url('/setToken')}}">
                             {{ csrf_field() }}
 
