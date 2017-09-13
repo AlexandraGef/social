@@ -5,7 +5,7 @@
 	<link rel="icon" type="image/png" href="assets/img/favicon.ico">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Company</title>
+	<title>Firma</title>
 
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -34,30 +34,30 @@
 
 			    	<div class="sidebar-wrapper">
 			            <div class="logo">
-			                <a href="{{url('/company')}}" class="simple-text">
-			                Company
+			                <a href="{{url('/firma')}}" class="simple-text">
+			               Firma
 			                </a>
 			            </div>
 
 			            <ul class="nav">
 			                <li class="active">
-			                    <a href="{{url('/company')}}">
+			                    <a href="{{url('/firma')}}">
 			                        <i class="pe-7s-graph"></i>
 			                        <p> Dashboard</p>
 			                    </a>
 			                </li>
 
 			                <li>
-			                    <a href="{{url('/company/jobs')}}">
+			                    <a href="{{url('/firma/OfertyPracy')}}">
 			                        <i class="pe-7s-graph3"></i>
-			                        <p>View Jobs</p>
+			                        <p>Pokaż oferty pracy</p>
 			                    </a>
 			                </li>
 
 											<li>
-												 <a href="{{url('/company/addJob')}}">
+												 <a href="{{url('/firma/dodajOfertePracy')}}">
 														 <i class="pe-7s-plus"></i>
-														 <p>Add Jobs</p>
+														 <p>Dodaj ofertę</p>
 												 </a>
 										 </li>
 
@@ -108,24 +108,25 @@
                         <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                   	<p>
-																			 Account
+																			 Konto
 										<b class="caret"></b>
 									</p>
                               </a>
                               <ul class="dropdown-menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something</a></li>
+                                <li><a href="{{ url('/') }}">Strona domowa</a></li>
+                                <li><a href="{{ url('/home') }}">Tablica</a></li>
                                 <li class="divider"></li>
-                                <li><a href="#">Separated link</a></li>
+                                  <li>
+                                      <a href="{{ route('logout') }}"
+                                         onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                          Wyloguj
+                                      </a>
+                                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                          {{ csrf_field() }}
+                                      </form>
+                                  </li>
                               </ul>
-                        </li>
-                        <li>
-                            <a href="{{url('/logout')}}">
-                                <p>Log out</p>
-                            </a>
                         </li>
 						<li class="separator hidden-lg hidden-md"></li>
                     </ul>
@@ -143,19 +144,19 @@
                     <ul>
                         <li>
                             <a href="#">
-                                Home
+                                Strona domowa
                             </a>
                         </li>
                         <li>
                             <a href="#">
-                                Jobs
+                                Ofert pracy
                             </a>
                         </li>
 
                     </ul>
                 </nav>
                 <p class="copyright pull-right">
-                Company Dashboard </p>
+               Dashboard </p>
             </div>
         </footer>
 
@@ -182,23 +183,5 @@
 
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
     <script src="{{ asset('company_theme/assets/js/light-bootstrap-dashboard.js') }}"></script>
-
-
-	<script type="text/javascript">
-    	$(document).ready(function(){
-
-        	demo.initChartist();
-
-        	$.notify({
-            	icon: 'pe-7s-gift',
-            	message: "Welcome to <b>Company Dashboard</b> "
-
-            },{
-                type: 'info',
-                timer: 1000
-            });
-
-    	});
-	</script>
 
 </html>

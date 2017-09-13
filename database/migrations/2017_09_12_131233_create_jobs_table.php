@@ -19,6 +19,7 @@ class CreateJobsTable extends Migration
             $table->string('skills');
             $table->string('requirements');
             $table->string('contact_email');
+            $table->integer('company_id');
             $table->timestamps();
         });
     }

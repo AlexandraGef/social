@@ -47,7 +47,9 @@
                                                   ->where('user_requested', Auth::user()->id)
                                                   ->count()}})</span></a></li>
                             @endif
-
+                        @if(Auth::check() && Auth::user()->isRole() == "company")
+                                <li><a href="{{ url('/firma') }}">Firma</a></li>
+@endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

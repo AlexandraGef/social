@@ -124,12 +124,16 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('/wyslijNowaWiadomosc', 'ProfileController@sendNewMessage');
 });
 
-Route::group(['prefix' => 'company', 'middleware' => ['auth','company']],function() {
+Route::group(['prefix' => 'firma', 'middleware' => ['auth','company']],function() {
     Route::get('/', 'companyController@index');
 
-    Route::get('/addJobForm', function(){
+    Route::get('/dodajOfertePracy', function(){
         return view('company.addJob');
     });
+
+    Route::post('/dodajOferteSubmit', 'companyController@addJobSubmit');
+    Route::get('/OfertyPracy', 'companyController@viewJobs');
+
 });
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth','admin']],function() {
