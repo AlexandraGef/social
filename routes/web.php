@@ -14,7 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+/*
+ * gosc
+ */
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/zapomnianeHaslo', function () {
         return view('auth.forgotPassword');
@@ -35,6 +37,9 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 Auth::routes();
+/*
+ * uzytkownik
+ */
 Route::group(['middleware' => 'auth'], function (){
 
     Route::get('/profil/{slug}', 'ProfileController@index');
@@ -77,12 +82,13 @@ Route::group(['middleware' => 'auth'], function (){
 
     });
     Route::post('/dodajPost', 'PostsController@addPost');
-
+    /*
+     * wiadomosci
+     */
     Route::get('/wiadomosci', function(){
         return view('messages');
     });
-/////////////////////////////WIADOMOSCI
-/// ///////////////////////////////////////////////
+
     Route::get('/getMessages', function(){
         $allUsers1 = DB::table('users')
             ->Join('conversation','users.id', 'conversation.user_one')
@@ -122,8 +128,15 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('/wyslijWiadomosc', 'ProfileController@sendMessage');
     Route::get('/noweWiadomosci','ProfileController@newMessage');
     Route::post('/wyslijNowaWiadomosc', 'ProfileController@sendNewMessage');
+    /*
+     * oferty dla uzytkownikow
+     */
+    Route::get('/praca','profileController@jobs');
+    Route::get('/szczegolyOferty/{id}', 'profileController@job');
 });
-
+/*
+ * firma
+ */
 Route::group(['prefix' => 'firma', 'middleware' => ['auth','company']],function() {
     Route::get('/', 'companyController@index');
 
@@ -135,7 +148,9 @@ Route::group(['prefix' => 'firma', 'middleware' => ['auth','company']],function(
     Route::get('/OfertyPracy', 'companyController@viewJobs');
 
 });
-
+/*
+ * admin
+ */
 Route::group(['prefix' => 'admin', 'middleware' => ['auth','admin']],function() {
     Route::get('/', 'adminController@index)');
 

@@ -40,4 +40,5 @@ class companyController extends Controller
         return view('company.jobs',compact('jobs'));
     }
 
+
 }

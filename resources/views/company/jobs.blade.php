@@ -41,7 +41,7 @@
                                          Data publikacji
                                      </th>
                                      <th>
-                                        Więcej
+                                        Detale
                                      </th>
                                  </tr>
                                 @foreach($jobs as $job)
@@ -60,7 +60,7 @@
                                             {{$job->created_at}}
                                         </td>
                                         <td>
-                                            <a href="#">Pokaż ofertę</a>
+                                            <a href="#">Pokaż</a>
                                         </td>
 
                                     </tr>
