@@ -141,8 +141,5 @@
 </div>
 
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/start.js') }}"></script>
-
 </body>
 </html>

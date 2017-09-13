@@ -11,28 +11,28 @@
                         </div>
                     @endif
 
-                        <div class="panel panel-default" >
+                        <div class="panel panel-default" style="box-shadow: 5px 5px 10px #888888;">
                             <div class="panel-heading">Najnowsze posty</div>
 
                             <div class="panel-body" >
+                                <div class="col-xs-1 ">
+                                    <img class="img-circle" src="{{ Auth::user()->pic }}" width="60" height="60" style="margin-left:-10px"/>                                </div>
+                                <div class="col-xs-11">
                                 <form method="post" enctype="multipart/form-data" v-on:submit.prevent="addPost" >
-                                 <textarea placeholder="Napisz co u Ciebie !"  v-model="content" rows="5" style="min-width: 80%"></textarea><br><br>
-
-
-                                    <input type="submit" class="btn btn-success" value="Udostępnij">
-                                    <hr>
-
+                                 <textarea placeholder="Napisz co u Ciebie !"  v-model="content" rows="5" style="min-width: 100%"></textarea><br><br>
+                                    <input type="submit" class="btn btn-success pull-right" value="Udostępnij">
                                 </form>
+                                </div>
                             </div>
                         </div>
                        <div v-for="post in posts">
-                                    <div class="col-md-12" style="margin-bottom:15px;background-color: white; padding:10px">
+                                    <div class="col-md-12" style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
                                         <div class="col-md-2 pull-left" style="margin-bottom: 10px;">
-                                            <a :href="'{{Config::get('url')}}/profil/' + post.slug"><img :src="'{{Config::get('url')}}' + post.pic" :alt="post.name" width="90" height="90"/></a>
+                                            <a :href="'{{Config::get('url')}}/profil/' + post.slug"><img :src="'{{Config::get('url')}}' + post.pic" class="img-circle" :alt="post.name" width="90" height="90"/></a>
                                         </div>
                                         <div class="col-md-8 ">
                                             <h3><a :href="'{{Config::get('url')}}/profil/' + post.slug">@{{post.name}}</a></h3>
-                                            <small>@{{ post.created_at }}</small>
+                                            <small>@{{ post.created_at | myOwnTime }}</small>
                                         </div>
                                         <div class="col-md-2">
                                             <a href="#" data-toggle="dropdown" aria-haspopup="true"><i class="fa fa-cog" aria-hidden="true"></i></a>
@@ -41,8 +41,9 @@
                                                 <li v-if="post.user_id == '{{Auth::user()->id}}'"><a @click="deletePost(post.id)"><i class="fa fa-trash-o" aria-hidden="true"></i> Usuń</a></li>
                                             </div>
                                         </div>
-                                        <p class="col-md-12">@{{post.content}}
+                                        <p style="border-bottom: solid #eeeeee 1px; padding:20px;" class="col-md-12">@{{post.content}}
                                         </p>
+
                                     </div>
                             </div>
             </div>

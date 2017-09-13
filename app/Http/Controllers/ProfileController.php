@@ -52,7 +52,9 @@ class ProfileController extends Controller
     }
     public function findFriends(){
         $uid = Auth::user()->id;
-        $allUsers = DB::table('profiles')->leftJoin('users','users.id','=','profiles.user_id')->where('user_id','!=', $uid)->get();
+        $allUsers = DB::table('profiles')
+            ->leftJoin('users','users.id','=','profiles.user_id')
+            ->where('user_id','!=', $uid)->get();
 
        return view('profile.findFriends', compact('allUsers'));
     }

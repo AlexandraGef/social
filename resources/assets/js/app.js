@@ -31,6 +31,12 @@ const app = new Vue({
                 .then(response => {
                     console.log(response);
                     app.posts = response.data;
+                    Vue.filter('myOwnTime', function(value){
+                        var moment = require('moment-timezone');
+                        moment.locale('pl');
+
+                        return moment.utc(value).utcOffset("-240").fromNow();
+                    });
 
 
                 })
