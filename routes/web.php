@@ -82,6 +82,8 @@ Route::group(['middleware' => 'auth'], function (){
 
     });
     Route::post('/dodajPost', 'PostsController@addPost');
+    //delete post
+    Route::get('/deletePost/{id}','PostsController@deletePost');
     /*
      * wiadomosci
      */

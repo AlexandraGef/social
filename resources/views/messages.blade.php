@@ -50,4 +50,5 @@
 </div>
     </div>
     </div>
+    <script src="{{ asset('js/profile.js') }}"></script>
 @endsection

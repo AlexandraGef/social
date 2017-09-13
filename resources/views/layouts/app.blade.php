@@ -17,7 +17,7 @@
 
 </head>
 <body>
-    <div id="app">
+    <div >
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -142,8 +142,7 @@
 
 
     <!-- Scripts -->
-
-    <script src="{{ asset('js/profile.js') }}"></script>
+    <script src="{{ asset('js/start.js') }}"></script>
 
 </body>
 </html>

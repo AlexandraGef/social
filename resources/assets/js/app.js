@@ -16,12 +16,12 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
 
 const app = new Vue({
     el: '#app',
     data: {
         posts:[],
+        content: '',
     },
     ready:function(){
       this.created();
@@ -39,7 +39,20 @@ const app = new Vue({
                 });
         },
     methods: {
+        deletePost(id){
+            axios.get('http://localhost:8000/deletePost/' + id)
+                .then(response => {
+                    console.log(response); // show if success
+                    console.log('Post został usuniety');
+                    if(response.status===200){
+                        app.posts = response.data;
 
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error); // run if we have error
+                });
+        },
         addPost() {
             axios.post('http://localhost:8000/dodajPost',{
                 content: this.content
@@ -54,6 +67,7 @@ const app = new Vue({
                 .catch(function (error){
                     console.log(error);
                 });
-        }
+        },
+
     }
 });
