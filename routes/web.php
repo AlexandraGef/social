@@ -71,18 +71,35 @@ Route::group(['middleware' => 'auth'], function (){
 
     Route::get('/usun/{id}', 'ProfileController@friendRemove');
 
-    Route::get('/home','PostsController@index');
-    Route::get('/posty', function(){
-        $posts_json = DB::table('posts')
+    Route::get('/home',function(){
+        /*$posts_json = DB::table('posts')
             ->leftJoin('users','posts.user_id','users.id')
             ->orderBy('posts.created_at', 'desc')
             ->get();
 
-        return $posts_json;
+        return $posts_json;*/
+        $posts =  Bevy\posts::with('user')
+            ->orderBy('created_at','DESC')
+            ->get();
+        return view('home', compact('posts'));
+
+
+    });
+    Route::get('/posty', function(){
+        /*$posts_json = DB::table('posts')
+            ->leftJoin('users','posts.user_id','users.id')
+            ->orderBy('posts.created_at', 'desc')
+            ->get();
+
+        return $posts_json;*/
+         return Bevy\posts::with('user')
+             ->orderBy('created_at','DESC')
+             ->get();
+
 
     });
     Route::post('/dodajPost', 'PostsController@addPost');
-    //delete post
+    //delete posts
     Route::get('/deletePost/{id}','PostsController@deletePost');
     /*
      * wiadomosci

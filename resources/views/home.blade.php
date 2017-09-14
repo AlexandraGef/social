@@ -28,13 +28,13 @@
                        <div v-for="post in posts">
                                     <div class="col-md-12" style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
                                         <div class="col-md-2 pull-left" style="margin-bottom: 10px;">
-                                            <a :href="'{{Config::get('url')}}/profil/' + post.slug"><img :src="'{{Config::get('url')}}' + post.pic" class="img-circle" :alt="post.name" width="90" height="90"/></a>
+                                            <a :href="'{{Config::get('url')}}/profil/' + post.user.slug"><img :src="'{{Config::get('url')}}' + post.user.pic" class="img-circle" :alt="post.user.name" width="90" height="90"/></a>
                                         </div>
-                                        <div class="col-md-8 ">
-                                            <h3><a :href="'{{Config::get('url')}}/profil/' + post.slug">@{{post.name}}</a></h3>
+                                        <div class="col-md-9 ">
+                                            <h3><a :href="'{{Config::get('url')}}/profil/' + post.user.slug">@{{post.user.name}}</a></h3>
                                             <small>@{{ post.created_at | myOwnTime }}</small>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-1">
                                             <a href="#" data-toggle="dropdown" aria-haspopup="true"><i class="fa fa-cog" aria-hidden="true"></i></a>
                                             <div class="dropdown-menu" id="dropdown">
                                                 <li><a>cos tam</a></li>
