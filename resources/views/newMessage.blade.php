@@ -32,10 +32,8 @@
             <hr>
         </div>
 
-
-
         <div style="background-color:#fff; min-height:600px; border-left:5px solid #F5F8FA"
-             class="col-md-6">
+             class="col-md-8">
             <h3 align="center">Wiadomości</h3>
             <p class="alert alert-success">@{{msg}}</p>
 
