@@ -57374,6 +57374,28 @@ var app = new Vue({
             }).catch(function (error) {
                 console.log(error);
             });
+        },
+        likePost: function likePost(id) {
+            axios.get('http://localhost:8000/lubie/' + id).then(function (response) {
+                console.log(response); // show if success
+                console.log('Post został usuniety');
+                if (response.status === 200) {
+                    app.posts = response.data;
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        unlikePost: function unlikePost(id) {
+            axios.get('http://localhost:8000/nielubie/' + id).then(function (response) {
+                console.log(response); // show if success
+                console.log('Post został usuniety');
+                if (response.status === 200) {
+                    app.posts = response.data;
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
         }
     }
 });

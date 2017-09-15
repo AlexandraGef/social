@@ -74,6 +74,34 @@ const app = new Vue({
                     console.log(error);
                 });
         },
+        likePost(id){
+            axios.get('http://localhost:8000/lubie/' + id)
+                .then(response => {
+                    console.log(response); // show if success
+                    console.log('Post został usuniety');
+                    if(response.status===200){
+                        app.posts = response.data;
+
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error); // run if we have error
+                });
+        },
+        unlikePost(id){
+            axios.get('http://localhost:8000/nielubie/' + id)
+                .then(response => {
+                    console.log(response); // show if success
+                    console.log('Post został usuniety');
+                    if(response.status===200){
+                        app.posts = response.data;
+
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error); // run if we have error
+                });
+        },
 
     }
 });

@@ -78,7 +78,7 @@ Route::group(['middleware' => 'auth'], function (){
             ->get();
 
         return $posts_json;*/
-        $posts =  Bevy\posts::with('user')
+        $posts =  Bevy\posts::with('user','likes')
             ->orderBy('created_at','DESC')
             ->get();
         return view('home', compact('posts'));
@@ -92,7 +92,7 @@ Route::group(['middleware' => 'auth'], function (){
             ->get();
 
         return $posts_json;*/
-         return Bevy\posts::with('user')
+         return Bevy\posts::with('user','likes')
              ->orderBy('created_at','DESC')
              ->get();
 
@@ -152,6 +152,11 @@ Route::group(['middleware' => 'auth'], function (){
      */
     Route::get('/praca','profileController@jobs');
     Route::get('/szczegolyOferty/{id}', 'profileController@job');
+/*
+ * polubienia
+ */
+    Route::get('/lubie/{id}', 'PostsController@likePost');
+    Route::get('/nielubie/{id}', 'PostsController@unlikePost');
 });
 /*
  * firma
