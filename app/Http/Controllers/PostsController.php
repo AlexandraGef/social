@@ -15,7 +15,7 @@ class PostsController extends Controller
             ->insert(['content' =>$content, 'user_id' =>Auth::user()->id,
                 'status'=>0, 'created_at' =>date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s") ]);
         if($createPost){
-  return posts::with('user','likes')
+  return posts::with('user','likes','comments')
       ->orderBy('created_at','DESC')
       ->get();
         }
@@ -25,7 +25,7 @@ class PostsController extends Controller
     {
         $delete = DB::table('posts')->where('id',$id)->delete();
         if($delete){
-   return posts::with('user','likes')
+   return posts::with('user','likes','comments')
        ->orderBy('created_at','DESC')
        ->get();
         }
@@ -37,11 +37,33 @@ class PostsController extends Controller
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
         ]);
         if($likePost){
-            return posts::with('user','likes')
+            return posts::with('user','likes','comments')
                 ->orderBy('created_at','DESC')
                 ->get();
         }
 
+    }
+    public function unlikePost($id)
+    {
+        $delete = DB::table('likes')->where('id',$id)->delete();
+        if($delete){
+            return posts::with('user','likes','comments')
+                ->orderBy('created_at','DESC')
+                ->get();
+        }
+    }
+    public function addComment(Request $request){
+        $comment = $request->comment;
+        $id = $request->id;
+
+        $createComment= DB::table('comments')
+            ->insert(['comment' =>$comment, 'user_id' => Auth::user()->id, 'posts_id' => $id,
+                'created_at' =>\Carbon\Carbon::now()->toDateTimeString()]);
+
+        if($createComment){
+            return posts::with('user','likes','comments')->orderBy('created_at','DESC')->get();
+            // return all posts same as before
+        }
     }
 
 

@@ -1,6 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+    <style>
+        #commentBox{
+            padding:10px;
+            width:100%;
+            margin:10px auto;
+            background:white;
+            padding:10px;
+        }
+        #commentBox li { list-style:none; padding:10px; border-bottom:1px solid #ddd}
+        .commet_form{ padding:10px; margin:10px}
+        .comment_form{ margin: 20px}
+    </style>
     <div class="container" id="app">
         <div class="row">
             @include('layouts.partials.sidebar')
@@ -25,8 +37,8 @@
                                 </div>
                             </div>
                         </div>
-                       <div v-for="post in posts">
-                                    <div class="col-md-12" style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
+                       <div v-for="post in posts" style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
+                                    <div class="col-md-12" >
                                         <div class="col-md-2 pull-left" style="margin-bottom: 10px;">
                                             <a :href="'{{Config::get('url')}}/profil/' + post.user.slug"><img :src="'{{Config::get('url')}}' + post.user.pic" class="img-circle" :alt="post.user.name" width="90" height="90"/></a>
                                         </div>
@@ -38,30 +50,42 @@
                                             <a href="#" data-toggle="dropdown" aria-haspopup="true"><i class="fa fa-cog" aria-hidden="true"></i></a>
                                             <div class="dropdown-menu" id="dropdown">
                                                 <li><a>cos tam</a></li>
-                                                <li v-if="post.user_id == '{{Auth::user()->id}}'"><a @click="deletePost(post.id)"><i class="fa fa-trash-o" aria-hidden="true"></i> Usuń</a></li>
+                                                <li style="cursor: pointer"  v-if="post.user_id == '{{Auth::user()->id}}'"><a @click="deletePost(post.id)"><i class="fa fa-trash-o" aria-hidden="true"></i> Usuń</a></li>
                                             </div>
                                         </div>
                                         <p style="border-bottom: solid #eeeeee 1px; padding:20px;" class="col-md-12">@{{post.content}}
                                         </p>
-                                        <div  v-if="post.likes.length==0 " class="col-md-1">
+                                        <div  v-if="post.likes.length==0 " class="col-md-1" style="padding: 15px;">
                                             <i @click="likePost(post.id)"  style="cursor: pointer" class="fa fa-thumbs-up fa-2x text-primary"></i>
                                         </div>
-                                        <div v-else-if="post.likes.length!=0">
+                                        <div v-else-if="post.likes.length!=0" style="padding: 15px;">
                                             <div v-for="like in post.likes" :key="like.user_id =='{{Auth::user()->id}}' ">
-                                                <div class="col-md-1">
+                                                <div class="col-md-1"  style="padding: 15px;">
                                                     <i @click="unlikePost(like.id)"  style="cursor: pointer" class="fa fa-thumbs-down fa-2x text-danger">@{{ like.length }}</i>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div v-else class="col-md-1">
+                                        <div v-else class="col-md-1" style="padding: 15px;">
                                             <i @click="likePost(post.id)"  style="cursor: pointer" class="fa fa-thumbs-up fa-2x text-primary"></i>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-4" style="padding: 15px;">
                                             @{{ post.likes.length }} Lubię
                                         </div>
-
                                     </div>
-                                        </div>
+
+                           
+                           <div id="commentBox">
+                               <div class="comment_form">
+                                   <textarea class="form-control"  v-model="commentData"></textarea><br>
+                                   <button class="btn btn-success pull-right" @click="addComment(post.id)">Wyślij</button>
+                               </div>
+
+                               <ul v-for="comment in post.comments">
+                                   <li>@{{comment.comment}} </li>
+                               </ul>
+                           </div>
+                       </div>
+
 
             </div>
         </div>

@@ -57331,7 +57331,10 @@ var app = new Vue({
     el: '#app',
     data: {
         posts: [],
-        content: ''
+        content: '',
+        postId: '',
+        successMsg: '',
+        commentData: ''
     },
     ready: function ready() {
         this.created();
@@ -57390,6 +57393,19 @@ var app = new Vue({
             axios.get('http://localhost:8000/nielubie/' + id).then(function (response) {
                 console.log(response); // show if success
                 console.log('Post został usuniety');
+                if (response.status === 200) {
+                    app.posts = response.data;
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        addComment: function addComment(id) {
+            axios.post('http://localhost:8000/dodajKomentarz', {
+                comment: this.commentData,
+                id: id
+            }).then(function (response) {
+                console.log('saved successfully'); // show if success
                 if (response.status === 200) {
                     app.posts = response.data;
                 }
