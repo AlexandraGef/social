@@ -10,8 +10,8 @@
             padding:10px;
         }
         #commentBox li { list-style:none; padding:10px; border-bottom:1px solid #ddd}
-        .commet_form{ padding:10px; margin:10px}
-        .comment_form{ margin: 20px}
+        .comment_form{ padding:10px; margin:30px}
+
     </style>
     <div class="container" id="app">
         <div class="row">
@@ -72,23 +72,39 @@
                                             @{{ post.likes.length }} Lubię
                                         </div>
                                     </div>
-
-                           
-                           <div id="commentBox">
-                               <div class="comment_form">
-                                   <textarea class="form-control"  v-model="commentData"></textarea><br>
-                                   <button class="btn btn-success pull-right" @click="addComment(post.id)">Wyślij</button>
+                           <div class="comment_form">
+                               <textarea class="form-control"  v-model="commentData"></textarea><br>
+                               <button class="btn btn-success pull-right" @click="addComment(post.id)">Wyślij</button>
+                           </div>
+                           <div v-for="comment in post.comments">
+                               <div v-if="comment.posts_id == post.id">
+                           <article class="row">
+                               <div class="col-md-2 col-sm-2 hidden-xs">
+                                   <figure class="thumbnail">
+                                       <a :href="'{{Config::get('url')}}/profil/' + comment.user.slug"><img :src="'{{Config::get('url')}}' + comment.user.pic" class="img-circle" :alt="comment.user.name" width="90" height="90"/></a>
+                                       <figcaption class="text-center">@{{post.user.name}}</figcaption>
+                                   </figure>
                                </div>
-
-                               <ul v-for="comment in post.comments">
-                                   <li>@{{comment.comment}} </li>
-                               </ul>
+                               <div class="col-md-10 col-sm-10">
+                                   <div class="panel panel-default arrow left">
+                                       <div class="panel-body">
+                                           <header class="text-left">
+                                               <time class="comment-date" ><i class="fa fa-clock-o"></i>@{{ comment.created_at | myOwnTime }}</time>
+                                           </header>
+                                           <div class="comment-post">
+                                               <p>
+                                                  @{{ comment.comment }}
+                                               </p>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </article>
+                               </div>
                            </div>
                        </div>
-
-
-            </div>
         </div>
+    </div>
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
 

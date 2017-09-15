@@ -78,7 +78,7 @@ Route::group(['middleware' => 'auth'], function (){
             ->get();
 
         return $posts_json;*/
-        $posts =  Bevy\posts::with('user','likes','comments','user.comments')
+        $posts =  Bevy\posts::with('user','likes','comments.user')
             ->orderBy('created_at','DESC')
             ->get();
         return view('home', compact('posts'));
@@ -92,7 +92,7 @@ Route::group(['middleware' => 'auth'], function (){
             ->get();
 
         return $posts_json;*/
-         return Bevy\posts::with('user','likes','comments','user.comments')
+         return Bevy\posts::with('user','likes','comments.user')
              ->orderBy('created_at','DESC')
              ->get();
 
