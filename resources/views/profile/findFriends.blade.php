@@ -22,11 +22,6 @@
                                               ->where('user_requested', '=', $uList->id)
                                               ->where('requester','=', Auth::user()->id)
                                               ->first();
-                                      $check1 = DB::table('friendships')
-                                      ->where('user_requested', '=', $uList->id)
-                                      ->where('requester','=', Auth::user()->id)
-                                          ->where('status','=',1)
-                                      ->first();
                                       if($check =='') {
                                           ?>
                                   <a href="{{url('/dodajZnajomego')}}/{{$uList->id}}" class="btn btn-primary">Dodaj do znajomych</a>

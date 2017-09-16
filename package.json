@@ -21,5 +21,18 @@
   "dependencies": {
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13"
-  }
+  },
+  "name": "bevyyy",
+  "version": "1.0.0",
+  "main": "webpack.mix.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.ideo.pl/other-php/bevy.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }

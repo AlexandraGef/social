@@ -78,10 +78,12 @@ Route::group(['middleware' => 'auth'], function (){
             ->get();
 
         return $posts_json;*/
+
+
         $posts =  Bevy\posts::with('user','likes','comments.user')
             ->orderBy('created_at','DESC')
             ->get();
-        return view('home', compact('posts','friends'));
+        return view('home', compact('posts'));
 
 
     });
@@ -93,10 +95,10 @@ Route::group(['middleware' => 'auth'], function (){
 
         return $posts_json;*/
 
-        return Bevy\posts::with('user','likes','comments.user')
-             ->orderBy('created_at','DESC')
-             ->get();
-
+        $posts =  Bevy\posts::with('user','likes','comments.user')
+            ->orderBy('created_at','DESC')
+            ->get();
+         return $posts;
 
     });
     Route::post('/dodajPost', 'PostsController@addPost');
@@ -160,6 +162,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/nielubie/{id}', 'PostsController@unlikePost');
     //add comments
     Route::post('dodajKomentarz', 'PostsController@addComment');
+    Route::get('usunKomentarz/{id}', 'PostsController@deleteComment');
 });
 /*
  * firma

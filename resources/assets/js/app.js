@@ -23,6 +23,7 @@ const app = new Vue({
         posts:[],
         content: '',
         postId: '',
+        a : 1,
         successMsg: '',
         commentData:''
     },
@@ -81,9 +82,11 @@ const app = new Vue({
             axios.get('http://localhost:8000/lubie/' + id)
                 .then(response => {
                     console.log(response); // show if success
-                    console.log('Post został usuniety');
+                    console.log('Post został polubiony');
                     if(response.status===200){
                         app.posts = response.data;
+                        app.a = 2;
+
 
                     }
                 })
@@ -95,9 +98,10 @@ const app = new Vue({
             axios.get('http://localhost:8000/nielubie/' + id)
                 .then(response => {
                     console.log(response); // show if success
-                    console.log('Post został usuniety');
+                    console.log('Post został polubiony');
                     if(response.status===200){
                         app.posts = response.data;
+                        app.a = 1;
 
                     }
                 })
@@ -120,7 +124,21 @@ const app = new Vue({
                     console.log(error); // run if we have error
                 });
 
-        }
+        },
+        deleteComment(id){
+            axios.get('http://localhost:8000/usunKomentarz/' + id)
+                .then(response => {
+                console.log(response); // show if success
+            console.log('Komentarz został usuniety');
+            if(response.status===200){
+                app.posts = response.data;
+
+            }
+        })
+        .catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
 
     }
 });

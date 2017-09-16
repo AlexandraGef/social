@@ -66,6 +66,15 @@ class PostsController extends Controller
                 ->get();
         }
     }
+    public function deleteComment($id)
+    {
+        $delete = DB::table('comments')->where('id',$id)->delete();
+        if($delete){
+            return posts::with('user','likes','comments.user')
+                ->orderBy('created_at','DESC')
+                ->get();
+        }
+    }
 
 
 }
