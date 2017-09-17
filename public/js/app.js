@@ -57438,7 +57438,7 @@ var app = new Vue({
         posts: [],
         content: '',
         postId: '',
-        a: 1,
+        a: '',
         successMsg: '',
         commentData: ''
     },
@@ -57490,7 +57490,7 @@ var app = new Vue({
                 console.log('Post został polubiony');
                 if (response.status === 200) {
                     app.posts = response.data;
-                    app.a = 2;
+                    app.a = id;
                 }
             }).catch(function (error) {
                 console.log(error); // run if we have error
@@ -57502,7 +57502,7 @@ var app = new Vue({
                 console.log('Post został polubiony');
                 if (response.status === 200) {
                     app.posts = response.data;
-                    app.a = 1;
+                    app.a = 0;
                 }
             }).catch(function (error) {
                 console.log(error); // run if we have error

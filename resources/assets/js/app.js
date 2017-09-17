@@ -23,7 +23,7 @@ const app = new Vue({
         posts:[],
         content: '',
         postId: '',
-        a : 1,
+        a : '',
         successMsg: '',
         commentData:''
     },
@@ -85,7 +85,7 @@ const app = new Vue({
                     console.log('Post został polubiony');
                     if(response.status===200){
                         app.posts = response.data;
-                        app.a = 2;
+                        app.a = id;
 
 
                     }
@@ -101,7 +101,7 @@ const app = new Vue({
                     console.log('Post został polubiony');
                     if(response.status===200){
                         app.posts = response.data;
-                        app.a = 1;
+                        app.a = 0;
 
                     }
                 })

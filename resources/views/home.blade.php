@@ -56,20 +56,20 @@
                                         </div>
                                         <p style="border-bottom: solid #eeeeee 1px; padding:20px;" class="col-md-12">@{{post.content}}
                                         </p>
-                                        <div v-for="like in post.likes" v-if="like.user_id =='{{Auth::user()->id}}' " style=" visibility: hidden">
-                                                @{{ a = a + 1 }}
+                                        <div v-for="like in post.likes" v-if="like.user_id =='{{Auth::user()->id}}' " style="visibility: hidden">
+                                                @{{ a = post.id }}
                                         </div>
-                                        <div  v-if="post.likes.length==0 " class="col-md-1" style="padding: 15px;">
+                                        <div  v-if="post.likes.length==0" class="col-md-1" style="padding: 15px;">
                                             <i @click="likePost(post.id)"  style="cursor: pointer" class="fa fa-thumbs-up fa-2x text-primary"></i>
                                         </div>
-                                        <div v-else-if="a != 1 && post.likes.length!=0" style="padding: 15px;">
+                                        <div v-else-if="a == post.id && post.likes.length!=0" style="padding: 15px;">
                                             <div v-for="like in post.likes" v-if="like.user_id =='{{Auth::user()->id}}' ">
                                                 <div class="col-md-1"  style="padding: 15px;">
-                                                    <i @click="unlikePost(like.id)"  style="cursor: pointer" class="fa fa-thumbs-down fa-2x text-danger">@{{ like.length }}</i>
+                                                    <i @click="unlikePost(like.id)"  style="cursor: pointer" class="fa fa-thumbs-down fa-2x text-danger"></i>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div v-else-if="a == 1 && post.likes.length!=0" class="col-md-1" style="padding: 15px;">
+                                        <div v-else-if="a != post.id && post.likes.length!=0" class="col-md-1" style="padding: 15px;">
                                             <i @click="likePost(post.id)"  style="cursor: pointer" class="fa fa-thumbs-up fa-2x text-primary"></i>
                                         </div>
                                         <div class="col-md-4" style="padding: 15px;">
