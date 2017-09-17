@@ -85,7 +85,7 @@
                            <article class="row">
                                <div class="col-md-2 col-sm-2 hidden-xs">
                                    <figure class="thumbnail">
-                                       <a :href="'{{Config::get('url')}}/profil/' + comment.user.slug"><img :src="'{{Config::get('url')}}' + comment.user.pic" class="img-circle" :alt="comment.user.name" width="90" height="90"/></a>
+                                       <a :href="'{{Config::get('url')}}/profil/' + comment.user.slug"><img :src="'{{Config::get('url')}}' + comment.user.pic" class="img-circle" :alt="comment.user.name" width="50" height="50"/></a>
                                        <figcaption class="text-center">@{{comment.user.name}}</figcaption>
                                    </figure>
                                </div>

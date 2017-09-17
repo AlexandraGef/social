@@ -9,7 +9,7 @@
                 <div class="col-md-6">Wiadomości</div>
                 <div class="col-md-2 pull-right">
                     <a href="{{url('/noweWiadomosci')}}">
-                        <img src="{{Config::get('url')}}/img/msg.png" title="Rozpocznij nową konwersajcę" width="32" ></a>
+                        <img src="{{Config::get('url')}}/img/new-msg.png" title="Rozpocznij nową konwersację" width="32" ></a>
                 </div>
             </div>
 

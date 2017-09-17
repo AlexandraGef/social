@@ -87,6 +87,20 @@ Route::group(['middleware' => 'auth'], function (){
 
 
     });
+    Route::get('/uzytkownicy', function(){
+        /*$posts_json = DB::table('posts')
+            ->leftJoin('users','posts.user_id','users.id')
+            ->orderBy('posts.created_at', 'desc')
+            ->get();
+
+        return $posts_json;*/
+
+        $allUsers = DB::table('profiles')
+            ->leftJoin('users','users.id','=','profiles.user_id')
+            ->where('user_id','!=', Auth::user()->id)->get();
+        return $allUsers;
+
+    });
     Route::get('/posty', function(){
         /*$posts_json = DB::table('posts')
             ->leftJoin('users','posts.user_id','users.id')
@@ -154,6 +168,12 @@ Route::group(['middleware' => 'auth'], function (){
      * oferty dla uzytkownikow
      */
     Route::get('/praca','profileController@jobs');
+    Route::get('/jobss', function(){
+        $jobs = DB::table('users')
+            ->Join('jobs','users.id','jobs.company_id')
+            ->get();
+        return $jobs;
+    });
     Route::get('/szczegolyOferty/{id}', 'profileController@job');
 /*
  * polubienia
