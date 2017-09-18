@@ -19,7 +19,8 @@
                                     <img class="img-circle" src="{{ $uList->pic }}" width="60" height="60"/>
                                     <h3>{{$uList->name}}</h3>
                                     <div class="caption form-inline">
-                                   <a href="{{url('/akceptuj')}}/{{$uList->name}}/{{$uList->id}}" class="btn btn-success">Potwierdź</a>
+                                        <a href="{{url('/akceptuj')}}/{{$uList->name}}/{{$uList->id}}"
+                                           class="btn btn-success">Potwierdź</a>
                                         <a href="{{url('/odrzuc')}}/{{$uList->id}}" class="btn btn-danger">Odrzuć</a>
                                     </div>
                                 </div>

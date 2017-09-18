@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -20,41 +19,41 @@ window.Vue = require('vue');
 const app = new Vue({
     el: '#app',
     data: {
-        posts:[],
+        posts: [],
         content: '',
         postId: '',
-        a : '',
+        a: '',
         successMsg: '',
-        commentData:''
+        commentData: ''
     },
-    ready:function(){
-      this.created();
+    ready: function () {
+        this.created();
     },
-    created(){
-            axios.get('http://localhost:8000/posty')
-                .then(response => {
-                    console.log(response);
-                    app.posts = response.data;
-                    Vue.filter('myOwnTime', function(value){
-                        var moment = require('moment-timezone');
-                        moment.locale('pl');
+    created() {
+        axios.get('http://localhost:8000/posty')
+            .then(response => {
+                console.log(response);
+                app.posts = response.data;
+                Vue.filter('myOwnTime', function (value) {
+                    var moment = require('moment-timezone');
+                    moment.locale('pl');
 
-                        return moment.utc(value).utcOffset("-240").fromNow();
-                    });
-
-
-                })
-                .catch(function (error){
-                    console.log(error);
+                    return moment.utc(value).utcOffset("-240").fromNow();
                 });
-        },
+
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
     methods: {
-        deletePost(id){
+        deletePost(id) {
             axios.get('http://localhost:8000/deletePost/' + id)
                 .then(response => {
                     console.log(response); // show if success
                     console.log('Post został usuniety');
-                    if(response.status===200){
+                    if (response.status === 200) {
                         app.posts = response.data;
 
                     }
@@ -64,26 +63,26 @@ const app = new Vue({
                 });
         },
         addPost() {
-            axios.post('http://localhost:8000/dodajPost',{
+            axios.post('http://localhost:8000/dodajPost', {
                 content: this.content
             })
-                .then(function (response){
+                .then(function (response) {
                     console.log('Post został udostępniony');
-                    if(response.status===200){
-                       app.posts = response.data;
+                    if (response.status === 200) {
+                        app.posts = response.data;
 
                     }
                 })
-                .catch(function (error){
+                .catch(function (error) {
                     console.log(error);
                 });
         },
-        likePost(id){
+        likePost(id) {
             axios.get('http://localhost:8000/lubie/' + id)
                 .then(response => {
                     console.log(response); // show if success
                     console.log('Post został polubiony');
-                    if(response.status===200){
+                    if (response.status === 200) {
                         app.posts = response.data;
                         app.a = id;
 
@@ -94,12 +93,12 @@ const app = new Vue({
                     console.log(error); // run if we have error
                 });
         },
-        unlikePost(id){
+        unlikePost(id) {
             axios.get('http://localhost:8000/nielubie/' + id)
                 .then(response => {
                     console.log(response); // show if success
                     console.log('Post został polubiony');
-                    if(response.status===200){
+                    if (response.status === 200) {
                         app.posts = response.data;
                         app.a = 0;
 
@@ -109,14 +108,14 @@ const app = new Vue({
                     console.log(error); // run if we have error
                 });
         },
-        addComment(id){
+        addComment(id) {
             axios.post('http://localhost:8000/dodajKomentarz', {
                 comment: this.commentData,
                 id: id
             })
                 .then(function (response) {
                     console.log('saved successfully'); // show if success
-                    if(response.status===200){
+                    if (response.status === 200) {
                         app.posts = response.data;
                     }
                 })
@@ -125,19 +124,19 @@ const app = new Vue({
                 });
 
         },
-        deleteComment(id){
+        deleteComment(id) {
             axios.get('http://localhost:8000/usunKomentarz/' + id)
                 .then(response => {
-                console.log(response); // show if success
-            console.log('Komentarz został usuniety');
-            if(response.status===200){
-                app.posts = response.data;
+                    console.log(response); // show if success
+                    console.log('Komentarz został usuniety');
+                    if (response.status === 200) {
+                        app.posts = response.data;
 
-            }
-        })
-        .catch(function (error) {
-                console.log(error); // run if we have error
-            });
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error); // run if we have error
+                });
         },
 
     }

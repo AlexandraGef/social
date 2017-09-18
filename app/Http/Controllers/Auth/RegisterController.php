@@ -2,11 +2,11 @@
 
 namespace Bevy\Http\Controllers\Auth;
 
-use Bevy\User;
-use Bevy\profile;
 use Bevy\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Validator;
+use Bevy\profile;
+use Bevy\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -43,7 +43,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -60,26 +60,23 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Bevy\User
      */
     protected function create(array $data)
     {
-        if($data['gender']=='kobieta')
-        {
+        if ($data['gender'] == 'kobieta') {
             $pic_path = 'http://localhost:8000/img/female.gif';
-        }
-        else
-        {
+        } else {
             $pic_path = 'http://localhost:8000/img/male.gif';
         }
 
-        $user =  User::create([
+        $user = User::create([
             'name' => $data['name'],
             'gender' => $data['gender'],
             'role' => $data['role'],
             'pic' => $pic_path,
-            'slug' => str_slug($data['name'],'-'),
+            'slug' => str_slug($data['name'], '-'),
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);

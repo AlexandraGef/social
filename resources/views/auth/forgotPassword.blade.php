@@ -11,9 +11,9 @@
                         @if(session()->has('info'))
                             <div class="alert alert-info">{{session()->get('info')}}</div>
                         @endif
-                            @if(session()->has('err'))
-                                <div class="alert alert-danger">{{session()->get('err')}}</div>
-                            @endif
+                        @if(session()->has('err'))
+                            <div class="alert alert-danger">{{session()->get('err')}}</div>
+                        @endif
                         <form class="form-horizontal" method="post" action="{{url('/setToken')}}">
                             {{ csrf_field() }}
 
@@ -21,7 +21,8 @@
                                 <label for="email" class="col-md-4 control-label">Podaj email</label>
 
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email_address" value="{{ old('email') }}" required>
+                                    <input id="email" type="email" class="form-control" name="email_address"
+                                           value="{{ old('email') }}" required>
 
                                     @if ($errors->has('email'))
                                         <span class="help-block">

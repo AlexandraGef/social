@@ -14,14 +14,20 @@
                         @endif
                         <h3>Powiadomienia</h3><br>
                         @foreach($notes as $note)
-                         <div class="row" style="border-bottom: 1px solid #ccc;margin-bottom: 15px;">
-                             <ul>
-                                 <li style="list-style-type: none;">
-                                     <p><a href="{{ url('/profil') }}/{{$note->slug}}" style="color:green; font-weight: bold;"><img class="img-circle" alt="{{$note->name }}" src="{{ $note->pic }}" width="60" height="60" style="margin-right: 10px;">{{$note->name}}</a>{{$note->note}}</p>
+                            <div class="row" style="border-bottom: 1px solid #ccc;margin-bottom: 15px;">
+                                <ul>
+                                    <li style="list-style-type: none;">
+                                        <p><a href="{{ url('/profil') }}/{{$note->slug}}"
+                                              style="color:green; font-weight: bold;"><img class="img-circle"
+                                                                                           alt="{{$note->name }}"
+                                                                                           src="{{ $note->pic }}"
+                                                                                           width="60" height="60"
+                                                                                           style="margin-right: 10px;">{{$note->name}}
+                                            </a>{{$note->note}}</p>
 
-                                 </li>
-                             </ul>
-                         </div>
+                                    </li>
+                                </ul>
+                            </div>
                         @endforeach
 
                     </div>

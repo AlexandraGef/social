@@ -1,56 +1,55 @@
 @extends('company.master')
 @section('content')
-<div class="content">
-         <div class="container-fluid">
-             <div class="row">
-                 <div class="col-md-4">
-                     <div class="card">
-                         <div class="header">
-                             <h4 class="title">Heading here</h4>
-                             <p class="category">sub heading here</p>
-                         </div>
-                         <div class="content">
-                        <div class="form-group">
-
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Heading here</h4>
+                            <p class="category">sub heading here</p>
                         </div>
+                        <div class="content">
+                            <div class="form-group">
 
-                             <div class="footer">
-                                 <div class="legend">
+                            </div>
 
-                                 </div>
-                                 <hr>
-                                 <div class="stats">
+                            <div class="footer">
+                                <div class="legend">
 
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
+                                </div>
+                                <hr>
+                                <div class="stats">
 
-                 <div class="col-md-8">
-                     <div class="card">
-                         <div class="header">
-                           <h4 class="title">Heading here</h4>
-                           <p class="category">sub heading here</p>
-                         </div>
-                         <div class="content">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                             <div class="footer">
-                                 <div class="legend">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="header">
+                            <h4 class="title">Heading here</h4>
+                            <p class="category">sub heading here</p>
+                        </div>
+                        <div class="content">
 
-                                  </div>
-                                 <hr>
-                                 <div class="stats">
+                            <div class="footer">
+                                <div class="legend">
 
-                                 </div>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
-             </div>
+                                </div>
+                                <hr>
+                                <div class="stats">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
-
-         </div>
-     </div>
-     @endsection
+        </div>
+    </div>
+@endsection

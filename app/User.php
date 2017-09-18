@@ -19,12 +19,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email','role','password','slug','gender','pic',
+        'name', 'email', 'role', 'password', 'slug', 'gender', 'pic',
     ];
- public function isRole()
- {
- return $this->role;
- }
+
+    public function isRole()
+    {
+        return $this->role;
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

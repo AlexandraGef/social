@@ -23,15 +23,10 @@ Route::group(['middleware' => 'guest'], function () {
     });
 
     Route::post('setToken', 'AuthController@setToken');
-//get random token by email
-    Route::get('/getToken/{token}', function ($token) {
-        $getData = DB::table('password_resets')->where('token', $token)->get();
-        if (count($getData) != 0) {
-            return view('auth.setPassword')->with('data', $getData);
-        } else {
-            return redirect('/zapomnianeHaslo')->with('err', 'Podany token już wygasł !');
-        }
-    });
+    /*
+     * get random token by email
+     */
+    Route::get('/getToken/{token}', 'AuthController@getToken');
     //update password
     Route::get('setPass', 'AuthController@setPass');
 });
@@ -40,20 +35,22 @@ Auth::routes();
 /*
  * uzytkownik
  */
-Route::group(['middleware' => 'auth'], function (){
+Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/profil/{slug}', 'ProfileController@index');
 
-    Route::get('/zmienZdjecie', function(){
+    Route::get('/zmienZdjecie', function () {
         return view('profile.pic');
     });
-    Route::post('/wgrajZdjecie','ProfileController@uploadPhoto');
+    Route::post('/wgrajZdjecie', 'ProfileController@uploadPhoto');
 
     Route::get('/edytujProfil', 'ProfileController@editProfileForm');
 
     Route::post('/aktualizujProfil', 'ProfileController@updateProfile');
 
     Route::get('/znajdzZnajomych', 'ProfileController@findFriends');
+
+    Route::get('/czyWyslaneZapro', 'ProfileController@sendReq');
 
     Route::get('/dodajZnajomego/{id}', 'ProfileController@sendRequest');
 
@@ -68,116 +65,63 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/powiadomienia/{id}', 'ProfileController@notifications');
 
 
-
     Route::get('/usun/{id}', 'ProfileController@friendRemove');
 
-    Route::get('/home',function(){
-        /*$posts_json = DB::table('posts')
-            ->leftJoin('users','posts.user_id','users.id')
-            ->orderBy('posts.created_at', 'desc')
-            ->get();
+    Route::get('/home', 'HomeController@index');
 
-        return $posts_json;*/
+    Route::get('/uzytkownicy', 'ProfileController@findUsers');
 
+    Route::get('/posty', 'PostsController@findPosts');
 
-        $posts =  Bevy\posts::with('user','likes','comments.user')
-            ->orderBy('created_at','DESC')
-            ->get();
-        return view('home', compact('posts'));
-
-
-    });
-    Route::get('/uzytkownicy', function(){
-        /*$posts_json = DB::table('posts')
-            ->leftJoin('users','posts.user_id','users.id')
-            ->orderBy('posts.created_at', 'desc')
-            ->get();
-
-        return $posts_json;*/
-
-        $allUsers = DB::table('profiles')
-            ->leftJoin('users','users.id','=','profiles.user_id')
-            ->where('user_id','!=', Auth::user()->id)->get();
-        return $allUsers;
-
-    });
-    Route::get('/posty', function(){
-        /*$posts_json = DB::table('posts')
-            ->leftJoin('users','posts.user_id','users.id')
-            ->orderBy('posts.created_at', 'desc')
-            ->get();
-
-        return $posts_json;*/
-
-        $posts =  Bevy\posts::with('user','likes','comments.user')
-            ->orderBy('created_at','DESC')
-            ->get();
-         return $posts;
-
-    });
     Route::post('/dodajPost', 'PostsController@addPost');
     //delete posts
-    Route::get('/deletePost/{id}','PostsController@deletePost');
+    Route::get('/deletePost/{id}', 'PostsController@deletePost');
     /*
      * wiadomosci
      */
-    Route::get('/wiadomosci', function(){
+    Route::get('/wiadomosci', function () {
         return view('messages');
     });
 
-    Route::get('/getMessages', function(){
+    Route::get('/getMessages', function () {
         $allUsers1 = DB::table('users')
-            ->Join('conversation','users.id', 'conversation.user_one')
+            ->Join('conversation', 'users.id', 'conversation.user_one')
             ->where('conversation.user_two', Auth::user()->id)
             ->get();
 
 
         $allUsers2 = DB::table('users')
-            ->Join('conversation','users.id', 'conversation.user_two')
+            ->Join('conversation', 'users.id', 'conversation.user_two')
             ->where('conversation.user_one', Auth::user()->id)
             ->get();
         return array_merge($allUsers1->toArray(), $allUsers2->toArray());
     });
 
-    Route::get('/getMessages/{id}', function($id){
+    Route::get('/getMessages/{id}', function ($id) {
         //check conversation
-      /*  $checkCon = DB::table('conversation')
-            ->where('user_one',Auth::user()->id)
-            ->where('user_two',$id)
-            ->get();
-            //fetch msgs
-            if(count($checkCon)!=0){
-               // echo $checkCon[0]->id;
-                $userMsg = DB::table('messages')
-                    ->where('messages.conversation_id', $checkCon[0]->id)->get();
-                return $userMsg;
-
-        }else{
-            echo "Brak wiadomości";
-        }*/
         $userMsg = DB::table('messages')
-            ->join('users', 'users.id','messages.user_from')
+            ->join('users', 'users.id', 'messages.user_from')
             ->where('messages.conversation_id', $id)->get();
         return $userMsg;
     });
 
     Route::post('/wyslijWiadomosc', 'ProfileController@sendMessage');
-    Route::get('/noweWiadomosci','ProfileController@newMessage');
+    Route::get('/noweWiadomosci', 'ProfileController@newMessage');
     Route::post('/wyslijNowaWiadomosc', 'ProfileController@sendNewMessage');
     /*
      * oferty dla uzytkownikow
      */
-    Route::get('/praca','profileController@jobs');
-    Route::get('/jobss', function(){
+    Route::get('/praca', 'profileController@jobs');
+    Route::get('/jobs', function () {
         $jobs = DB::table('users')
-            ->Join('jobs','users.id','jobs.company_id')
+            ->Join('jobs', 'users.id', 'jobs.company_id')
             ->get();
         return $jobs;
     });
     Route::get('/szczegolyOferty/{id}', 'profileController@job');
-/*
- * polubienia
- */
+    /*
+     * polubienia
+     */
     Route::get('/lubie/{id}', 'PostsController@likePost');
     Route::get('/nielubie/{id}', 'PostsController@unlikePost');
     //add comments
@@ -187,10 +131,10 @@ Route::group(['middleware' => 'auth'], function (){
 /*
  * firma
  */
-Route::group(['prefix' => 'firma', 'middleware' => ['auth','company']],function() {
+Route::group(['prefix' => 'firma', 'middleware' => ['auth', 'company']], function () {
     Route::get('/', 'companyController@index');
 
-    Route::get('/dodajOfertePracy', function(){
+    Route::get('/dodajOfertePracy', function () {
         return view('company.addJob');
     });
 
@@ -201,7 +145,7 @@ Route::group(['prefix' => 'firma', 'middleware' => ['auth','company']],function(
 /*
  * admin
  */
-Route::group(['prefix' => 'admin', 'middleware' => ['auth','admin']],function() {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
     Route::get('/', 'adminController@index)');
 
 

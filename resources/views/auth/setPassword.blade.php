@@ -14,7 +14,8 @@
                         <form class="form-horizontal" method="get" action="{{ url('/setPass') }}">
                             {{ csrf_field() }}
 
-                                    <input id="email" type="hidden" class="form-control" name="email" value="{{ $data[0] -> email}}" required autofocus>
+                            <input id="email" type="hidden" class="form-control" name="email"
+                                   value="{{ $data[0] -> email}}" required autofocus>
 
                             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label for="password" class="col-md-4 control-label">Nowe hasło</label>
@@ -33,7 +34,8 @@
                             <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                                 <label for="password-confirm" class="col-md-4 control-label">Powtórz nowe hasło</label>
                                 <div class="col-md-6">
-                                    <input id="confirm_pass" type="password" class="form-control" name="confirm_pass" required>
+                                    <input id="confirm_pass" type="password" class="form-control" name="confirm_pass"
+                                           required>
 
                                     @if ($errors->has('confirm_pass'))
                                         <span class="help-block">

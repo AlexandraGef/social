@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
 <head>
-	<meta charset="utf-8" />
-	<link rel="icon" type="image/png" href="assets/img/favicon.ico">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8"/>
+    <link rel="icon" type="image/png" href="assets/img/favicon.ico">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
-	<title>Firma</title>
+    <title>Firma</title>
 
-	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-    <meta name="viewport" content="width=device-width" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
+    <meta name="viewport" content="width=device-width"/>
 
 
     <!-- Bootstrap core CSS     -->
@@ -30,39 +30,39 @@
 
 <div class="wrapper">
     <div class="sidebar"
-		data-image="{{ asset('company_theme/assets/img/sidebar-1.jpg') }}">
+         data-image="{{ asset('company_theme/assets/img/sidebar-1.jpg') }}">
 
-			    	<div class="sidebar-wrapper">
-			            <div class="logo">
-			                <a href="{{url('/firma')}}" class="simple-text">
-			               Firma
-			                </a>
-			            </div>
+        <div class="sidebar-wrapper">
+            <div class="logo">
+                <a href="{{url('/firma')}}" class="simple-text">
+                    Firma
+                </a>
+            </div>
 
-			            <ul class="nav">
-			                <li class="active">
-			                    <a href="{{url('/firma')}}">
-			                        <i class="pe-7s-graph"></i>
-			                        <p> Dashboard</p>
-			                    </a>
-			                </li>
+            <ul class="nav">
+                <li class="active">
+                    <a href="{{url('/firma')}}">
+                        <i class="pe-7s-graph"></i>
+                        <p> Dashboard</p>
+                    </a>
+                </li>
 
-			                <li>
-			                    <a href="{{url('/firma/OfertyPracy')}}">
-			                        <i class="pe-7s-graph3"></i>
-			                        <p>Pokaż oferty pracy</p>
-			                    </a>
-			                </li>
+                <li>
+                    <a href="{{url('/firma/OfertyPracy')}}">
+                        <i class="pe-7s-graph3"></i>
+                        <p>Pokaż oferty pracy</p>
+                    </a>
+                </li>
 
-											<li>
-												 <a href="{{url('/firma/dodajOfertePracy')}}">
-														 <i class="pe-7s-plus"></i>
-														 <p>Dodaj ofertę</p>
-												 </a>
-										 </li>
+                <li>
+                    <a href="{{url('/firma/dodajOfertePracy')}}">
+                        <i class="pe-7s-plus"></i>
+                        <p>Dodaj ofertę</p>
+                    </a>
+                </li>
 
-			            </ul>
-			    	</div>
+            </ul>
+        </div>
 
     </div>
 
@@ -71,71 +71,72 @@
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse"
-										 data-target="#navigation-example-2">
+                            data-target="#navigation-example-2">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">  <i class="pe-7s-home"> </i>  Dashboard</a>
+                    <a class="navbar-brand" href="#"> <i class="pe-7s-home"> </i> Dashboard</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
 
-                  <!--      <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-globe"></i>
-                                    <b class="caret hidden-sm hidden-xs"></b>
-                                    <span class="notification hidden-sm hidden-xs">5</span>
-																<p class="hidden-lg hidden-md">
-																	5 Notifications
-																	<b class="caret"></b>
-																</p>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li><a href="#">Notification 1</a></li>
-                                <li><a href="#">Notification 2</a></li>
-                                <li><a href="#">Notification 3</a></li>
-                                <li><a href="#">Notification 4</a></li>
-                                <li><a href="#">Another notification</a></li>
-                              </ul>
-                        </li>-->
+                        <!--      <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                          <i class="fa fa-globe"></i>
+                                          <b class="caret hidden-sm hidden-xs"></b>
+                                          <span class="notification hidden-sm hidden-xs">5</span>
+                                                                      <p class="hidden-lg hidden-md">
+                                                                          5 Notifications
+                                                                          <b class="caret"></b>
+                                                                      </p>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                      <li><a href="#">Notification 1</a></li>
+                                      <li><a href="#">Notification 2</a></li>
+                                      <li><a href="#">Notification 3</a></li>
+                                      <li><a href="#">Notification 4</a></li>
+                                      <li><a href="#">Another notification</a></li>
+                                    </ul>
+                              </li>-->
 
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
 
                         <li class="dropdown">
-                              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                  	<p>
-																			 Konto
-										<b class="caret"></b>
-									</p>
-                              </a>
-                              <ul class="dropdown-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <p>
+                                    Konto
+                                    <b class="caret"></b>
+                                </p>
+                            </a>
+                            <ul class="dropdown-menu">
                                 <li><a href="{{ url('/') }}">Strona domowa</a></li>
                                 <li><a href="{{ url('/home') }}">Tablica</a></li>
                                 <li class="divider"></li>
-                                  <li>
-                                      <a href="{{ route('logout') }}"
-                                         onclick="event.preventDefault();
+                                <li>
+                                    <a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                          Wyloguj
-                                      </a>
-                                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                          {{ csrf_field() }}
-                                      </form>
-                                  </li>
-                              </ul>
+                                        Wyloguj
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                          style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
+                            </ul>
                         </li>
-						<li class="separator hidden-lg hidden-md"></li>
+                        <li class="separator hidden-lg hidden-md"></li>
                     </ul>
                 </div>
             </div>
         </nav>
 
 
-     @yield('content')
+        @yield('content')
 
 
         <footer class="footer">
@@ -156,7 +157,7 @@
                     </ul>
                 </nav>
                 <p class="copyright pull-right">
-               Dashboard </p>
+                    Dashboard </p>
             </div>
         </footer>
 
@@ -166,22 +167,22 @@
 
 </body>
 
-    <!--   Core JS Files   -->
-    <script src="{{ asset('company_theme/assets/js/jquery-1.10.2.js') }}"></script>
-    <script src="{{ asset('company_theme/assets/js/bootstrap.min.js') }}"></script>
-    <!--  Checkbox, Radio & Switch Plugins -->
-    <script src="{{ asset('company_theme/assets/js/bootstrap-checkbox-radio-switch.js') }}"></script>
+<!--   Core JS Files   -->
+<script src="{{ asset('company_theme/assets/js/jquery-1.10.2.js') }}"></script>
+<script src="{{ asset('company_theme/assets/js/bootstrap.min.js') }}"></script>
+<!--  Checkbox, Radio & Switch Plugins -->
+<script src="{{ asset('company_theme/assets/js/bootstrap-checkbox-radio-switch.js') }}"></script>
 
-	<!--  Charts Plugin -->
-    <script src="{{ asset('company_theme/assets/js/chartist.min.js') }}"></script>
+<!--  Charts Plugin -->
+<script src="{{ asset('company_theme/assets/js/chartist.min.js') }}"></script>
 
-    <!--  Notifications Plugin    -->
-    <script src="{{ asset('company_theme/assets/js/bootstrap-notify.js') }}"></script>
+<!--  Notifications Plugin    -->
+<script src="{{ asset('company_theme/assets/js/bootstrap-notify.js') }}"></script>
 
-    <!--  Google Maps Plugin    -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<!--  Google Maps Plugin    -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
-    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-    <script src="{{ asset('company_theme/assets/js/light-bootstrap-dashboard.js') }}"></script>
+<!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
+<script src="{{ asset('company_theme/assets/js/light-bootstrap-dashboard.js') }}"></script>
 
 </html>

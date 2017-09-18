@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -21,7 +20,7 @@ window.Vue = require('vue');
 const profile = new Vue({
     el: '#profile',
     data: {
-  content:'',
+        content: '',
         msg: 'Aby rozpocząć nową konwersację, kliknij na użytkownika po lewej stronie',
         content: '',
         privateMsgs: [],
@@ -32,24 +31,24 @@ const profile = new Vue({
         seen: false,
         newMsgFrom: ''
     },
-    ready:function(){
-      this.created();
+    ready: function () {
+        this.created();
     },
-    created(){
-            axios.get('http://localhost:8000/getMessages')
-                .then(response => {
-                    console.log(response.data);
+    created() {
+        axios.get('http://localhost:8000/getMessages')
+            .then(response => {
+                console.log(response.data);
                 profile.privateMsgs = response.data;
 
 
-                })
-                .catch(function (error){
-                    console.log(error);
-                });
-        },
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    },
     methods: {
-        messages: function(id){
-            axios.get('http://localhost:8000/getMessages/'+ id)
+        messages: function (id) {
+            axios.get('http://localhost:8000/getMessages/' + id)
                 .then(response => {
                     console.log(response.data);
                     profile.singleMsgs = response.data;
@@ -57,50 +56,50 @@ const profile = new Vue({
 
 
                 })
-                .catch(function (error){
+                .catch(function (error) {
                     console.log(error);
                 });
         },
 
-        inputHandler(e){
-            if(e.keyCode ===13 && !e.shiftKey){
+        inputHandler(e) {
+            if (e.keyCode === 13 && !e.shiftKey) {
                 e.preventDefault();
                 this.sendMsg();
             }
 
         },
 
-        sendMsg(){
-            if(this.msgForm){
-                axios.post('http://localhost:8000/wyslijWiadomosc',{
+        sendMsg() {
+            if (this.msgForm) {
+                axios.post('http://localhost:8000/wyslijWiadomosc', {
                     conID: this.conID,
                     msg: this.msgForm
                 })
-                    .then(function (response){
+                    .then(function (response) {
                         console.log(response.data);
-                        if(response.status===200){
+                        if (response.status === 200) {
                             profile.singleMsgs = response.data;
 
                         }
 
                     })
-                    .catch(function (error){
+                    .catch(function (error) {
                         console.log(error);
                     });
             }
 
         },
-        friendID: function(id){
+        friendID: function (id) {
             profile.friend_id = id;
         },
-        sendNewMsg(){
+        sendNewMsg() {
             axios.post('http://localhost:8000/wyslijNowaWiadomosc', {
                 friend_id: this.friend_id,
                 msg: this.newMsgFrom,
             })
                 .then(function (response) {
                     console.log(response.data); // show if success
-                    if(response.status===200){
+                    if (response.status === 200) {
                         window.location.replace('http://localhost:8000/wiadomosci');
                         profile.msg = 'Twoja wiadomość została wysłana';
                     }

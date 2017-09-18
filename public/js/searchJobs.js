@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 157);
+/******/ 	return __webpack_require__(__webpack_require__.s = 163);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -30240,110 +30240,6 @@ module.exports.default = axios;
 
 /***/ }),
 
-/***/ 157:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(158);
-
-
-/***/ }),
-
-/***/ 158:
-/***/ (function(module, exports, __webpack_require__) {
-
-var _data;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-__webpack_require__(10);
-
-window.Vue = __webpack_require__(34);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-var profile = new Vue({
-    el: '#profile',
-    data: (_data = {
-        content: '',
-        msg: 'Aby rozpocząć nową konwersację, kliknij na użytkownika po lewej stronie'
-    }, _defineProperty(_data, 'content', ''), _defineProperty(_data, 'privateMsgs', []), _defineProperty(_data, 'singleMsgs', []), _defineProperty(_data, 'msgForm', ''), _defineProperty(_data, 'conID', ''), _defineProperty(_data, 'friend_id', ''), _defineProperty(_data, 'seen', false), _defineProperty(_data, 'newMsgFrom', ''), _data),
-    ready: function ready() {
-        this.created();
-    },
-    created: function created() {
-        axios.get('http://localhost:8000/getMessages').then(function (response) {
-            console.log(response.data);
-            profile.privateMsgs = response.data;
-        }).catch(function (error) {
-            console.log(error);
-        });
-    },
-
-    methods: {
-        messages: function messages(id) {
-            axios.get('http://localhost:8000/getMessages/' + id).then(function (response) {
-                console.log(response.data);
-                profile.singleMsgs = response.data;
-                profile.conID = response.data[0].conversation_id;
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-
-        inputHandler: function inputHandler(e) {
-            if (e.keyCode === 13 && !e.shiftKey) {
-                e.preventDefault();
-                this.sendMsg();
-            }
-        },
-        sendMsg: function sendMsg() {
-            if (this.msgForm) {
-                axios.post('http://localhost:8000/wyslijWiadomosc', {
-                    conID: this.conID,
-                    msg: this.msgForm
-                }).then(function (response) {
-                    console.log(response.data);
-                    if (response.status === 200) {
-                        profile.singleMsgs = response.data;
-                    }
-                }).catch(function (error) {
-                    console.log(error);
-                });
-            }
-        },
-
-        friendID: function friendID(id) {
-            profile.friend_id = id;
-        },
-        sendNewMsg: function sendNewMsg() {
-            axios.post('http://localhost:8000/wyslijNowaWiadomosc', {
-                friend_id: this.friend_id,
-                msg: this.newMsgFrom
-            }).then(function (response) {
-                console.log(response.data); // show if success
-                if (response.status === 200) {
-                    window.location.replace('http://localhost:8000/wiadomosci');
-                    profile.msg = 'Twoja wiadomość została wysłana';
-                }
-            }).catch(function (error) {
-                console.log(error); // run if we have error
-            });
-        }
-    }
-});
-
-/***/ }),
-
 /***/ 16:
 /***/ (function(module, exports) {
 
@@ -30369,6 +30265,66 @@ function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
+
+/***/ }),
+
+/***/ 163:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(164);
+
+
+/***/ }),
+
+/***/ 164:
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+__webpack_require__(10);
+
+window.Vue = __webpack_require__(34);
+
+/**
+ * Next, we will create a fresh Vue application instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
+
+var searchJobs = new Vue({
+    el: '#searchJobs',
+    data: {
+        search: '',
+        jobs: []
+    },
+    ready: function ready() {
+        this.created();
+        this.filteredJobs();
+    },
+    created: function created() {
+        axios.get('http://localhost:8000/jobs').then(function (response) {
+            console.log(response);
+            searchJobs.jobs = response.data;
+        }).catch(function (error) {
+            console.log(error);
+        });
+    },
+
+    computed: {
+        filteredJobs: function filteredJobs() {
+            var _this = this;
+
+            return this.jobs.filter(function (job) {
+                return job.job_title.toLowerCase().match(_this.search.toLowerCase());
+            });
+        }
+    }
+
+});
 
 /***/ }),
 
