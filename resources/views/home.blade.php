@@ -86,7 +86,7 @@
                             <div v-for="like in post.likes" v-if="like.user_id =='{{Auth::user()->id}}' ">
                                 <div class="col-md-1" style="padding: 15px;">
                                     <i @click="unlikePost(like.id)" style="cursor: pointer"
-                                       class="fa fa-thumbs-down fa-2x text-danger"></i>
+                                       class="fa fa-thumbs-down fa-2x text-default"></i>
                                 </div>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                     </div>
                     <div class="comment_form">
                         <textarea class="form-control" v-model="commentData"></textarea><br>
-                        <button class="btn btn-success pull-right" @click="addComment(post.id)">Wyślij</button>
+                        <button style="margin-bottom: 15px"class="btn btn-success pull-right" @click="addComment(post.id)">Wyślij</button>
                     </div>
                     <div v-for="comment in post.comments">
                         <div v-if="comment.posts_id == post.id">
@@ -125,7 +125,7 @@
                                                 <span style="cursor: pointer"
                                                       v-if="comment.user_id == '{{Auth::user()->id}}'"><a
                                                             @click="deleteComment(comment.id)"><i
-                                                                class="fa fa-trash-o text-danger"
+                                                                class="fa fa-trash-o text-primary"
                                                                 aria-hidden="true"></i></a></span>
                                             </header>
                                             <div class="comment-post ">

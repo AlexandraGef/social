@@ -41,7 +41,7 @@
                     <div class="col-md-12" style="margin-top:10px">
                         <img :src="singleMsg.pic"
                              style="width:30px; border-radius:100%; margin-left:5px" class="pull-right">
-                        <div style="float:right; background-color:#0084ff; padding:5px 15px 5px 15px;
+                        <div style="float:right; background-color:#E95420; padding:5px 15px 5px 15px;
           margin-right:10px;color:#333; border-radius:10px; color:#fff;" >
                             @{{singleMsg.msg}}
                         </div>

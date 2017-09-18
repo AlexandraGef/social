@@ -29,7 +29,7 @@
 <body>
 
 <div class="wrapper">
-    <div class="sidebar"
+    <div class="sidebar " data-color="orange"
          data-image="{{ asset('company_theme/assets/img/sidebar-1.jpg') }}">
 
         <div class="sidebar-wrapper">

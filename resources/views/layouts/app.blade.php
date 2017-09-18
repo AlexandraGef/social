@@ -17,6 +17,11 @@
 
 </head>
 <body>
+<style>
+  a.anav{
+        height: 60px;
+    }
+</style>
 <div>
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
@@ -41,36 +46,39 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     @if(Auth::check())
-                        <li><a href="{{ url('/home') }}">Tablica</a></li>
-                        <li><a href="{{ url('/znajdzZnajomych') }}">Znajdź znajomych</a></li>
-                        <li><a href="{{ url('/zaproszenia') }}">Moje zaproszenia <span style="color:green; font-weight:bold;
+                        <li><a class="anav" href="{{ url('/home') }}">Tablica</a></li>
+                        <li><a class="anav" href="{{ url('/znajdzZnajomych') }}">Znajdź znajomych</a></li>
+                        <li><a class="anav" href="{{ url('/zaproszenia') }}">Moje zaproszenia <span style="color:#772953; font-weight:bold;
                                        font-size:16px">({{Bevy\friendships::where('status', 0)
                                                   ->where('user_requested', Auth::user()->id)
                                                   ->count()}})</span></a></li>
                     @endif
                     @if(Auth::check() && Auth::user()->isRole() == "company")
-                        <li><a href="{{ url('/firma') }}">Firma</a></li>
+                        <li><a class="anav" href="{{ url('/firma') }}">Firma</a></li>
                     @endif
+                        @if(Auth::check() && Auth::user()->isRole() == "admin")
+                            <li><a class="anav" href="{{ url('/admin') }}">Administracja</a></li>
+                        @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" style="height: 100%">
                     <!-- Authentication Links -->
                     @guest
-                        <li><a href="{{ route('login') }}">Logowanie</a></li>
+                        <li ><a  href="{{ route('login') }}">Logowanie</a></li>
                         <li><a href="{{ route('register') }}">Rejestracja</a></li>
                         @else
-                            <li><a href="{{ url('/wiadomosci') }}"><i class="fa fa-envelope fa-2x"
+                            <li style="height: 100%"><a href="{{ url('/wiadomosci') }}"><i class="fa fa-envelope fa-2x"
                                                                       aria-hidden="true"></i>
                                 </a></li>
-                            <li><a href="{{ url('/znajomi') }}"><i class="fa fa-users fa-2x" aria-hidden="true"></i>
+                            <li><a class="anav" href="{{ url('/znajomi') }}"><i class="fa fa-users fa-2x" aria-hidden="true"></i>
                                 </a></li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                <a class="anav" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                    aria-expanded="false">
                                     <i class="fa fa-globe fa-2x" aria-hidden="true"></i>
                                     <span class="badge"
-                                          style="background: red; position: relative;top: -15px;left: -10px;">
+                                          style="background: #772953; position: relative;top: -15px;left: -10px;">
                                             {{Bevy\notifications::where('status',1)->where('user_hero',Auth::user()->id)->count()}}</span>
 
                                 </a>
@@ -86,7 +94,7 @@
 
                                 <ul class="dropdown-menu" role="menu" style="width:320px">
                                     @foreach($notes as $note)
-                                        <a href="{{url('/powiadomienia')}}/{{$note->id}}">
+                                        <a class="anav" href="{{url('/powiadomienia')}}/{{$note->id}}">
                                             @if($note->status==1)
                                                 <li style="background:#E4E9F2; padding:10px">
                                             @else
@@ -101,7 +109,7 @@
 
                                                         <div class="col-md-10">
 
-                                                            <b style="color:green; font-size:90%">{{ucwords($note->name)}}</b>
+                                                            <b style="color:orangered; font-size:90%">{{ucwords($note->name)}}</b>
                                                             <span style="color:#000; font-size:90%">{{$note->note}}</span>
                                                             <br/>
                                                             <small style="color:#90949C"><i aria-hidden="true"
@@ -117,7 +125,7 @@
                                 </ul>
                             </li>
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                <a class="anav" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                    aria-expanded="false">
                                     <img class="img-circle" src="{{ Auth::user()->pic }}" width="40" height="40"/>
                                     {{ ucwords(Auth::user()->name) }} <span class="caret"></span>

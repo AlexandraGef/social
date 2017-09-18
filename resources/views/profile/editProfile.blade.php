@@ -43,5 +43,5 @@
             </div>
         </div>
     </div>
-
+    <script src="{{ asset('js/start.js') }}"></script>
 @stop

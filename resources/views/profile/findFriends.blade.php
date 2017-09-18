@@ -35,7 +35,7 @@
                                     <p>@{{uList.country}} - @{{uList.city}}</p>
                                     <div v-if="a != uList.id && b != uList.id">
                                         <a :href="'{{Config::get('url')}}/dodajZnajomego/' + uList.id"
-                                           class="btn btn-primary">Dodaj do
+                                           class="btn btn-success">Dodaj do
                                             znajomych</a>
                                     </div>
                                     <div v-else-if="b == uList.id && a != uList.id">
