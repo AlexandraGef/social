@@ -74,7 +74,7 @@
                             <li><a class="anav" href="{{ url('/znajomi') }}"><i class="fa fa-users fa-2x" aria-hidden="true"></i>
                                 </a></li>
                             <li class="dropdown">
-                                <a class="anav" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                <a class="anav" href="" class="dropdown-toggle" data-toggle="dropdown" role="button"
                                    aria-expanded="false">
                                     <i class="fa fa-globe fa-2x" aria-hidden="true"></i>
                                     <span class="badge"

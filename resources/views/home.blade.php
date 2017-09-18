@@ -66,10 +66,39 @@
                             <a href="#" data-toggle="dropdown" aria-haspopup="true"><i class="fa fa-cog"
                                                                                        aria-hidden="true"></i></a>
                             <div class="dropdown-menu" id="dropdown">
-                                <li><a>cos tam</a></li>
+                                <li v-if="post.user_id == '{{Auth::user()->id}}'"><a data-toggle="modal"
+                                                                                     data-target="#myModal"><i
+                                                class="fa fa-pencil"
+                                                aria-hidden="true"></i>Edytuj</a>
+                                </li>
+                                <li v-if="post.user_id != '{{Auth::user()->id}}'"><a><i
+                                                class="fa fa-exclamation-triangle"
+                                                aria-hidden="true"></i>Zgłoś</a>
+                                </li>
                                 <li style="cursor: pointer" v-if="post.user_id == '{{Auth::user()->id}}'"><a
                                             @click="deletePost(post.id)"><i class="fa fa-trash-o"
                                                                             aria-hidden="true"></i> Usuń</a></li>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Edytuj post</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post" enctype="multipart/form-data" v-on:submit.prevent="addPost">
+                                <textarea placeholder="Napisz co u Ciebie !" v-model="content" rows="5"
+                                          style="min-width: 100%"></textarea><br><br>
+                                            <input type="submit" class="btn btn-success pull-right" value="Edytuj">
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <p style="border-bottom: solid #eeeeee 1px; padding:20px;" class="col-md-12">@{{post.content}}
@@ -100,7 +129,9 @@
                     </div>
                     <div class="comment_form">
                         <textarea class="form-control" v-model="commentData"></textarea><br>
-                        <button style="margin-bottom: 15px"class="btn btn-success pull-right" @click="addComment(post.id)">Wyślij</button>
+                        <button style="margin-bottom: 15px" class="btn btn-success pull-right"
+                                @click="addComment(post.id)">Wyślij
+                        </button>
                     </div>
                     <div v-for="comment in post.comments">
                         <div v-if="comment.posts_id == post.id">
