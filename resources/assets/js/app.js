@@ -9,13 +9,15 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-
+// register globally
+var i = 0;
 const app = new Vue({
     el: '#app',
     data: {
@@ -24,30 +26,60 @@ const app = new Vue({
         postId: '',
         a: '',
         successMsg: '',
-        commentData: ''
+        commentData: '',
+        bottom: false,
     },
-    ready: function () {
-        this.created();
+    watch: {
+        bottom(bottom) {
+            if (bottom) {
+                this.Post();
+            }
+        }
     },
     created() {
-        axios.get('http://localhost:8000/posty')
-            .then(response => {
-                console.log(response);
-                app.posts = response.data;
-                Vue.filter('myOwnTime', function (value) {
-                    var moment = require('moment-timezone');
-                    moment.locale('pl');
-
-                    return moment.utc(value).utcOffset("-240").fromNow();
-                });
-
-
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        window.addEventListener('scroll', () => {
+            this.bottom = this.bottomVisible()
+        })
+        this.Post();
     },
+
     methods: {
+        bottomVisible() {
+            const scrollY = window.scrollY
+            const visible = document.documentElement.clientHeight
+            const pageHeight = document.documentElement.scrollHeight
+            const bottomOfPage = visible + scrollY >= pageHeight
+            return bottomOfPage || pageHeight < visible
+        },
+        Post() {
+            axios.get('http://localhost:8000/posty')
+                .then(response => {
+                        let api = response.data[i++];
+                        let apiInfo = {
+                            id: api.id,
+                            user_id: app.user_id,
+                            content: api.content,
+                            status: api.status,
+                            created_at: api.created_at,
+                            updated_at: api.updated_at,
+                            user: api.user,
+                            likes: api.likes,
+                            comments: api.comments,
+                        };
+                    Vue.filter('myOwnTime', function (value) {
+                        var moment = require('moment-timezone');
+                        moment.locale('pl');
+                        return moment.utc(value).utcOffset("-240").fromNow();
+                    });
+
+                    this.posts.push(apiInfo)
+                    if (this.bottomVisible()) {
+                        this.Post();
+                    }
+
+                })
+
+        },
         deletePost(id) {
             axios.get('http://localhost:8000/deletePost/' + id)
                 .then(response => {

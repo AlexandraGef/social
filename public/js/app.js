@@ -57308,8 +57308,9 @@ module.exports = __webpack_require__(156);
 
 /***/ }),
 /* 151 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -57325,7 +57326,8 @@ window.Vue = __webpack_require__(34);
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
+// register globally
+var i = 0;
 var app = new Vue({
     el: '#app',
     data: {
@@ -57334,27 +57336,62 @@ var app = new Vue({
         postId: '',
         a: '',
         successMsg: '',
-        commentData: ''
+        commentData: '',
+        bottom: false
     },
-    ready: function ready() {
-        this.created();
+    watch: {
+        bottom: function bottom(_bottom) {
+            if (_bottom) {
+                this.Post();
+            }
+        }
     },
     created: function created() {
-        axios.get('http://localhost:8000/posty').then(function (response) {
-            console.log(response);
-            app.posts = response.data;
-            Vue.filter('myOwnTime', function (value) {
-                var moment = __webpack_require__(152);
-                moment.locale('pl');
+        var _this = this;
 
-                return moment.utc(value).utcOffset("-240").fromNow();
-            });
-        }).catch(function (error) {
-            console.log(error);
+        window.addEventListener('scroll', function () {
+            _this.bottom = _this.bottomVisible();
         });
+        this.Post();
     },
 
+
     methods: {
+        bottomVisible: function bottomVisible() {
+            var scrollY = window.scrollY;
+            var visible = document.documentElement.clientHeight;
+            var pageHeight = document.documentElement.scrollHeight;
+            var bottomOfPage = visible + scrollY >= pageHeight;
+            return bottomOfPage || pageHeight < visible;
+        },
+        Post: function Post() {
+            var _this2 = this;
+
+            axios.get('http://localhost:8000/posty').then(function (response) {
+                var api = response.data[i++];
+                var apiInfo = {
+                    id: api.id,
+                    user_id: app.user_id,
+                    content: api.content,
+                    status: api.status,
+                    created_at: api.created_at,
+                    updated_at: api.updated_at,
+                    user: api.user,
+                    likes: api.likes,
+                    comments: api.comments
+                };
+                Vue.filter('myOwnTime', function (value) {
+                    var moment = __webpack_require__(152);
+                    moment.locale('pl');
+                    return moment.utc(value).utcOffset("-240").fromNow();
+                });
+
+                _this2.posts.push(apiInfo);
+                if (_this2.bottomVisible()) {
+                    _this2.Post();
+                }
+            });
+        },
         deletePost: function deletePost(id) {
             axios.get('http://localhost:8000/deletePost/' + id).then(function (response) {
                 console.log(response); // show if success

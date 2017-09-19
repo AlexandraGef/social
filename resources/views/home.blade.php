@@ -48,7 +48,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div v-for="post in posts"
                      style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
                     <div class="col-md-12">
@@ -90,7 +89,8 @@
                                         <h4 class="modal-title">Edytuj post</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <form method="post" enctype="multipart/form-data" v-on:submit.prevent="addPost">
+                                        <form method="post" enctype="multipart/form-data"
+                                              v-on:submit.prevent="addPost">
                                 <textarea placeholder="Napisz co u Ciebie !" v-model="content" rows="5"
                                           style="min-width: 100%"></textarea><br><br>
                                             <input type="submit" class="btn btn-success pull-right" value="Edytuj">
@@ -101,7 +101,8 @@
                                 </div>
                             </div>
                         </div>
-                        <p style="border-bottom: solid #eeeeee 1px; padding:20px;" class="col-md-12">@{{post.content}}
+                        <p style="border-bottom: solid #eeeeee 1px; padding:20px;" class="col-md-12">
+                            @{{post.content}}
                         </p>
                         <div v-for="like in post.likes" v-if="like.user_id =='{{Auth::user()->id}}' "
                              style="visibility: hidden">
@@ -119,7 +120,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div v-else-if="a != post.id && post.likes.length!=0" class="col-md-1" style="padding: 15px;">
+                        <div v-else-if="a != post.id && post.likes.length!=0" class="col-md-1"
+                             style="padding: 15px;">
                             <i @click="likePost(post.id)" style="cursor: pointer"
                                class="fa fa-thumbs-up fa-2x text-primary"></i>
                         </div>
@@ -140,7 +142,8 @@
                                     <figure class="thumbnail">
                                         <a :href="'{{Config::get('url')}}/profil/' + comment.user.slug"><img
                                                     :src="'{{Config::get('url')}}' + comment.user.pic"
-                                                    class="img-circle" :alt="comment.user.name" width="50" height="50"/></a>
+                                                    class="img-circle" :alt="comment.user.name" width="50"
+                                                    height="50"/></a>
                                         <figcaption class="text-center">@{{comment.user.name}}</figcaption>
                                     </figure>
                                 </div>
@@ -164,7 +167,6 @@
                                                     @{{ comment.comment }}
                                                 </p>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
