@@ -24,7 +24,8 @@ class PostsController extends Controller
 
     }
 
-    public function editPost(Request $request){
+    public function editPost(Request $request)
+    {
         $editContent = $request->editContent;
         $id = $request->id;
         $editPost = DB::table('posts')
@@ -96,6 +97,7 @@ class PostsController extends Controller
         }
     }
 
+
     public function deleteComment($id)
     {
         $delete = DB::table('comments')->where('id', $id)->delete();
@@ -103,6 +105,36 @@ class PostsController extends Controller
             return posts::with('user', 'likes', 'comments.user')
                 ->orderBy('created_at', 'DESC')
                 ->get();
+        }
+    }
+
+    public function addNotiPost(Request $request)
+    {
+        $text = $request->text;
+        $id = $request->id;
+        $uid = Auth::user()->id;
+
+        $createNoti = DB::table('service')
+            ->insert(['user_id' => $uid, 'post_id' => $id, 'excuse' => $text,
+                'created_at' => \Carbon\Carbon::now()->toDateTimeString()]);
+
+        if ($createNoti) {
+            return back()->with('msg', 'Dziękujemy za przesłanie zgłoszenia. Zapoznamy się z nim jak najszybciej !');
+        }
+    }
+
+    public function addNotiCom(Request $request)
+    {
+        $text = $request->text;
+        $id = $request->id;
+        $uid = Auth::user()->id;
+
+        $createNoti = DB::table('service')
+            ->insert(['user_id' => $uid, 'comment_id' => $id, 'excuse' => $text,
+                'created_at' => \Carbon\Carbon::now()->toDateTimeString()]);
+
+        if ($createNoti) {
+            return back()->with('msg', 'Dziękujemy za przesłanie zgłoszenia. Zapoznamy się z nim jak najszybciej !');
         }
     }
 

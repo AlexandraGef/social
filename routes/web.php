@@ -76,6 +76,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/dodajPost', 'PostsController@addPost');
 
     Route::post('/edytujPost', 'PostsController@editPost');
+
+    Route::get('/zglosPost/{id}', function ($id) {
+
+        return view('notifi.addNotiPosts', compact('id', $id));
+    });
+    Route::get('/zglosKomentarz/{id}', function ($id) {
+
+        return view('notifi.addNotiComment', compact('id', $id));
+    });
+    Route::post('/dodajZgloszeniePostu', 'PostsController@addNotiPost');
+
+    Route::post('/dodajZgloszenieKomentarza', 'PostsController@addNotiCom');
+
     //delete posts
     Route::get('/deletePost/{id}', 'PostsController@deletePost');
     /*

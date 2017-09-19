@@ -67,7 +67,7 @@
                             <div class="dropdown-menu" id="dropdown">
                                 <div v-if="'{{Auth::user()->id}}' == post.user.id" style="cursor: pointer">
                                     <li><a data-toggle="modal"
-                                           :data-target="'#modal' + post.id" ><i
+                                           :data-target="'#modal' + post.id"><i
                                                     class="fa fa-pencil"
                                                     aria-hidden="true"></i>Edytuj</a>
                                     </li>
@@ -76,7 +76,7 @@
                                                                                 aria-hidden="true"></i> Usuń</a></li>
                                 </div>
                                 <div v-else style="cursor: pointer">
-                                    <li><a><i
+                                    <li><a :href="'{{Config::get('url')}}/zglosPost/' + post.id"><i
                                                     class="fa fa-exclamation-triangle"
                                                     aria-hidden="true"></i>Zgłoś</a>
                                     </li>
@@ -96,8 +96,9 @@
                                     <div class="modal-body" style="margin-bottom: 30px">
                                         <form method="get" enctype=multipart/form-data"
                                               v-on:submit.prevent="editPost(post.id)">
-                                        <textarea id="editBox" v-bind:placeholder="post.content" v-model="editContent" rows="5"
-                                          style="min-width: 100%"></textarea><br><br>
+                                        <textarea id="editBox" v-bind:placeholder="post.content" v-model="editContent"
+                                                  rows="5"
+                                                  style="min-width: 100%"></textarea><br><br>
                                             <input type="submit" class="btn btn-success pull-right" value="Edytuj">
                                         </form>
                                     </div>
@@ -163,6 +164,11 @@
                                                       v-if="comment.user_id == '{{Auth::user()->id}}'"><a
                                                             @click="deleteComment(comment.id)"><i
                                                                 class="fa fa-trash-o text-primary"
+                                                                aria-hidden="true"></i></a></span>
+                                                <span style="cursor: pointer"
+                                                      v-if="comment.user_id != '{{Auth::user()->id}}'"><a
+                                                            :href="'{{Config::get('url')}}/zglosKomentarz/' + comment.id"><i
+                                                                class="fa fa-exclamation-triangle text-danger"
                                                                 aria-hidden="true"></i></a></span>
                                             </header>
                                             <div class="comment-post ">
