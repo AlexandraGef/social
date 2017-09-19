@@ -74,6 +74,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/posty', 'PostsController@findPosts');
 
     Route::post('/dodajPost', 'PostsController@addPost');
+
+    Route::post('/edytujPost', 'PostsController@editPost');
     //delete posts
     Route::get('/deletePost/{id}', 'PostsController@deletePost');
     /*

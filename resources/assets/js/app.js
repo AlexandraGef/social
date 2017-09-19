@@ -23,6 +23,7 @@ const app = new Vue({
     data: {
         posts: [],
         content: '',
+        editContent: '',
         postId: '',
         a: '',
         successMsg: '',
@@ -102,6 +103,25 @@ const app = new Vue({
                     console.log('Post został udostępniony');
                     if (response.status === 200) {
                         app.posts = response.data;
+                        app.content = '';
+
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        editPost(id) {
+            axios.post('http://localhost:8000/edytujPost',{
+                editContent: this.editContent,
+                id: id
+            })
+                .then(function (response) {
+                    console.log('Post został zedytowany');
+                    if (response.status === 200) {
+                        app.posts = response.data;
+                        app.editContent = '';
+                        app.id = '';
 
                     }
                 })
@@ -149,6 +169,7 @@ const app = new Vue({
                     console.log('saved successfully'); // show if success
                     if (response.status === 200) {
                         app.posts = response.data;
+                        app.commentData = '';
                     }
                 })
                 .catch(function (error) {

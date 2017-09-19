@@ -24,6 +24,19 @@ class PostsController extends Controller
 
     }
 
+    public function editPost(Request $request){
+        $editContent = $request->editContent;
+        $id = $request->id;
+        $editPost = DB::table('posts')
+            ->where('id', $id)
+            ->update(['content' => $editContent]);
+        if ($editPost) {
+            return posts::with('user', 'likes', 'comments.user')
+                ->orderBy('created_at', 'DESC')
+                ->get();
+        }
+    }
+
     public function findPosts()
     {
         $posts = posts::with('user', 'likes', 'comments.user')
