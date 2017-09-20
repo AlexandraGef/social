@@ -85,10 +85,17 @@ Route::group(['middleware' => 'auth'], function () {
 
         return view('notifi.addNotiComment', compact('id', $id));
     });
+
+    Route::get('/zglosProfil/{id}', function ($id) {
+
+        return view('notifi.addNotiProfile', compact('id', $id));
+    });
+
     Route::post('/dodajZgloszeniePostu', 'PostsController@addNotiPost');
 
     Route::post('/dodajZgloszenieKomentarza', 'PostsController@addNotiCom');
 
+    Route::post('/dodajZgloszenieProfilu', 'PostsController@addNotiProfile');
     //delete posts
     Route::get('/deletePost/{id}', 'PostsController@deletePost');
     /*
@@ -161,8 +168,15 @@ Route::group(['prefix' => 'firma', 'middleware' => ['auth', 'company']], functio
  * admin
  */
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
-    Route::get('/', 'adminController@index)');
+    Route::get('/', 'AdminController@index');
 
+    Route::get('/tabele', 'AdminController@showTables');
+
+    Route::get('/bazaDanych', 'AdminController@database');
+
+    Route::get('/deleteTable/{name}', 'AdminController@deleteTable');
+
+    Route::get('/pokazTabele/{name}','AdminController@showTable');
 
 });
 

@@ -9,6 +9,8 @@ use Mail;
 
 class AuthController extends Controller
 {
+
+
     public function setToken(Request $request)
     {
 

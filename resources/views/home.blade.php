@@ -76,8 +76,8 @@
                                                                                 aria-hidden="true"></i> Usuń</a></li>
                                 </div>
                                 <div v-else style="cursor: pointer">
-                                    <li><a :href="'{{Config::get('url')}}/zglosPost/' + post.id"><i
-                                                    class="fa fa-exclamation-triangle"
+                                    <li><a :href="'{{Config::get('url')}}/zglosPost/' + post.id" class="text-danger"><i
+                                                    class="fa fa-exclamation-triangle" title="Zgłoś post"
                                                     aria-hidden="true"></i>Zgłoś</a>
                                     </li>
                                 </div>
@@ -168,7 +168,7 @@
                                                 <span style="cursor: pointer"
                                                       v-if="comment.user_id != '{{Auth::user()->id}}'"><a
                                                             :href="'{{Config::get('url')}}/zglosKomentarz/' + comment.id"><i
-                                                                class="fa fa-exclamation-triangle text-danger"
+                                                                class="fa fa-exclamation-triangle text-danger" title="Zgłoś komentarz"
                                                                 aria-hidden="true"></i></a></span>
                                             </header>
                                             <div class="comment-post ">

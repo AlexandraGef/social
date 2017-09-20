@@ -138,5 +138,20 @@ class PostsController extends Controller
         }
     }
 
+    public function addNotiProfile(Request $request)
+    {
+        $text = $request->text;
+        $id = $request->id;
+        $uid = Auth::user()->id;
+
+        $createNoti = DB::table('service')
+            ->insert(['user_id' => $uid, 'profile_id' => $id, 'excuse' => $text,
+                'created_at' => \Carbon\Carbon::now()->toDateTimeString()]);
+
+        if ($createNoti) {
+            return back()->with('msg', 'Dziękujemy za przesłanie zgłoszenia. Zapoznamy się z nim jak najszybciej !');
+        }
+    }
+
 
 }

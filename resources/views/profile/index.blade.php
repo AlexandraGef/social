@@ -8,7 +8,16 @@
                 @foreach($userData as $uData)
                     <div class="col-md-9">
                         <div class="panel panel-default">
-                            <div class="panel-heading">{{$uData->name}}</div>
+                            <div class="panel-heading" style="min-height: 40px;">
+                                <div class="pull-left">{{$uData->name}}</div>
+                                @if ($uData->user_id != Auth::user()->id)
+                                    <div style="cursor: pointer">
+                                        <a href="{{url('/zglosProfil')}}/{{$uData->id}}"><i
+                                                    class="fa fa-exclamation-triangle text-danger pull-right"
+                                                    title="Zgłoś profil"
+                                                    aria-hidden="true"></i></a></div>
+                                @endif
+                            </div>
                             <div class="panel-body">
                                 <div class="row">
                                     <div class="col-sm-12  text-center">

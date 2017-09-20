@@ -3,11 +3,11 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-10">
                     <div class="card">
                         <div class="header">
-                            <h4 class="title">Heading here</h4>
-                            <p class="category">sub heading here</p>
+                            <h4 class="title">Na tej stronie możesz dodawać oferty pracy, a także je przeglądać</h4>
+                            <p class="category"><--- wszystkie opcje są dostepne na bocznym panelu</p>
                         </div>
                         <div class="content">
                             <div class="form-group">
@@ -26,29 +26,7 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="header">
-                            <h4 class="title">Heading here</h4>
-                            <p class="category">sub heading here</p>
-                        </div>
-                        <div class="content">
-
-                            <div class="footer">
-                                <div class="legend">
-
-                                </div>
-                                <hr>
-                                <div class="stats">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-
 
         </div>
     </div>

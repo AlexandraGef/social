@@ -16,7 +16,7 @@
                             <div class="form-group">
                                 {{ Form::open(['url'=> 'firma/dodajOferteSubmit'])}}
 
-                                {{ Form::label('Tytuł oferty')}}
+                                {{ Form::label('Szukam:')}}
                                 {{Form::text('job_title')}}
                                 <br><br>
                                 {{Form::label('Umiejętności')}}

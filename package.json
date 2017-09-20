@@ -21,7 +21,8 @@
   "dependencies": {
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
-    "vue-infinite-scroll": "^2.0.1"
+    "vue-infinite-scroll": "^2.0.1",
+    "vue-laravel-data": "^1.0.3"
   },
   "name": "bevyyy",
   "version": "1.0.0",
