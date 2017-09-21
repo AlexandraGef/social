@@ -41,6 +41,7 @@ class PostsController extends Controller
     public function findPosts()
     {
         $posts = posts::with('user', 'likes', 'comments.user')
+
             ->orderBy('created_at', 'DESC')
             ->get();
         return $posts;

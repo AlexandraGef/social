@@ -54,7 +54,27 @@ class ProfileController extends Controller
 
         return back();
     }
+public function checkFriends()
+{
+    $uid = Auth::user()->id;
 
+    $friends1 = DB::table('friendships')
+        ->leftJoin('users', 'users.id', 'friendships.user_requested')//wysylajacy zaproszenie
+        ->where('status', 1)
+        ->where('requester', $uid)//zalogowany
+        ->get();
+
+    $friends2 = DB::table('friendships')
+        ->leftJoin('users', 'users.id', 'friendships.requester')
+        ->where('status', 1)
+        ->where('user_requested', $uid)
+        ->get();
+
+    $friends = array_merge($friends1->toArray(), $friends2->toArray());
+
+    return $friends;
+
+}
     public function findFriends()
     {
         $uid = Auth::user()->id;

@@ -29,6 +29,7 @@ const app = new Vue({
         successMsg: '',
         commentData: '',
         bottom: false,
+        friend:[],
     },
     watch: {
         bottom(bottom) {
@@ -36,6 +37,9 @@ const app = new Vue({
                 this.Post();
             }
         }
+    },
+    ready: function () {
+        this.friends();
     },
     created() {
         window.addEventListener('scroll', () => {
@@ -80,6 +84,16 @@ const app = new Vue({
 
                 })
 
+        },
+        friends() {
+            axios.get('http://localhost:8000/checkFriends')
+                .then(response => {
+                console.log(response);
+            app.friend = response.data;
+        })
+        .catch(function (error) {
+                console.log(error);
+            });
         },
         deletePost(id) {
             axios.get('http://localhost:8000/deletePost/' + id)

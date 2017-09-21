@@ -45,4 +45,6 @@ class User extends \TCG\Voyager\Models\User
     {
         return $this->hasOne('App\roles');
     }
+
+
 }
