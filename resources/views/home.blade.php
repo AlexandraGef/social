@@ -48,7 +48,8 @@
                         </div>
                     </div>
                 </div>
-                <div v-for="post in posts"
+<div v-for="friend in friends">
+        <div v-for="post in posts" v-if="post.user.id == friend.id"
                      style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
                     <div class="col-md-12">
                         <div class="col-md-2 pull-left" style="margin-bottom: 10px;">
@@ -186,7 +187,7 @@
             </div>
         </div>
     </div>
-
+    </div>
     <script src="{{ asset('js/app.js') }}"></script>
 
 @endsection
