@@ -10,13 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});
 Route::get('/', function () {
     return view('welcome');
 });
 /*
  * gosc
  */
+
+
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/zapomnianeHaslo', function () {
         return view('auth.forgotPassword');
@@ -167,18 +171,7 @@ Route::group(['prefix' => 'firma', 'middleware' => ['auth', 'company']], functio
 /*
  * admin
  */
-Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {
-    Route::get('/', 'AdminController@index');
 
-    Route::get('/tabele', 'AdminController@showTables');
-
-    Route::get('/bazaDanych', 'AdminController@database');
-
-    Route::get('/deleteTable/{name}', 'AdminController@deleteTable');
-
-    Route::get('/pokazTabele/{name}','AdminController@showTable');
-
-});
 
 
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bevy;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +10,6 @@ class profile extends Model
 
     public function user()
     {
-        return $this->hasOne('Bevy\User');
+        return $this->hasOne('App\User');
     }
 }

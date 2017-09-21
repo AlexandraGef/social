@@ -1,8 +1,8 @@
 <?php
 
-namespace Bevy\Http\Controllers;
-use Bevy\posts;
-use DB;
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -23,9 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = posts::with('user', 'likes', 'comments.user')
-            ->orderBy('created_at', 'DESC')
-            ->get();
-        return view('home', compact('posts'));
+        return view('home');
     }
 }

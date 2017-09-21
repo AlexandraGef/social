@@ -1,10 +1,10 @@
 <?php
 
-namespace Bevy\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Auth;
-use Bevy\friendships;
-use Bevy\notifications;
+use App\friendships;
+use App\notifications;
 use DB;
 use Illuminate\Http\Request;
 

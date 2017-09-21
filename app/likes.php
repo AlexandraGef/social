@@ -1,6 +1,6 @@
 <?php
 
-namespace Bevy;
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 

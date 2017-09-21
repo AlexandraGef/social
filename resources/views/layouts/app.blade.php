@@ -48,16 +48,13 @@
                         <li><a class="anav" href="{{ url('/home') }}">Tablica</a></li>
                         <li><a class="anav" href="{{ url('/znajdzZnajomych') }}">Znajdź znajomych</a></li>
                         <li><a class="anav" href="{{ url('/zaproszenia') }}">Moje zaproszenia <span style="color:#772953; font-weight:bold;
-                                       font-size:16px">({{Bevy\friendships::where('status', 0)
+                                       font-size:16px">({{App\friendships::where('status', 0)
                                                   ->where('user_requested', Auth::user()->id)
                                                   ->count()}})</span></a></li>
                     @endif
-                    @if(Auth::check() && Auth::user()->isRole() == "company")
+                    @if(Auth::check() && Auth::user()->role_id == "3")
                         <li><a class="anav" href="{{ url('/firma') }}">Firma</a></li>
                     @endif
-                        @if(Auth::check() && Auth::user()->isRole() == "admin")
-                            <li><a class="anav" href="{{ url('/admin') }}">Administracja</a></li>
-                        @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -78,7 +75,7 @@
                                     <i class="fa fa-globe fa-2x" aria-hidden="true"></i>
                                     <span class="badge"
                                           style="background: #772953; position: relative;top: -15px;left: -10px;">
-                                            {{Bevy\notifications::where('status',1)->where('user_hero',Auth::user()->id)->count()}}</span>
+                                            {{App\notifications::where('status',1)->where('user_hero',Auth::user()->id)->count()}}</span>
 
                                 </a>
 

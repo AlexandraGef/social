@@ -1,9 +1,9 @@
 <?php
 
-namespace Bevy\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Auth;
-use Bevy\posts;
+use App\posts;
 use DB;
 use Illuminate\Http\Request;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bevy\Http\Controllers;
+namespace App\Http\Controllers;
 
 use Auth;
 use DB;

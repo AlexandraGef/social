@@ -1,10 +1,10 @@
 <?php
 
-namespace Bevy\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth;
 
-use Bevy\Http\Controllers\Controller;
-use Bevy\profile;
-use Bevy\User;
+use App\Http\Controllers\Controller;
+use App\profile;
+use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
 
@@ -61,7 +61,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array $data
-     * @return \Bevy\User
+     * @return \App\User
      */
     protected function create(array $data)
     {
@@ -70,11 +70,16 @@ class RegisterController extends Controller
         } else {
             $pic_path = 'http://localhost:8000/img/male.gif';
         }
+        if ($data['role'] == 'user') {
+            $role = 2;
+        } else {
+            $role = 3;
+        }
 
         $user = User::create([
             'name' => $data['name'],
             'gender' => $data['gender'],
-            'role' => $data['role'],
+            'role_id' => $role,
             'pic' => $pic_path,
             'slug' => str_slug($data['name'], '-'),
             'email' => $data['email'],

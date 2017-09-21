@@ -1,8 +1,8 @@
 <?php
 
-namespace Bevy\Traits;
+namespace App\Traits;
 
-use Bevy\friendships;
+use App\friendships;
 
 trait Friendable
 {
