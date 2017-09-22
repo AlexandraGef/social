@@ -32,7 +32,7 @@
                                                 <p>{{$uData -> city}}</p>
                                                 <h4><span class="label label-primary">O mnie : </span></h4>
                                                 <p>{{$uData -> about}}</p>
-                                                @if ($uData->user_id == Auth::user()->id)
+                                                @if ($uData->user_id == Auth::user()->id || Auth::user()->role_id == 4 )
                                                     <p><a href="{{url('/edytujProfil')}}" class="btn btn-primary"
                                                           role="button">Edytuj profil</a></p>
                                                 @endif

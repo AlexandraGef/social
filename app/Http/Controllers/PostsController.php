@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use App\posts;
+use Auth;
 use DB;
 use Illuminate\Http\Request;
 
@@ -17,7 +17,7 @@ class PostsController extends Controller
             ->insert(['content' => $content, 'user_id' => Auth::user()->id,
                 'status' => 0, 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")]);
         if ($createPost) {
-            return posts::with('user', 'likes', 'comments.user')
+            return posts::with('user', 'likes', 'comments.user', 'comments.answers.user')
                 ->orderBy('created_at', 'DESC')
                 ->get();
         }
@@ -32,7 +32,7 @@ class PostsController extends Controller
             ->where('id', $id)
             ->update(['content' => $editContent]);
         if ($editPost) {
-            return posts::with('user', 'likes', 'comments.user')
+            return posts::with('user', 'likes', 'comments.user', 'comments.answers.user')
                 ->orderBy('created_at', 'DESC')
                 ->get();
         }
@@ -40,8 +40,7 @@ class PostsController extends Controller
 
     public function findPosts()
     {
-        $posts = posts::with('user', 'likes', 'comments.user')
-
+        $posts = posts::with('user', 'likes', 'comments.user', 'comments.answers.user')
             ->orderBy('created_at', 'DESC')
             ->get();
         return $posts;
@@ -51,7 +50,7 @@ class PostsController extends Controller
     {
         $delete = DB::table('posts')->where('id', $id)->delete();
         if ($delete) {
-            return posts::with('user', 'likes', 'comments.user')
+            return posts::with('user', 'likes', 'comments.user', 'comments.answers.user')
                 ->orderBy('created_at', 'DESC')
                 ->get();
         }
@@ -65,7 +64,7 @@ class PostsController extends Controller
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
         ]);
         if ($likePost) {
-            return posts::with('user', 'likes', 'comments.user')
+            return posts::with('user', 'likes', 'comments.user', 'comments.answers.user')
                 ->orderBy('created_at', 'DESC')
                 ->get();
         }
@@ -76,7 +75,7 @@ class PostsController extends Controller
     {
         $delete = DB::table('likes')->where('id', $id)->delete();
         if ($delete) {
-            return posts::with('user', 'likes', 'comments.user')
+            return posts::with('user', 'likes', 'comments.user', 'comments.answers.user')
                 ->orderBy('created_at', 'DESC')
                 ->get();
         }
@@ -92,7 +91,7 @@ class PostsController extends Controller
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString()]);
 
         if ($createComment) {
-            return posts::with('user', 'likes', 'comments.user')
+            return posts::with('user', 'likes', 'comments.user', 'comments.answers.user')
                 ->orderBy('created_at', 'DESC')
                 ->get();
         }
@@ -103,11 +102,39 @@ class PostsController extends Controller
     {
         $delete = DB::table('comments')->where('id', $id)->delete();
         if ($delete) {
-            return posts::with('user', 'likes', 'comments.user')
+            return posts::with('user', 'likes', 'comments.user', 'comments.answers.user')
                 ->orderBy('created_at', 'DESC')
                 ->get();
         }
     }
+
+    public function addAnswer(Request $request)
+    {
+        $answer = $request->comment;
+        $id = $request->id;
+
+        $createComment = DB::table('answers')
+            ->insert(['answer' => $answer, 'user_id' => Auth::user()->id, 'comment_id' => $id,
+                'created_at' => \Carbon\Carbon::now()->toDateTimeString()]);
+
+        if ($createComment) {
+            return posts::with('user', 'likes', 'comments.user', 'comments.answers.user')
+                ->orderBy('created_at', 'DESC')
+                ->get();
+        }
+    }
+
+
+    public function deleteAnswer($id)
+    {
+        $delete = DB::table('answers')->where('id', $id)->delete();
+        if ($delete) {
+            return posts::with('user', 'likes', 'comments.user', 'comments.answers.user')
+                ->orderBy('created_at', 'DESC')
+                ->get();
+        }
+    }
+
 
     public function addNotiPost(Request $request)
     {
@@ -139,20 +166,21 @@ class PostsController extends Controller
         }
     }
 
-    public function addNotiProfile(Request $request)
+    public function addNotiAnswer(Request $request)
     {
         $text = $request->text;
         $id = $request->id;
         $uid = Auth::user()->id;
 
         $createNoti = DB::table('service')
-            ->insert(['user_id' => $uid, 'profile_id' => $id, 'excuse' => $text,
+            ->insert(['user_id' => $uid, 'answer_id' => $id, 'excuse' => $text,
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString()]);
 
         if ($createNoti) {
             return back()->with('msg', 'Dziękujemy za przesłanie zgłoszenia. Zapoznamy się z nim jak najszybciej !');
         }
     }
+
 
 
 }

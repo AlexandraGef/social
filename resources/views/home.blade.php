@@ -48,9 +48,9 @@
                         </div>
                     </div>
                 </div>
-<div v-for="friend in friends">
-        <div v-for="post in posts" v-if="post.user.id == friend.id"
+                <div v-for="post in posts"
                      style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
+
                     <div class="col-md-12">
                         <div class="col-md-2 pull-left" style="margin-bottom: 10px;">
                             <a :href="'{{Config::get('url')}}/profil/' + post.user.slug"><img
@@ -66,23 +66,24 @@
                             <a href="#" data-toggle="dropdown" aria-haspopup="true"><i class="fa fa-cog"
                                                                                        aria-hidden="true"></i></a>
                             <div class="dropdown-menu" id="dropdown">
-                                <div v-if="'{{Auth::user()->id}}' == post.user.id" style="cursor: pointer">
-                                    <li><a data-toggle="modal"
+                                <div style="cursor: pointer; text-align: center">
+                                    <li v-if="'{{Auth::user()->id}}' == post.user.id || '{{ Auth::user()->role_id}}' == 4">
+                                        <a data-toggle="modal"
                                            :data-target="'#modal' + post.id"><i
                                                     class="fa fa-pencil"
-                                                    aria-hidden="true"></i>Edytuj</a>
-                                    </li>
-                                    <li><a
+                                                    aria-hidden="true"></i>Edytuj</a><br>
+                                        <a
                                                 @click="deletePost(post.id)"><i class="fa fa-trash-o"
-                                                                                aria-hidden="true"></i> Usuń</a></li>
-                                </div>
-                                <div v-else style="cursor: pointer">
-                                    <li><a :href="'{{Config::get('url')}}/zglosPost/' + post.id" class="text-danger"><i
+                                                                                aria-hidden="true"></i> Usuń</a>
+                                    </li>
+
+                                    <li v-if="'{{Auth::user()->id}}' != post.user.id || '{{ Auth::user()->role_id}}' == 4">
+                                        <a :href="'{{Config::get('url')}}/zglosPost/' + post.id"
+                                           class="text-danger"><i
                                                     class="fa fa-exclamation-triangle" title="Zgłoś post"
                                                     aria-hidden="true"></i>Zgłoś</a>
                                     </li>
                                 </div>
-
                             </div>
                         </div>
                         <div class="modal fade" v-bind:id="['modal'+ post.id]" role="dialog">
@@ -134,60 +135,139 @@
                             @{{ post.likes.length }} Lubię to !
                         </div>
                     </div>
-                    <div class="comment_form">
+                    <div class="comment_form ">
                         <textarea class="form-control" v-model="commentData"></textarea><br>
                         <button style="margin-bottom: 15px" class="btn btn-success pull-right"
                                 @click="addComment(post.id)">Wyślij
                         </button>
                     </div>
-                    <div v-for="comment in post.comments">
-                        <div v-if="comment.posts_id == post.id">
-                            <article class="row">
-                                <div class="col-md-2 col-sm-2 hidden-xs">
-                                    <figure class="thumbnail">
-                                        <a :href="'{{Config::get('url')}}/profil/' + comment.user.slug"><img
-                                                    :src="'{{Config::get('url')}}' + comment.user.pic"
-                                                    class="img-circle" :alt="comment.user.name" width="50"
-                                                    height="50"/></a>
-                                        <figcaption class="text-center">@{{comment.user.name}}</figcaption>
-                                    </figure>
-                                </div>
-                                <div class="col-md-10 col-sm-10">
-                                    <div class="panel panel-default arrow left">
-                                        <div class="panel-body">
-                                            <header class="text-left">
-                                                <time class="comment-date"><i class="fa fa-clock-o"></i>@{{
-                                                    comment.created_at | myOwnTime }}
-                                                </time>
-                                            </header>
-                                            <header class="text-right">
+
+                    <div v-if="post.comments.length != 0">
+                        <a class="btn btn-primary btn-xs" data-toggle="collapse"
+                           style="cursor: pointer;margin-right:20px"
+                           :data-target="'#comments' + post.id">Pokaż komentarze</a><i
+                                class="fa fa-comment text-primary" aria-hidden="true">@{{ post.comments.length }}</i>
+                        <div v-bind:id="['comments'+ post.id]" class="panel-collapse collapse" style="margin-top:15px">
+                            <div v-for="comment in post.comments">
+                                <div v-if="comment.posts_id == post.id">
+
+                                    <article class="row">
+                                        <div class="col-md-2 col-sm-2 hidden-xs">
+                                            <figure class="thumbnail">
+                                                <a :href="'{{Config::get('url')}}/profil/' + comment.user.slug"><img
+                                                            :src="'{{Config::get('url')}}' + comment.user.pic"
+                                                            class="img-circle" :alt="comment.user.name" width="50"
+                                                            height="50"/></a>
+                                                <figcaption class="text-center">@{{comment.user.name}}</figcaption>
+                                            </figure>
+                                        </div>
+                                        <div class="col-md-10 col-sm-10">
+                                            <div class="panel panel-default arrow left">
+                                                <div class="panel-body">
+                                                    <header class="text-left">
+                                                        <time class="comment-date"><i class="fa fa-clock-o"></i>@{{
+                                                            comment.created_at | myOwnTime }}
+                                                        </time>
+                                                    </header>
+                                                    <header class="text-right">
                                                 <span style="cursor: pointer"
-                                                      v-if="comment.user_id == '{{Auth::user()->id}}'"><a
+                                                      v-if="comment.user_id == '{{Auth::user()->id}}' || '{{ Auth::user()->role_id}}' == 4"><a
                                                             @click="deleteComment(comment.id)"><i
                                                                 class="fa fa-trash-o text-primary"
                                                                 aria-hidden="true"></i></a></span>
+                                                        <span style="cursor: pointer"
+                                                              v-if="comment.user_id != '{{Auth::user()->id}}' || '{{ Auth::user()->role_id}}' == 4"><a
+                                                                    :href="'{{Config::get('url')}}/zglosKomentarz/' + comment.id"><i
+                                                                        class="fa fa-exclamation-triangle text-danger"
+                                                                        title="Zgłoś komentarz"
+                                                                        aria-hidden="true"></i></a></span>
+                                                    </header>
+                                                    <div class="comment-post">
+                                                        <p>
+                                                            @{{ comment.comment }}
+                                                        </p>
+                                                        <a data-toggle="collapse" style="cursor: pointer;"
+                                                           :data-target="'#answers' + comment.id">Odpowiedzi</a><i
+                                                                style="margin-left: 20px"
+                                                                class="fa fa-comment text-primary" aria-hidden="true">@{{
+                                                            comment.answers.length }}</i>
+                                                        <div v-bind:id="['answers'+ comment.id]"
+                                                             class="panel-collapse collapse" style="margin-top:15px">
+                                                        <textarea class="form-control"
+                                                                  v-model="answerData"></textarea><br>
+                                                            <button style="margin-bottom: 15px"
+                                                                    class="btn btn-success pull-right btn-xs"
+                                                                    @click="addAnswer(comment.id)">Odpowiedz
+                                                            </button>
+                                                            <div v-for="answer in comment.answers">
+                                                                <div v-if="answer.comment_id == comment.id">
+
+                                                                    <article class="row">
+                                                                        <div class="col-md-2 col-sm-2 hidden-xs">
+                                                                            <figure class="thumbnail">
+                                                                                <a :href="'{{Config::get('url')}}/profil/' + answer.user.slug"><img
+                                                                                            :src="'{{Config::get('url')}}' + answer.user.pic"
+                                                                                            class="img-circle"
+                                                                                            :alt="answer.user.name"
+                                                                                            width="50"
+                                                                                            height="50"/></a>
+                                                                                <figcaption class="text-center">
+                                                                                    @{{answer.user.name}}
+                                                                                </figcaption>
+                                                                            </figure>
+                                                                        </div>
+                                                                        <div class="col-md-10 col-sm-10">
+                                                                            <div class="panel panel-default arrow left">
+                                                                                <div class="panel-body">
+                                                                                    <header class="text-left">
+                                                                                        <time class="comment-date"><i
+                                                                                                    class="fa fa-clock-o"></i>@{{
+                                                                                            answer.created_at |
+                                                                                            myOwnTime
+                                                                                            }}
+                                                                                        </time>
+                                                                                    </header>
+                                                                                    <header class="text-right">
                                                 <span style="cursor: pointer"
-                                                      v-if="comment.user_id != '{{Auth::user()->id}}'"><a
-                                                            :href="'{{Config::get('url')}}/zglosKomentarz/' + comment.id"><i
-                                                                class="fa fa-exclamation-triangle text-danger" title="Zgłoś komentarz"
+                                                      v-if="answer.user_id == '{{Auth::user()->id}}' || '{{ Auth::user()->role_id}}' == 4"><a
+                                                            @click="deleteAnswer(answer.id)"><i
+                                                                class="fa fa-trash-o text-primary"
                                                                 aria-hidden="true"></i></a></span>
-                                            </header>
-                                            <div class="comment-post ">
-                                                <p>
-                                                    @{{ comment.comment }}
-                                                </p>
+                                                                                        <span style="cursor: pointer"
+                                                                                              v-if="answer.user_id != '{{Auth::user()->id}}' || '{{ Auth::user()->role_id}}' == 4"><a
+                                                                                                    :href="'{{Config::get('url')}}/zglosOdpowiedz/' + answer.id"><i
+                                                                                                        class="fa fa-exclamation-triangle text-danger"
+                                                                                                        title="Zgłoś odpowiedź"
+                                                                                                        aria-hidden="true"></i></a></span>
+                                                                                    </header>
+                                                                                    <div class="comment-post ">
+                                                                                        <p>
+                                                                                            @{{ answer.answer }}
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </article>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </article>
                                 </div>
-                            </article>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+
+
+
     <script src="{{ asset('js/app.js') }}"></script>
 
 @endsection

@@ -97,11 +97,18 @@ Route::group(['middleware' => 'auth'], function () {
         return view('notifi.addNotiProfile', compact('id', $id));
     });
 
+    Route::get('/zglosOdpowiedz/{id}', function ($id) {
+
+        return view('notifi.addNotiAnswer', compact('id', $id));
+    });
+
     Route::post('/dodajZgloszeniePostu', 'PostsController@addNotiPost');
 
     Route::post('/dodajZgloszenieKomentarza', 'PostsController@addNotiCom');
 
-    Route::post('/dodajZgloszenieProfilu', 'PostsController@addNotiProfile');
+    Route::post('/dodajZgloszenieOdpowiedzi', 'PostsController@addNotiAnswer');
+
+    Route::post('/dodajZgloszenieProfilu', 'ProfileController@addNotiProfile');
     //delete posts
     Route::get('/deletePost/{id}', 'PostsController@deletePost');
     /*
@@ -152,9 +159,13 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::get('/lubie/{id}', 'PostsController@likePost');
     Route::get('/nielubie/{id}', 'PostsController@unlikePost');
-    //add comments
+    //comments
     Route::post('dodajKomentarz', 'PostsController@addComment');
     Route::get('usunKomentarz/{id}', 'PostsController@deleteComment');
+
+    //add answers
+    Route::post('dodajOdpowiedz', 'PostsController@addAnswer');
+    Route::get('usunOdpowiedz/{id}', 'PostsController@deleteAnswer');
 });
 /*
  * firma

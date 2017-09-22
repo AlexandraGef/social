@@ -30,6 +30,8 @@ const app = new Vue({
         successMsg: '',
         commentData: '',
         bottom: false,
+        answerData:'',
+        api:'',
 
     },
     watch: {
@@ -206,6 +208,37 @@ const app = new Vue({
                 .catch(function (error) {
                     console.log(error); // run if we have error
                 });
+        },
+        addAnswer(id) {
+            axios.post('http://localhost:8000/dodajOdpowiedz', {
+                comment: this.answerData,
+                id: id
+            })
+                .then(function (response) {
+                    console.log('saved successfully'); // show if success
+                    if (response.status === 200) {
+                        app.posts = response.data;
+                        app.commentData = '';
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error); // run if we have error
+                });
+
+        },
+        deleteAnswer(id) {
+            axios.get('http://localhost:8000/usunOdpowiedz/' + id)
+                .then(response => {
+                console.log(response); // show if success
+            console.log('Odpowiedz została usunieta');
+            if (response.status === 200) {
+                app.posts = response.data;
+
+            }
+        })
+        .catch(function (error) {
+                console.log(error); // run if we have error
+            });
         },
 
     }

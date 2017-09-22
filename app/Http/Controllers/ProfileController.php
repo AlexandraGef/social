@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use App\friendships;
 use App\notifications;
+use Auth;
 use DB;
 use Illuminate\Http\Request;
 
@@ -54,27 +54,29 @@ class ProfileController extends Controller
 
         return back();
     }
-public function checkFriends()
-{
-    $uid = Auth::user()->id;
 
-    $friends1 = DB::table('friendships')
-        ->leftJoin('users', 'users.id', 'friendships.user_requested')//wysylajacy zaproszenie
-        ->where('status', 1)
-        ->where('requester', $uid)//zalogowany
-        ->get();
+    public function checkFriends()
+    {
+        $uid = Auth::user()->id;
 
-    $friends2 = DB::table('friendships')
-        ->leftJoin('users', 'users.id', 'friendships.requester')
-        ->where('status', 1)
-        ->where('user_requested', $uid)
-        ->get();
+        $friends1 = DB::table('friendships')
+            ->leftJoin('users', 'users.id', 'friendships.user_requested')//wysylajacy zaproszenie
+            ->where('status', 1)
+            ->where('requester', $uid)//zalogowany
+            ->get();
 
-    $friends = array_merge($friends1->toArray(), $friends2->toArray());
+        $friends2 = DB::table('friendships')
+            ->leftJoin('users', 'users.id', 'friendships.requester')
+            ->where('status', 1)
+            ->where('user_requested', $uid)
+            ->get();
 
-    return $friends;
+        $friends = array_merge($friends1->toArray(), $friends2->toArray());
 
-}
+        return $friends;
+
+    }
+
     public function findFriends()
     {
         $uid = Auth::user()->id;
@@ -92,7 +94,8 @@ public function checkFriends()
         return view('profile.findFriends', compact('check'));
     }
 
-    public function sendReq(){
+    public function sendReq()
+    {
         $uid = Auth::user()->id;
         $allUsers = DB::table('profiles')
             ->leftJoin('users', 'users.id', '=', 'profiles.user_id')
@@ -104,7 +107,7 @@ public function checkFriends()
                 ->orWhere('user_requested', $uid)
                 ->get();
         }
-         return $check;
+        return $check;
     }
 
     public function sendRequest($id)
@@ -329,6 +332,21 @@ public function checkFriends()
             ->where('jobs.id', $id)
             ->get();
         return view('profile.job', compact('jobs'));
+    }
+
+    public function addNotiProfile(Request $request)
+    {
+        $text = $request->text;
+        $id = $request->id;
+        $uid = Auth::user()->id;
+
+        $createNoti = DB::table('service')
+            ->insert(['user_id' => $uid, 'profile_id' => $id, 'excuse' => $text,
+                'created_at' => \Carbon\Carbon::now()->toDateTimeString()]);
+
+        if ($createNoti) {
+            return back()->with('msg', 'Dziękujemy za przesłanie zgłoszenia. Zapoznamy się z nim jak najszybciej !');
+        }
     }
 
 }
