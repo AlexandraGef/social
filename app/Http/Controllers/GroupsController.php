@@ -46,6 +46,6 @@ class GroupsController extends Controller
             ->insert(['user_id' => Auth::user()->id, 'group_id' =>  $group]);
 
 
-        return back();
+        return redirect('/grupy')->with('msg', 'Twoja grupa została pomyślnie utworzona !');
     }
 }

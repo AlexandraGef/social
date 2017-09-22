@@ -57607,7 +57607,7 @@ var app = new Vue({
                 console.log('saved successfully'); // show if success
                 if (response.status === 200) {
                     app.posts = response.data;
-                    app.commentData = '';
+                    app.answerData = '';
                 }
             }).catch(function (error) {
                 console.log(error); // run if we have error
