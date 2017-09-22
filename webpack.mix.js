@@ -16,4 +16,5 @@ mix.js('resources/assets/js/profile.js', 'public/js')
 mix.js('resources/assets/js/start.js', 'public/js')
 mix.js('resources/assets/js/searchUser.js', 'public/js')
 mix.js('resources/assets/js/searchJobs.js', 'public/js')
+mix.js('resources/assets/js/group.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');

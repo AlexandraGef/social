@@ -57455,7 +57455,6 @@ var app = new Vue({
             }
         }
     },
-    ready: function ready() {},
     created: function created() {
         var _this = this;
 
@@ -57464,6 +57463,7 @@ var app = new Vue({
         });
         this.Post();
         this.friend();
+        this.check();
     },
 
 

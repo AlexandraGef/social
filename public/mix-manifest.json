@@ -4,5 +4,6 @@
     "/js/searchUser.js": "/js/searchUser.js",
     "/js/searchJobs.js": "/js/searchJobs.js",
     "/js/profile.js": "/js/profile.js",
-    "/js/start.js": "/js/start.js"
+    "/js/start.js": "/js/start.js",
+    "/js/group.js": "/js/group.js"
 }

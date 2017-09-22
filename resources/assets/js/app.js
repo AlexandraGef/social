@@ -41,15 +41,13 @@ const app = new Vue({
             }
         }
     },
-    ready: function () {
-
-    },
     created() {
         window.addEventListener('scroll', () => {
             this.bottom = this.bottomVisible()
         })
         this.Post();
         this.friend();
+        this.check();
     },
 
     methods: {

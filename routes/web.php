@@ -166,6 +166,16 @@ Route::group(['middleware' => 'auth'], function () {
     //add answers
     Route::post('dodajOdpowiedz', 'PostsController@addAnswer');
     Route::get('usunOdpowiedz/{id}', 'PostsController@deleteAnswer');
+
+    //group
+    Route::get('/grupy', 'GroupsController@index');
+    Route::get('/groups', 'GroupsController@groups');
+    Route::get('/grupa/{slug}', 'GroupsController@group');
+    Route::get('/utworzGrupe', function () {
+
+        return view('group.addGroup');
+    });
+    Route::post('/newGroup', 'GroupsController@createGroup');
 });
 /*
  * firma

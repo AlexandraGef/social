@@ -2,13 +2,6 @@
 
 @section('content')
     <style>
-        #commentBox {
-            padding: 10px;
-            width: 100%;
-            margin: 10px auto;
-            background: white;
-            padding: 10px;
-        }
 
         #commentBox li {
             list-style: none;
@@ -33,9 +26,7 @@
                 @endif
 
                 <div class="panel panel-default" style="box-shadow: 5px 5px 10px #888888;">
-                    <div class="panel-heading">Najnowsze posty</div>
-
-                    <div class="panel-body">
+                    <div class="panel-body" style="margin-top: 20px;">
                         <div class="col-xs-1 ">
                             <img class="img-circle" src="{{ Auth::user()->pic }}" width="60" height="60"
                                  style="margin-left:-10px"/></div>
@@ -48,7 +39,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-for="post in posts"
+                <div v-for="post in posts" class="panel panel-default"
                      style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
 
                     <div class="col-md-12">
