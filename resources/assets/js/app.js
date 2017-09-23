@@ -47,7 +47,6 @@ const app = new Vue({
         })
         this.Post();
         this.friend();
-        this.check();
     },
 
     methods: {
@@ -64,7 +63,7 @@ const app = new Vue({
                         let api = response.data[i++];
                         let apiInfo = {
                             id: api.id,
-                            user_id: app.user_id,
+                            user_id: api.user_id,
                             content: api.content,
                             status: api.status,
                             created_at: api.created_at,

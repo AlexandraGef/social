@@ -102,6 +102,11 @@ Route::group(['middleware' => 'auth'], function () {
         return view('notifi.addNotiAnswer', compact('id', $id));
     });
 
+    Route::get('/zglosGrupe/{id}', function ($id) {
+
+        return view('notifi.addNotiGroup', compact('id', $id));
+    });
+
     Route::post('/dodajZgloszeniePostu', 'PostsController@addNotiPost');
 
     Route::post('/dodajZgloszenieKomentarza', 'PostsController@addNotiCom');
@@ -109,6 +114,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/dodajZgloszenieOdpowiedzi', 'PostsController@addNotiAnswer');
 
     Route::post('/dodajZgloszenieProfilu', 'ProfileController@addNotiProfile');
+
+    Route::post('/dodajZgloszenieGrupy', 'GroupsController@addNotiGroup');
+
+    Route::get('/usunGrupe/{id}', 'GroupsController@deleteGroup');
     //delete posts
     Route::get('/deletePost/{id}', 'PostsController@deletePost');
     /*
@@ -176,6 +185,9 @@ Route::group(['middleware' => 'auth'], function () {
         return view('group.addGroup');
     });
     Route::post('/newGroup', 'GroupsController@createGroup');
+    Route::get('/dolaczDoGrupy/{id}', 'GroupsController@joinToGroup');
+    Route::get('/odejdzZGrupy/{id}', 'GroupsController@leaveGroup');
+
 });
 /*
  * firma

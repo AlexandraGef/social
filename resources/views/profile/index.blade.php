@@ -78,12 +78,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9 col-md-9">
-                    <div class=" col-sm-12 col-xs-12" v-for="post in posts">
+                <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                    <div  v-for="post in posts">
                         <div class="panel panel-default" v-if="{{$uData->user_id}} == post.user.id"
                              style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
 
-                            <div class="col-md-12">
+                            <div class="col-md-12" class="panel-body">
                                 <div class="col-md-2 pull-left" style="margin-bottom: 10px;">
                                     <a :href="'{{Config::get('url')}}/profil/' + post.user.slug"><img
                                                 :src="'{{Config::get('url')}}' + post.user.pic" class="img-circle"

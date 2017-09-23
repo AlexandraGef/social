@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="col-md-12 msgDiv"  id="profile">
+    <div class="col-md-12 msgDiv" id="profile">
 
         <div style="background-color:#fff" class="col-md-3 pull-left">
 
@@ -15,7 +15,6 @@
             </div>
 
             @foreach($friends as $friend)
-
                 <li @click="friendID({{$friend->id}})" v-on:click="seen = true" style="list-style:none;
     margin-top:10px; background-color:#F3F3F3" class="row">
 
@@ -31,21 +30,17 @@
             @endforeach
             <hr>
         </div>
-
         <div style="background-color:#fff; min-height:600px; border-left:5px solid #F5F8FA"
              class="col-md-8">
             <h3 align="center">Wiadomości</h3>
             <p class="alert alert-success">@{{msg}}</p>
-
-            <div  v-if="seen">
+            <div v-if="seen">
                 <input type="hidden" v-model="friend_id">
                 <textarea class="col-md-12 form-control" v-model="newMsgFrom"></textarea><br>
-                <input type="button" style="margin-top: 15px;" class=" btn btn-primary" value="Wyślij" @click="sendNewMsg()">
+                <input type="button" style="margin-top: 15px;" class=" btn btn-primary" value="Wyślij"
+                       @click="sendNewMsg()">
             </div>
-
         </div>
-
-
     </div>
 
     <script src="{{ asset('js/profile.js') }}"></script>

@@ -57463,7 +57463,6 @@ var app = new Vue({
         });
         this.Post();
         this.friend();
-        this.check();
     },
 
 
@@ -57482,7 +57481,7 @@ var app = new Vue({
                 var api = response.data[i++];
                 var apiInfo = {
                     id: api.id,
-                    user_id: app.user_id,
+                    user_id: api.user_id,
                     content: api.content,
                     status: api.status,
                     created_at: api.created_at,
