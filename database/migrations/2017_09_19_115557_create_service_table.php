@@ -18,6 +18,8 @@ class CreateServiceTable extends Migration
             $table->integer('user_id');
             $table->integer('post_id');
             $table->integer('profile_id');
+            $table->integer('comment_id');
+            $table->integer('answer_id');
             $table->string('excuse');
             $table->timestamps();
         });

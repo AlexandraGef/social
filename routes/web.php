@@ -187,6 +187,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/newGroup', 'GroupsController@createGroup');
     Route::get('/dolaczDoGrupy/{id}', 'GroupsController@joinToGroup');
     Route::get('/odejdzZGrupy/{id}', 'GroupsController@leaveGroup');
+    Route::get('/edytujGrupe/{id}', 'GroupsController@editGroupForm');
+    Route::get('/zmienZdjecieGrupy/{id}', 'GroupsController@editGroupAv');
+    Route::post('/aktualizujGrupe', 'GroupsController@updateGroup');
+    Route::post('/wgrajAvatarGrupy', 'GroupsController@uploadAvatar');
+    Route::post('/dodajPostGrupy', 'GroupsController@addGroupPost');
+
 
 });
 /*

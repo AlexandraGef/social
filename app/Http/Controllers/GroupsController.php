@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\groups;
+use App\posts;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
@@ -92,6 +93,55 @@ class GroupsController extends Controller
         return redirect('/grupy')->with('msg', 'Twoja grupa została usunięta');
 
     }
+    public function editGroupForm($id)
+    {
+        $groups = DB::table('groups')->where('id', $id)->get();
 
+        return view('group.editGroup', compact('groups'));
+    }
+
+    public function updateGroup(Request $request)
+    {
+        $id = $request->id;
+        DB::table('groups')->where('id', '=', $id)->update($request->except('_token'));
+
+        return back()->with('msg','Informacje o grupie zostały zaktualizowane.');
+    }
+   public function editGroupAv($id) {
+       $groups = DB::table('groups')->where('id', $id)->get();
+
+       return view('group.pic', compact('groups'));
+   }
+
+    public function uploadAvatar(Request $request)
+    {
+
+        $file = $request->file('pic');
+        $filename = $file->getClientOriginalName();
+
+        $path = 'img';
+
+        $file->move($path, $filename);
+
+        $id = $request->id;
+
+        DB::table('groups')->where('id', $id)->update(['pic' => 'http://localhost:8000/img/' . $filename]);
+
+        return back()->with('msg', 'Avatar został zmieniony');
+    }
+
+    public function addGroupPost(Request $request){
+        $content = $request->content;
+        $id = $request->id;
+
+        $createPost = DB::table('posts')
+            ->insert(['content' => $content, 'user_id' => Auth::user()->id,
+                'status' => 0, 'group_id'=> $id, 'created_at' => date("Y-m-d H:i:s"), 'updated_at' => date("Y-m-d H:i:s")]);
+        if ($createPost) {
+            return posts::with('user', 'likes', 'comments.user', 'comments.answers.user')
+                ->orderBy('created_at', 'DESC')
+                ->get();
+        }
+    }
 
 }

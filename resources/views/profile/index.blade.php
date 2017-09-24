@@ -73,7 +73,7 @@
                         <a href="{{url('/zglosProfil')}}/{{$uData->id}}" class="btn btn-link"
                            style="text-decoration:none;"><i class="fa fa-lg fa-ban" aria-hidden="true"
                                                             data-toggle="tooltip" data-placement="bottom"
-                                                            title="Ignore"></i></a>
+                                                            title="Zgłoś"></i></a>
                     </span>
                         </div>
                     </div>

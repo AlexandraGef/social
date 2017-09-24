@@ -19,14 +19,15 @@ const group = new Vue({
         posts: [],
         content: '',
         editContent: '',
-        postId: '',
+        postId:'',
         a: '',
         successMsg: '',
         commentData: '',
         bottom: false,
         answerData:'',
         api:'',
-        g: '',
+        g:0,
+        admin:0,
     },
     watch: {
         bottom(bottom) {
@@ -71,6 +72,7 @@ const group = new Vue({
             let apiInfo = {
                 id: api.id,
                 user_id: api.user_id,
+                group_id: api.group_id,
                 content: api.content,
                 status: api.status,
                 created_at: api.created_at,
@@ -107,22 +109,7 @@ const group = new Vue({
                 console.log(error); // run if we have error
             });
         },
-        addPost() {
-            axios.post('http://localhost:8000/dodajPost', {
-                content: this.content
-            })
-                .then(function (response) {
-                    console.log('Post został udostępniony');
-                    if (response.status === 200) {
-                        group.posts = response.data;
-                        group.content = '';
 
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        },
         editPost(id) {
             axios.post('http://localhost:8000/edytujPost',{
                 editContent: this.editContent,
@@ -134,6 +121,23 @@ const group = new Vue({
                         group.posts = response.data;
                         group.editContent = '';
                         group.id = '';
+
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        },
+        addPostGroup(id) {
+            axios.post('http://localhost:8000/dodajPostGrupy',{
+                content: this.content,
+                id: id
+            })
+                .then(function (response) {
+                    console.log('Post został zedytowany');
+                        if (response.status === 200) {
+                            group.posts = response.data;
+                            group.content = '';
 
                     }
                 })

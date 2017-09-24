@@ -18,6 +18,11 @@
     <div class="container" id="group">
         <div clas="row">
             @foreach($groups as $uData)
+                @foreach($uData->admins as $admin)
+                    @if($admin->id == Auth::user()->id)
+                        <span style="visibility: hidden"> @{{ admin = {!! $admin->id !!} }}</span>
+                    @endif
+                @endforeach
                 <div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
                     <div class="panel panel-default"
                          style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
@@ -31,12 +36,10 @@
                                     <hr>
                                     <h3><strong>Opis</strong></h3>
                                     <p>{{$uData -> description}}</p>
-                                    @if ($uData->user_id == Auth::user()->id || Auth::user()->role_id == 4 )
-                                        <div style="text-align: center; margin-top: 30px;">
-                                            <p><a href="{{url('/edytujProfil')}}" class="btn btn-primary"
-                                                  role="button">Edytuj grupe</a></p>
-                                        </div>
-                                    @endif
+                                    <div style="text-align: center; margin-top: 30px;"  v-if="admin == {{Auth::user()->id}} || {{Auth::user()->role_id}} == 4">
+                                        <p><a href="{{ url('/edytujGrupe') }}/{{$uData->id}}" class="btn btn-primary"
+                                              role="button">Edytuj grupe</a></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -46,47 +49,29 @@
                     <div class="panel panel-default"
                          style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
                         <div class="panel-body">
-                            <div class="col-md-1 pull-right">
-                                <a href="" data-toggle="dropdown" aria-haspopup="true"><i class="fa fa-cog"
-                                                                                          aria-hidden="true"></i></a>
-                                <div class="dropdown-menu" id="dropdown">
-                                    <div style="cursor: pointer; text-align: center">
-                                        <li v-if="'{{Auth::user()->id}}' || '{{ Auth::user()->role_id}}' == 4">
-                                            <a
-                                                    href="{{ url('/usunGrupe') }}/{{$uData->id}}"><i class="fa fa-trash-o"
-                                                                             aria-hidden="true"></i> Usuń</a>
-                                        </li>
-
-                                        <li v-if="'{{Auth::user()->id}}' || '{{ Auth::user()->role_id}}' == 4">
-                                            <a href="{{ url('/zglosGrupe') }}/{{$uData->id}}"
-                                               class="text-danger"><i
-                                                        class="fa fa-exclamation-triangle" title="Zgłoś post"
-                                                        aria-hidden="true"></i>Zgłoś</a>
-                                        </li>
-                                    </div>
-                                </div>
+                            <div class="col-md-1 pull-right"v-if="admin == {{Auth::user()->id}} || {{Auth::user()->role_id }}== 4" >
+                                <span style="cursor: pointer"><a
+                                            href="{{ url('/usunGrupe') }}/{{$uData->id}}"><i
+                                                class="fa fa-trash-o text-primary"
+                                                aria-hidden="true"></i></a></span>
                             </div>
-                            <span>
-                        <h1 class="panel-title pull-left"
-                            style="font-size:30px;">{{$uData->name}}</h1>
-                    </span>
+
+
+                            <h1 class="panel-title pull-left"
+                                style="font-size:30px;">{{$uData->name}}</h1>
+                            </span>
                             <br><br><br><br>
                             @if(count($uData->user) == 0 )
                                 <div class="caption form-inline">
                                     <a @click="joinToGroup({{$uData->id}})" class="btn btn-success">Dołącz</a>
                                 </div>
-
                             @endif
-                            <div v-for="group in groups">
-                                <div v-for="us in group.user">
-                                    <div class="caption form-inline" v-if="us.id != {{Auth::user()->id}}">
-                                        <a @click="joinToGroup(group.id)" class="btn btn-success">Dołącz</a>
+                                    <div class="caption form-inline" v-if="g != {{Auth::user()->id}}">
+                                        <a @click="joinToGroup({{$uData->id}})" class="btn btn-success">Dołącz</a>
                                     </div>
                                     <div class="caption form-inline" v-else>
-                                        <a @click="leaveGroup(us.id)" class="btn btn-danger">Odejdź</a>
+                                        <a @click="leaveGroup(g)" class="btn btn-danger">Odejdź</a>
                                     </div>
-                                </div>
-                            </div>
                             <hr>
                             <span class="pull-left">
                         <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-files-o"
@@ -98,38 +83,36 @@
                     </span>
                             <div class="pull-right">
                                 <span>
-                        <a href="{{url('/zglosProfil')}}/{{$uData->id}}" class="btn btn-link"
+                        <a href="{{ url('/zglosGrupe') }}/{{$uData->id}}" class="btn btn-link"
                            style="text-decoration:none;"><i class="fa fa-lg fa-ban" aria-hidden="true"
                                                             data-toggle="tooltip" data-placement="bottom"
-                                                            title="Ignore"></i></a>
+                                                            title="Zgłoś"></i></a>
                     </span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 pull-right">
-                    <div class="panel panel-default" style="box-shadow: 5px 5px 10px #888888;">
+                    @foreach($uData->user as $user)
+                        @if($user->id == Auth::user()->id)
+                            <span style="visibility: hidden"> @{{ g = {!! $user->id !!} }}</span>
+                        @endif
+                    @endforeach
+                    <div class="panel panel-default" style="box-shadow: 5px 5px 10px #888888;"
+                         v-if="g == {{Auth::user()->id}}">
                         <div class="panel-body" style="margin-top: 20px;">
-                            <div class="col-xs-1 ">
-                                <img class="img-circle" src="{{ Auth::user()->pic }}" width="60" height="60"
-                                     style="margin-left:-10px"/></div>
-                            <div class="col-xs-11">
-                                <form method="post" enctype="multipart/form-data" v-on:submit.prevent="addPost">
-                                <textarea placeholder="Napisz co u Ciebie !" v-model="content" rows="5"
+                            <div class="col-xs-12">
+                                <form method="post" enctype="multipart/form-data"
+                                      v-on:submit.prevent="addPostGroup({{$uData->id}})">
+                                <textarea placeholder="Dodaj post..." v-model="content" rows="5"
                                           style="min-width: 100%"></textarea><br><br>
                                     <input type="submit" class="btn btn-success pull-right" value="Udostępnij">
                                 </form>
                             </div>
                         </div>
                     </div>
-
-                    <div v-for="post in posts">
-                        @foreach($uData->user as $user)
-                            <div v-if="{{$user->id}} == post.user.id" class="hidden">
-                                @{{ g = post.user.id }}
-                            </div>
-                        @endforeach
-                        <div v-if="post.user.id == g">
+                    <div v-for="post in posts" v-if="g == {{Auth::user()->id}}">
+                        <div v-if="post.group_id == {{$uData ->id}}">
                             <div class="panel panel-default"
                                  style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
                                 <div class="col-md-12" class="panel-body">
