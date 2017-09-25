@@ -76,12 +76,14 @@ class RegisterController extends Controller
             $role = 3;
         }
 
+        $rand = rand(0, 10000);
+
         $user = User::create([
             'name' => $data['name'],
             'gender' => $data['gender'],
             'role_id' => $role,
             'pic' => $pic_path,
-            'slug' => str_slug($data['name'], '-'),
+            'slug' => str_slug($data['name'], '-').$rand,
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);

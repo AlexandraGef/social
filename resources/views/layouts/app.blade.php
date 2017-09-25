@@ -16,7 +16,7 @@
 </head>
 <body>
 <style>
-  a.anav{
+    a.anav {
         height: 60px;
     }
 </style>
@@ -55,19 +55,23 @@
                     @if(Auth::check() && Auth::user()->role_id == "3")
                         <li><a class="anav" href="{{ url('/firma') }}">Firma</a></li>
                     @endif
+                    @if(Auth::check() && Auth::user()->role_id == "4")
+                        <li><a class="anav" href="{{ url('/zgloszenia') }}">Zgłoszenia</a></li>
+                    @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right" style="height: 100%">
                     <!-- Authentication Links -->
                     @guest
-                        <li ><a  href="{{ route('login') }}">Logowanie</a></li>
+                        <li><a href="{{ route('login') }}">Logowanie</a></li>
                         <li><a href="{{ route('register') }}">Rejestracja</a></li>
                         @else
                             <li style="height: 100%"><a href="{{ url('/wiadomosci') }}"><i class="fa fa-envelope fa-2x"
-                                                                      aria-hidden="true"></i>
+                                                                                           aria-hidden="true"></i>
                                 </a></li>
-                            <li><a class="anav" href="{{ url('/znajomi') }}"><i class="fa fa-users fa-2x" aria-hidden="true"></i>
+                            <li><a class="anav" href="{{ url('/znajomi') }}"><i class="fa fa-users fa-2x"
+                                                                                aria-hidden="true"></i>
                                 </a></li>
                             <li class="dropdown">
                                 <a class="anav" href="" class="dropdown-toggle" data-toggle="dropdown" role="button"

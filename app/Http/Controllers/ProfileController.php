@@ -316,6 +316,18 @@ class ProfileController extends Controller
                 'conversation_id' => $conID_new,
                 'status' => 1
             ]);
+            $name = DB::table('users')
+                ->where('id', $myID)
+                ->value('name');
+            $notifications = new notifications;
+            $notifications->user_hero = $friend_id;
+            $notifications->note = 'Masz nową wiadomość od uzytkwnika ' . $name;
+            $notifications->user_logged = $myID;
+            $notifications->status = '1'; // nieodczytane powiadomienie
+            $notifications->save();
+
+            if ($notifications)
+                return back()->with('msg', 'Dziękujemy za przesłanie zgłoszenia. Zapoznamy się z nim jak najszybciej !');
         }
     }
 
@@ -340,13 +352,29 @@ class ProfileController extends Controller
         $id = $request->id;
         $uid = Auth::user()->id;
 
-        $createNoti = DB::table('service')
+        $createNoti = DB::table('services')
             ->insert(['user_id' => $uid, 'profile_id' => $id, 'excuse' => $text,
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString()]);
 
-        if ($createNoti) {
-            return back()->with('msg', 'Dziękujemy za przesłanie zgłoszenia. Zapoznamy się z nim jak najszybciej !');
+        $query = DB::table('users')->where('role_id', 4)->get();
+        foreach ($query as $q) {
+            $idd = $q->id;
+            $moderators[] = $idd;
         }
+        $query1 = DB::table('users')
+            ->leftJoin('profiles', 'users.id', 'profiles.user_id')
+            ->where('profiles.id', $id)
+            ->value('name');
+        foreach ($moderators as $mod) {
+            $notifications = new notifications;
+            $notifications->user_hero = $mod;
+            $notifications->note = 'Zgłoszenie profilu nr : ' . $id . ' użytkownika ' . $query1 . ', treść: ' . $text;
+            $notifications->user_logged = Auth::user()->id;
+            $notifications->status = '1'; // nieodczytane powiadomienie
+            $notifications->save();
+        }
+        if ($notifications)
+            return back()->with('msg', 'Dziękujemy za przesłanie zgłoszenia. Zapoznamy się z nim jak najszybciej !');
     }
 
 }

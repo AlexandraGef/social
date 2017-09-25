@@ -6,6 +6,7 @@ use App\posts;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
+use App\notifications;
 
 class PostsController extends Controller
 {
@@ -142,13 +143,26 @@ class PostsController extends Controller
         $id = $request->id;
         $uid = Auth::user()->id;
 
-        $createNoti = DB::table('service')
+        $createNoti = DB::table('services')
             ->insert(['user_id' => $uid, 'post_id' => $id, 'excuse' => $text,
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString()]);
 
-        if ($createNoti) {
-            return back()->with('msg', 'Dziękujemy za przesłanie zgłoszenia. Zapoznamy się z nim jak najszybciej !');
+        $query = DB::table('users')->where('role_id', 4)->get();
+        foreach ($query as $q) {
+            $idd = $q->id;
+            $moderators[] = $idd;
         }
+        foreach ($moderators as $mod) {
+            $notifications = new notifications;
+            $notifications->user_hero = $mod;
+            $notifications->note = 'Zgłoszenie postu nr. : ' . $id . ', treść: ' . $text;
+            $notifications->user_logged = Auth::user()->id;
+            $notifications->status = '1'; // nieodczytane powiadomienie
+            $notifications->save();
+        }
+        if ($notifications)
+            return back()->with('msg', 'Dziękujemy za przesłanie zgłoszenia. Zapoznamy się z nim jak najszybciej !');
+
     }
 
     public function addNotiCom(Request $request)
@@ -157,13 +171,25 @@ class PostsController extends Controller
         $id = $request->id;
         $uid = Auth::user()->id;
 
-        $createNoti = DB::table('service')
+        $createNoti = DB::table('services')
             ->insert(['user_id' => $uid, 'comment_id' => $id, 'excuse' => $text,
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString()]);
 
-        if ($createNoti) {
-            return back()->with('msg', 'Dziękujemy za przesłanie zgłoszenia. Zapoznamy się z nim jak najszybciej !');
+        $query = DB::table('users')->where('role_id', 4)->get();
+        foreach ($query as $q) {
+            $idd = $q->id;
+            $moderators[] = $idd;
         }
+        foreach ($moderators as $mod) {
+            $notifications = new notifications;
+            $notifications->user_hero = $mod;
+            $notifications->note = 'Zgłoszenie komentarza nr. : ' . $id . ', treść: ' . $text;
+            $notifications->user_logged = Auth::user()->id;
+            $notifications->status = '1'; // nieodczytane powiadomienie
+            $notifications->save();
+        }
+        if ($notifications)
+            return back()->with('msg', 'Dziękujemy za przesłanie zgłoszenia. Zapoznamy się z nim jak najszybciej !');
     }
 
     public function addNotiAnswer(Request $request)
@@ -172,15 +198,26 @@ class PostsController extends Controller
         $id = $request->id;
         $uid = Auth::user()->id;
 
-        $createNoti = DB::table('service')
+        $createNoti = DB::table('services')
             ->insert(['user_id' => $uid, 'answer_id' => $id, 'excuse' => $text,
                 'created_at' => \Carbon\Carbon::now()->toDateTimeString()]);
 
-        if ($createNoti) {
-            return back()->with('msg', 'Dziękujemy za przesłanie zgłoszenia. Zapoznamy się z nim jak najszybciej !');
+        $query = DB::table('users')->where('role_id', 4)->get();
+        foreach ($query as $q) {
+            $idd = $q->id;
+            $moderators[] = $idd;
         }
+        foreach ($moderators as $mod) {
+            $notifications = new notifications;
+            $notifications->user_hero = $mod;
+            $notifications->note = 'Zgłoszenie odp na komentarz nr. : ' . $id . ', treść: ' . $text;
+            $notifications->user_logged = Auth::user()->id;
+            $notifications->status = '1'; // nieodczytane powiadomienie
+            $notifications->save();
+        }
+        if ($notifications)
+            return back()->with('msg', 'Dziękujemy za przesłanie zgłoszenia. Zapoznamy się z nim jak najszybciej !');
     }
-
 
 
 }

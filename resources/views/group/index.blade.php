@@ -74,10 +74,10 @@
                                     </div>
                             <hr>
                             <span class="pull-left">
-                        <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-files-o"
+                        <a href="{{ url('/grupa') }}/{{$uData->slug}}" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-files-o"
                                                                                           aria-hidden="true"></i> Posty <span
                                     class="badge"></span></a>
-                        <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-users"
+                        <a href="{{ url('/czlonkowieGrupy') }}/{{$uData->slug}}" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-users"
                                                                                           aria-hidden="true"></i> Członkowie <span
                                     class="badge"></span></a>
                     </span>
@@ -93,6 +93,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 pull-right">
+
                     @foreach($uData->user as $user)
                         @if($user->id == Auth::user()->id)
                             <span style="visibility: hidden"> @{{ g = {!! $user->id !!} }}</span>

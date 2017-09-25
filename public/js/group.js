@@ -58330,6 +58330,7 @@ var group = new Vue({
         api: '',
         g: 0,
         admin: 0
+
     },
     watch: {
         bottom: function bottom(_bottom) {
@@ -58338,6 +58339,7 @@ var group = new Vue({
             }
         }
     },
+    ready: function ready() {},
     computed: {
         filteredGroups: function filteredGroups() {
             var _this = this;

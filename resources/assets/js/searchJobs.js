@@ -22,10 +22,6 @@ const searchJobs = new Vue({
         search: '',
         jobs: [],
     },
-    ready: function () {
-        this.created();
-        this.filteredJobs();
-    },
     created() {
         axios.get('http://localhost:8000/jobs')
             .then(response => {

@@ -192,6 +192,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/aktualizujGrupe', 'GroupsController@updateGroup');
     Route::post('/wgrajAvatarGrupy', 'GroupsController@uploadAvatar');
     Route::post('/dodajPostGrupy', 'GroupsController@addGroupPost');
+    Route::get('/czlonkowieGrupy/{slug}', 'GroupsController@groupMembers');
+    Route::get('/countGroupMembers/{id}', 'GroupsController@countGroupMembers');
+
+    //zgłoszenia
+    Route::get('/zgloszenia', 'NotiController@noti');
+
 
 
 });

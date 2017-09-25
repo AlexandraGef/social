@@ -30304,9 +30304,6 @@ var searchUser = new Vue({
         a: '',
         b: ''
     },
-    ready: function ready() {
-        this.created();
-    },
     created: function created() {
         axios.get('http://localhost:8000/uzytkownicy').then(function (response) {
             console.log(response);

@@ -25,9 +25,6 @@ const searchUser = new Vue({
         a: '',
         b:'',
     },
-    ready: function () {
-        this.created();
-    },
     created() {
         axios.get('http://localhost:8000/uzytkownicy')
             .then(response => {

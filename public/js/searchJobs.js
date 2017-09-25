@@ -30301,10 +30301,6 @@ var searchJobs = new Vue({
         search: '',
         jobs: []
     },
-    ready: function ready() {
-        this.created();
-        this.filteredJobs();
-    },
     created: function created() {
         axios.get('http://localhost:8000/jobs').then(function (response) {
             console.log(response);

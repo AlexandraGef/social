@@ -24,18 +24,18 @@
                                     <img class="img-circle" :src="'{{Config::get('url')}}' + group.pic" width="60"
                                          height="60"/>
                                     <h3>@{{ group.name }}</h3>
+                                    <div v-for="us in group.user" style="visibility: hidden">
+                                        <div v-if="{{Auth::user()->id}} == us.id">
+                                            @{{ g = group.id }}
+                                        </div>
+                                    </div>
                                     <div v-if="group.user.length == 0">
                                     <div class="caption form-inline" >
                                         <a @click="joinToGroup(group.id)" class="btn btn-success">Dołącz</a>
                                     </div>
                                     </div>
                                     <div v-else>
-                                    <div v-for="us in group.user" style="visibility: hidden">
-                                        <div v-if="{{Auth::user()->id}} == us.id">
-                                            @{{ g = us.id }}
-                                        </div>
-                                    </div>
-                                        <div class="caption form-inline" v-if="g != {{Auth::user()->id}}">
+                                        <div class="caption form-inline" v-if="g != group.id">
                                             <a @click="joinToGroup(group.id)" class="btn btn-success">Dołącz</a>
                                         </div>
                                         <div class="caption form-inline" v-else>

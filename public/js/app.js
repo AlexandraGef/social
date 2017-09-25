@@ -58364,6 +58364,7 @@ var app = new Vue({
                     updated_at: api.updated_at,
                     user: api.user,
                     likes: api.likes,
+                    group_id: api.group_id,
                     comments: api.comments
                 };
                 Vue.filter('myOwnTime', function (value) {

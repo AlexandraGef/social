@@ -28,6 +28,7 @@ const group = new Vue({
         api:'',
         g:0,
         admin:0,
+
     },
     watch: {
         bottom(bottom) {
@@ -35,6 +36,9 @@ const group = new Vue({
                 this.Post();
             }
         }
+    },
+    ready: function () {
+
     },
     computed: {
         filteredGroups: function () {
@@ -95,6 +99,7 @@ const group = new Vue({
         })
 
         },
+
         deletePost(id) {
             axios.get('http://localhost:8000/deletePost/' + id)
                 .then(response => {
