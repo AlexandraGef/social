@@ -59,19 +59,28 @@
 
                             <h1 class="panel-title pull-left"
                                 style="font-size:30px;">{{$uData->name}}</h1>
-                            </span>
-                            <br><br><br><br>
-                            @if(count($uData->user) == 0 )
+                            <div v-for="group in groups" style="visibility: hidden">
+                            <div v-for="us in group.user" >
+                                <div v-if="{{Auth::user()->id}} == us.id">
+                                    @{{ g = group.id }}
+                                </div>
+                            </div>
+                            </div>
+                            <div v-for="group in groups" >
+                            <div v-if="group.user.length == 0">
                                 <div class="caption form-inline">
                                     <a @click="joinToGroup({{$uData->id}})" class="btn btn-success">Dołącz</a>
                                 </div>
-                            @endif
-                                    <div class="caption form-inline" v-if="g != {{Auth::user()->id}}">
+                            </div>
+                            <div v-else-if="group.user.length != 0">
+                                    <div class="caption form-inline" v-if="g != group.id">
                                         <a @click="joinToGroup({{$uData->id}})" class="btn btn-success">Dołącz</a>
                                     </div>
-                                    <div class="caption form-inline" v-else>
+                                    <div class="caption form-inline" v-else="g == group.id">
                                         <a @click="leaveGroup(g)" class="btn btn-danger">Odejdź</a>
                                     </div>
+                            </div>
+                            </div>
                             <hr>
                             <span class="pull-left">
                         <a href="{{ url('/grupa') }}/{{$uData->slug}}" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-files-o"
