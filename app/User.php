@@ -39,7 +39,7 @@ class User extends \TCG\Voyager\Models\User
     public function profile()
     {
         return $this->hasOne('App\profile');
-    }
+}
 
     public function roles()
     {

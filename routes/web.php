@@ -196,7 +196,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/countGroupMembers/{id}', 'GroupsController@countGroupMembers');
 
     //zgłoszenia
-    Route::get('/zgloszenia', 'NotiController@noti');
+    Route::get('/noti', 'NotiController@noti');
+    Route::get('/zgloszenia', 'NotiController@index');
+    Route::get('/usunZgloszenie/{id}', 'NotiController@deleteNoti');
 
 
 

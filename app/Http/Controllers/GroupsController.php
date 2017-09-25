@@ -91,6 +91,7 @@ class GroupsController extends Controller
     public function deleteGroup($id)
     {
         $delete = DB::table('groups')->where('id', $id)->delete();
+        DB::table('services')->where('group_id',$id)->delete();
 
         return redirect('/grupy')->with('msg', 'Twoja grupa została usunięta');
 
