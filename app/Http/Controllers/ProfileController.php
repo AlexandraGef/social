@@ -168,6 +168,11 @@ class ProfileController extends Controller
 
     public function friends()
     {
+
+        return view('profile.friends');
+    }
+    public function myFriends()
+    {
         $uid = Auth::user()->id;
 
         $friends1 = DB::table('friendships')
@@ -184,9 +189,8 @@ class ProfileController extends Controller
 
         $friends = array_merge($friends1->toArray(), $friends2->toArray());
 
-        return view('profile.friends', compact('friends'));
+        return $friends;
     }
-
     public function requestRemove($id)
     {
         DB::table('friendships')
@@ -207,7 +211,7 @@ class ProfileController extends Controller
             ->where('user_requested', $id)
             ->delete();
 
-      DB::table('friendships')
+        DB::table('friendships')
             ->where('requester', $id)
             ->where('user_requested', $loggedUser)
             ->delete();
@@ -223,6 +227,37 @@ class ProfileController extends Controller
                 ->get();
         }
         return $check;
+    }
+
+    public function friendRemove2($id)
+    {
+        $uid = Auth::user()->id;
+
+        DB::table('friendships')
+            ->where('requester', $uid)
+            ->where('user_requested', $id)
+            ->delete();
+
+        DB::table('friendships')
+            ->where('requester', $id)
+            ->where('user_requested', $uid)
+            ->delete();
+
+        $friends1 = DB::table('friendships')
+            ->leftJoin('users', 'users.id', 'friendships.user_requested')//wysylajacy zaproszenie
+            ->where('status', 1)
+            ->where('requester', $uid)//zalogowany
+            ->get();
+
+        $friends2 = DB::table('friendships')
+            ->leftJoin('users', 'users.id', 'friendships.requester')
+            ->where('status', 1)
+            ->where('user_requested', $uid)
+            ->get();
+
+        $friends = array_merge($friends1->toArray(), $friends2->toArray());
+
+        return $friends;
     }
 
     public function sendMessage(Request $request)

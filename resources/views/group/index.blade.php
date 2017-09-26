@@ -63,27 +63,27 @@
                             <h1 class="panel-title pull-left"
                                 style="font-size:30px;">{{$uData->name}}</h1>
 
-                        <div style="margin-top: 50px">
-                            @foreach($uData->user as $user)
-                                @if($user->id == Auth::user()->id)
-                                   <span style="visibility: hidden;"> @{{ g = {!! $user->id !!} }}</span>
+                            <div style="margin-top: 50px">
+                                @foreach($uData->user as $user)
+                                    @if($user->id == Auth::user()->id)
+                                        <span style="visibility: hidden;"> @{{ g = {!! $user->id !!} }}</span>
+                                    @endif
+                                @endforeach
+                                @if(count($uData->user) == 0)
+                                    <div class="caption form-inline">
+                                        <a @click="joinToGroup2({{$uData->id}})" class="btn btn-success">Dołącz</a>
+                                    </div>
+                                @else
+                                    <div class="caption form-inline v-cloak--hidden" v-if="g != {{Auth::user()->id}}">
+                                        <a @click="joinToGroup2({{$uData->id}})" class="btn btn-success">Dołącz</a>
+                                    </div>
+                                    <div class="caption form-inline" v-else>
+                                        <a @click="leaveGroup2(g,{{$uData->id}})" class="btn btn-danger ">Odejdź</a>
+                                    </div>
                                 @endif
-                            @endforeach
-                            @if(count($uData->user) == 0)
-                                <div class="caption form-inline">
-                                    <a @click="joinToGroup2({{$uData->id}})" class="btn btn-success">Dołącz</a>
-                                </div>
-                            @else
-                                <div class="caption form-inline v-cloak--hidden" v-if="g != {{Auth::user()->id}}" >
-                                    <a  @click="joinToGroup2({{$uData->id}})" class="btn btn-success">Dołącz</a>
-                                </div>
-                                <div  class="caption form-inline" v-else>
-                                    <a  @click="leaveGroup2(g,{{$uData->id}})" class="btn btn-danger ">Odejdź</a>
-                                </div>
-                            @endif
-                        </div>
-                        <hr>
-                        <span class="pull-left">
+                            </div>
+                            <hr>
+                            <span class="pull-left">
                         <a href="{{ url('/grupa') }}/{{$uData->slug}}" class="btn btn-link"
                            style="text-decoration:none;"><i class="fa fa-fw fa-files-o"
                                                             aria-hidden="true"></i> Posty <span
@@ -93,7 +93,9 @@
                                                             aria-hidden="true"></i> Członkowie <span
                                     class="badge"></span></a>
                     </span>
-                        <div class="pull-right">
+                            <div style="text-align: center; margin-top: 30px;"
+                                 v-if="admin != {{Auth::user()->id}} ">
+                                <div class="pull-right">
                                 <span>
                         <a href="{{ url('/zglosGrupe') }}/{{$uData->id}}" class="btn btn-link"
                            style="text-decoration:none;"><i class="fa fa-md fa-exclamation-triangle" aria-hidden="true"
@@ -101,9 +103,10 @@
                                                             title="Zgłoś"></i></a>
                     </span>
 
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </div>
         </div>
         <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 pull-right">
@@ -362,7 +365,7 @@
     </div>
     <!-- Scripts -->
     <script>
-        $('#groupBtn').click(function() {
+        $('#groupBtn').click(function () {
             window.location.href = window.location.href; //This is a possibility
             window.location.reload(); //Another possiblity
             history.go(0);

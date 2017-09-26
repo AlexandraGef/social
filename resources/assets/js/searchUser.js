@@ -29,8 +29,7 @@ const searchUser = new Vue({
     watch: {
         bottom(bottom) {
             if (bottom) {
-                this.Users();
-                this.filteredUsers();
+                tihs.User();
             }
         }
     },
@@ -46,15 +45,18 @@ const searchUser = new Vue({
         window.addEventListener('scroll', () => {
             this.bottom = this.bottomVisible()
     })
-        this.Users()
+        this.User();
     },
     computed: {
         filteredUsers: function () {
+            this.User();
             return this.allUsers.filter((user) => {
                 return user.name.toLowerCase().match(this.search.toLowerCase());
+
             })
         }
     },
+
     methods: {
         bottomVisible() {
             const scrollY = window.scrollY
@@ -63,7 +65,7 @@ const searchUser = new Vue({
             const bottomOfPage = visible + scrollY >= pageHeight
             return bottomOfPage || pageHeight < visible
         },
-        Users() {
+        User() {
             axios.get('http://localhost:8000/uzytkownicy')
                 .then(response => {
                 let api = response.data[i++];
@@ -79,7 +81,7 @@ const searchUser = new Vue({
             };
             this.allUsers.push(apiInfo)
             if (this.bottomVisible()) {
-                this.Users();
+                this.User();
             }
 
         })

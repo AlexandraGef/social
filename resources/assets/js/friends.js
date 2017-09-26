@@ -16,44 +16,35 @@ window.Vue = require('vue');
  */
 
 var i = 0;
-const searchUser = new Vue({
-    el: '#searchUser',
+const friends = new Vue({
+    el: '#friends',
     data: {
         search: '',
-        allUsers: [],
-        checks:[],
-        a: '',
-        b:'',
-        api:'',
+        myFriends: [],
+
+
     },
     watch: {
         bottom(bottom) {
             if (bottom) {
-                this.Users();
-                this.filteredUsers();
+       this.Users();
             }
         }
     },
     created() {
-        axios.get('http://localhost:8000/czyWyslaneZapro')
-            .then(response => {
-                console.log(response);
-                searchUser.checks = response.data;
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
         window.addEventListener('scroll', () => {
             this.bottom = this.bottomVisible()
     })
-        this.Users()
+        this.Users();
     },
     computed: {
-        filteredUsers: function () {
-            return this.allUsers.filter((user) => {
-                return user.name.toLowerCase().match(this.search.toLowerCase());
+        filteredFriends: function () {
+            this.Users();
+            return this.myFriends.filter((friend) => {
+                return friend.name.toLowerCase().match(this.search.toLowerCase());
             })
         }
+
     },
     methods: {
         bottomVisible() {
@@ -64,20 +55,16 @@ const searchUser = new Vue({
             return bottomOfPage || pageHeight < visible
         },
         Users() {
-            axios.get('http://localhost:8000/uzytkownicy')
+            axios.get('http://localhost:8000/moiZnajomi')
                 .then(response => {
                 let api = response.data[i++];
             let apiInfo = {
                 id: api.id,
-                about: api.about,
-                city: api.city,
-                country: api.country,
                 name: api.name,
                 pic: api.pic,
                 slug: api.slug,
-                user_id: api.user_id
             };
-            this.allUsers.push(apiInfo)
+            this.myFriends.push(apiInfo)
             if (this.bottomVisible()) {
                 this.Users();
             }
@@ -86,15 +73,12 @@ const searchUser = new Vue({
 
         },
         deleteFromFriends(id) {
-            axios.get('http://localhost:8000/usun/' + id)
+            axios.get('http://localhost:8000/usunZnajomego/' + id)
                 .then(response => {
                 console.log(response); // show if success
             console.log('Znajomy został usuniety');
             if (response.status === 200) {
-                searchUser.a = '';
-                searchUser.b='';
-                searchUser.checks = response.data;
-
+                friends.myFriends = response.data;
 
 
             }
@@ -103,23 +87,7 @@ const searchUser = new Vue({
                 console.log(error); // run if we have error
             });
         },
-        addFriends(id) {
-            axios.get('http://localhost:8000/dodajZnajomego/' + id)
-                .then(response => {
-                console.log(response); // show if success
-            console.log('Znajomy został usuniety');
-            if (response.status === 200) {
-                searchUser.a = '';
-                searchUser.b='';
-                searchUser.checks = response.data;
 
-
-            }
-        })
-        .catch(function (error) {
-                console.log(error); // run if we have error
-            });
-        },
     }
 
 });

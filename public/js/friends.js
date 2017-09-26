@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 161);
+/******/ 	return __webpack_require__(__webpack_require__.s = 169);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -30268,135 +30268,11 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
-/***/ 161:
+/***/ 169:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(162);
+module.exports = __webpack_require__(170);
 
-
-/***/ }),
-
-/***/ 162:
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-__webpack_require__(10);
-
-window.Vue = __webpack_require__(34);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-var i = 0;
-var searchUser = new Vue({
-    el: '#searchUser',
-    data: {
-        search: '',
-        allUsers: [],
-        checks: [],
-        a: '',
-        b: '',
-        api: ''
-    },
-    watch: {
-        bottom: function bottom(_bottom) {
-            if (_bottom) {
-                tihs.User();
-            }
-        }
-    },
-    created: function created() {
-        var _this = this;
-
-        axios.get('http://localhost:8000/czyWyslaneZapro').then(function (response) {
-            console.log(response);
-            searchUser.checks = response.data;
-        }).catch(function (error) {
-            console.log(error);
-        });
-        window.addEventListener('scroll', function () {
-            _this.bottom = _this.bottomVisible();
-        });
-        this.User();
-    },
-
-    computed: {
-        filteredUsers: function filteredUsers() {
-            var _this2 = this;
-
-            this.User();
-            return this.allUsers.filter(function (user) {
-                return user.name.toLowerCase().match(_this2.search.toLowerCase());
-            });
-        }
-    },
-
-    methods: {
-        bottomVisible: function bottomVisible() {
-            var scrollY = window.scrollY;
-            var visible = document.documentElement.clientHeight;
-            var pageHeight = document.documentElement.scrollHeight;
-            var bottomOfPage = visible + scrollY >= pageHeight;
-            return bottomOfPage || pageHeight < visible;
-        },
-        User: function User() {
-            var _this3 = this;
-
-            axios.get('http://localhost:8000/uzytkownicy').then(function (response) {
-                var api = response.data[i++];
-                var apiInfo = {
-                    id: api.id,
-                    about: api.about,
-                    city: api.city,
-                    country: api.country,
-                    name: api.name,
-                    pic: api.pic,
-                    slug: api.slug,
-                    user_id: api.user_id
-                };
-                _this3.allUsers.push(apiInfo);
-                if (_this3.bottomVisible()) {
-                    _this3.User();
-                }
-            });
-        },
-        deleteFromFriends: function deleteFromFriends(id) {
-            axios.get('http://localhost:8000/usun/' + id).then(function (response) {
-                console.log(response); // show if success
-                console.log('Znajomy został usuniety');
-                if (response.status === 200) {
-                    searchUser.a = '';
-                    searchUser.b = '';
-                    searchUser.checks = response.data;
-                }
-            }).catch(function (error) {
-                console.log(error); // run if we have error
-            });
-        },
-        addFriends: function addFriends(id) {
-            axios.get('http://localhost:8000/dodajZnajomego/' + id).then(function (response) {
-                console.log(response); // show if success
-                console.log('Znajomy został usuniety');
-                if (response.status === 200) {
-                    searchUser.a = '';
-                    searchUser.b = '';
-                    searchUser.checks = response.data;
-                }
-            }).catch(function (error) {
-                console.log(error); // run if we have error
-            });
-        }
-    }
-
-});
 
 /***/ }),
 
@@ -30491,6 +30367,102 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = Axios;
 
+
+/***/ }),
+
+/***/ 170:
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+__webpack_require__(10);
+
+window.Vue = __webpack_require__(34);
+
+/**
+ * Next, we will create a fresh Vue application instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
+
+var i = 0;
+var friends = new Vue({
+    el: '#friends',
+    data: {
+        search: '',
+        myFriends: []
+
+    },
+    watch: {
+        bottom: function bottom(_bottom) {
+            if (_bottom) {
+                this.Users();
+            }
+        }
+    },
+    created: function created() {
+        var _this = this;
+
+        window.addEventListener('scroll', function () {
+            _this.bottom = _this.bottomVisible();
+        });
+        this.Users();
+    },
+
+    computed: {
+        filteredFriends: function filteredFriends() {
+            var _this2 = this;
+
+            this.Users();
+            return this.myFriends.filter(function (friend) {
+                return friend.name.toLowerCase().match(_this2.search.toLowerCase());
+            });
+        }
+
+    },
+    methods: {
+        bottomVisible: function bottomVisible() {
+            var scrollY = window.scrollY;
+            var visible = document.documentElement.clientHeight;
+            var pageHeight = document.documentElement.scrollHeight;
+            var bottomOfPage = visible + scrollY >= pageHeight;
+            return bottomOfPage || pageHeight < visible;
+        },
+        Users: function Users() {
+            var _this3 = this;
+
+            axios.get('http://localhost:8000/moiZnajomi').then(function (response) {
+                var api = response.data[i++];
+                var apiInfo = {
+                    id: api.id,
+                    name: api.name,
+                    pic: api.pic,
+                    slug: api.slug
+                };
+                _this3.myFriends.push(apiInfo);
+                if (_this3.bottomVisible()) {
+                    _this3.Users();
+                }
+            });
+        },
+        deleteFromFriends: function deleteFromFriends(id) {
+            axios.get('http://localhost:8000/usunZnajomego/' + id).then(function (response) {
+                console.log(response); // show if success
+                console.log('Znajomy został usuniety');
+                if (response.status === 200) {
+                    friends.myFriends = response.data;
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        }
+    }
+
+});
 
 /***/ }),
 

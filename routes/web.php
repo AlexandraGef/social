@@ -64,6 +64,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/znajomi', 'ProfileController@friends');
 
+    Route::get('/moiZnajomi', 'ProfileController@myFriends');
+
     Route::get('/checkFriends', 'ProfileController@checkFriends');
 
     Route::get('/odrzuc/{id}', 'ProfileController@requestRemove');
@@ -74,6 +76,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('/usun/{id}', 'ProfileController@friendRemove');
+
+    Route::get('/usunZnajomego/{id}', 'ProfileController@friendRemove2');
 
     Route::get('/home', 'HomeController@index');
 
