@@ -188,7 +188,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
     Route::post('/newGroup', 'GroupsController@createGroup');
     Route::get('/dolaczDoGrupy/{id}', 'GroupsController@joinToGroup');
-    Route::get('/odejdzZGrupy/{id}', 'GroupsController@leaveGroup');
+    Route::get('/odejdzZGrupy/{id}/{groupId}', 'GroupsController@leaveGroup');
     Route::get('/edytujGrupe/{id}', 'GroupsController@editGroupForm');
     Route::get('/zmienZdjecieGrupy/{id}', 'GroupsController@editGroupAv');
     Route::post('/aktualizujGrupe', 'GroupsController@updateGroup');
@@ -201,7 +201,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/noti', 'NotiController@noti');
     Route::get('/zgloszenia', 'NotiController@index');
     Route::get('/usunZgloszenie/{id}', 'NotiController@deleteNoti');
-
 
 
 });

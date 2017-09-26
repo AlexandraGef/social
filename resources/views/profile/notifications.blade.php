@@ -24,7 +24,9 @@
                                                                                            width="60" height="60"
                                                                                            style="margin-right: 10px;">{{$note->name}}
                                             </a>{{$note->note}}</p>
-                                        <a style="cursor:pointer" href="{{ url('/usunPowiadomienie') }}/{{$id}}"><i class="fa fa-trash-o text-primary"  aria-hidden="true"></i>Usuń powiadomienie</a>
+                                        <a style="cursor:pointer" href="{{ url('/usunPowiadomienie') }}/{{$id}}"><i
+                                                    class="fa fa-trash-o text-primary" aria-hidden="true"></i>Usuń
+                                            powiadomienie</a>
                                     </li>
                                 </ul>
                             </div>

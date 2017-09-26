@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\service;
-use DB;
 use Auth;
-use App\notifications;
+use DB;
 
 class NotiController extends Controller
 {
@@ -42,8 +41,8 @@ class NotiController extends Controller
     public function deleteNotifications($id)
     {
         $delete = DB::table('notifications')->where('id', $id)->delete();
-         if($delete)
-        return back()->with('msg','Powiadomienie zostało usunięte.');
+        if ($delete)
+            return back()->with('msg', 'Powiadomienie zostało usunięte.');
     }
 
 
@@ -61,6 +60,6 @@ class NotiController extends Controller
             ->where('notifications.id', $id)
             ->update(['status' => 0]);
 
-        return view('profile.notifications', compact('notes',$notes,'id',$id));
+        return view('profile.notifications', compact('notes', $notes, 'id', $id));
     }
 }

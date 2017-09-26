@@ -258,14 +258,42 @@ const group = new Vue({
                 console.log(error); // run if we have error
             });
         },
-        leaveGroup(id) {
-            axios.get('http://localhost:8000/odejdzZGrupy/' + id)
+        leaveGroup(id,groupid) {
+            axios.get('http://localhost:8000/odejdzZGrupy/' + id +'/'+ groupid)
                 .then(response => {
                 console.log(response);
             this.name = // show if success
                 console.log('Zostałes usunięty z grupy grupy');
             if (response.status === 200) {
                 group.groups = response.data;
+            }
+        })
+        .catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        joinToGroup2(id) {
+            axios.get('http://localhost:8000/dolaczDoGrupy/' + id)
+                .then(response => {
+                console.log(response);
+            this.name = // show if success
+                console.log('Zostałes nowym czlonkiem grupy');
+            if (response.status === 200) {
+                location.reload();
+            }
+        })
+        .catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        leaveGroup2(id,groupid) {
+            axios.get('http://localhost:8000/odejdzZGrupy/' + id +'/'+ groupid)
+                .then(response => {
+                console.log(response);
+            this.name = // show if success
+                console.log('Zostałes usunięty z grupy grupy');
+            if (response.status === 200) {
+                location.reload();
 
             }
         })

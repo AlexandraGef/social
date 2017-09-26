@@ -80,7 +80,7 @@
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                     <div  v-for="post in posts">
-                        <div class="panel panel-default" v-if="{{$uData->user_id}} == post.user.id"
+                        <div v-if="post.group_id == 0" class="panel panel-default" v-if="{{$uData->user_id}} == post.user.id"
                              style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
 
                             <div class="col-md-12" class="panel-body">

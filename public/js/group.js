@@ -58529,15 +58529,43 @@ var group = new Vue({
                 console.log(error); // run if we have error
             });
         },
-        leaveGroup: function leaveGroup(id) {
+        leaveGroup: function leaveGroup(id, groupid) {
             var _this5 = this;
 
-            axios.get('http://localhost:8000/odejdzZGrupy/' + id).then(function (response) {
+            axios.get('http://localhost:8000/odejdzZGrupy/' + id + '/' + groupid).then(function (response) {
                 console.log(response);
                 _this5.name = // show if success
                 console.log('Zostałes usunięty z grupy grupy');
                 if (response.status === 200) {
                     group.groups = response.data;
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        joinToGroup2: function joinToGroup2(id) {
+            var _this6 = this;
+
+            axios.get('http://localhost:8000/dolaczDoGrupy/' + id).then(function (response) {
+                console.log(response);
+                _this6.name = // show if success
+                console.log('Zostałes nowym czlonkiem grupy');
+                if (response.status === 200) {
+                    location.reload();
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        leaveGroup2: function leaveGroup2(id, groupid) {
+            var _this7 = this;
+
+            axios.get('http://localhost:8000/odejdzZGrupy/' + id + '/' + groupid).then(function (response) {
+                console.log(response);
+                _this7.name = // show if success
+                console.log('Zostałes usunięty z grupy grupy');
+                if (response.status === 200) {
+                    location.reload();
                 }
             }).catch(function (error) {
                 console.log(error); // run if we have error

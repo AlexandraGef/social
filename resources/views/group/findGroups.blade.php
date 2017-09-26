@@ -30,16 +30,17 @@
                                         </div>
                                     </div>
                                     <div v-if="group.user.length == 0">
-                                    <div class="caption form-inline" >
-                                        <a @click="joinToGroup(group.id)" class="btn btn-success">Dołącz</a>
-                                    </div>
+                                        <div class="caption form-inline">
+                                            <a @click="joinToGroup(group.id)" class="btn btn-success">Dołącz</a>
+                                        </div>
                                     </div>
                                     <div v-else>
                                         <div class="caption form-inline" v-if="g != group.id">
                                             <a @click="joinToGroup(group.id)" class="btn btn-success">Dołącz</a>
                                         </div>
                                         <div class="caption form-inline" v-else>
-                                            <a @click="leaveGroup({{Auth::user()->id}})" class="btn btn-danger">Odejdź</a>
+                                            <a @click="leaveGroup({{Auth::user()->id}},group.id)"
+                                               class="btn btn-danger">Odejdź</a>
                                         </div>
                                     </div>
                                 </div>

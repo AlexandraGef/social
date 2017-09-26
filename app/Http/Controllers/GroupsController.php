@@ -47,9 +47,9 @@ class GroupsController extends Controller
 
     }
 
-    public function leaveGroup($id)
+    public function leaveGroup($id,$groupId)
     {
-        $delete = DB::table('groupuser')->where('user_id', $id)->delete();
+        $delete = DB::table('groupuser')->where('user_id', $id)->where('group_id', $groupId)->delete();
         if ($delete) {
             $groups = Groups::with('user', 'admins')
                 ->get();
