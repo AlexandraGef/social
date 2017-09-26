@@ -8,11 +8,11 @@
 
 
             <div class="col-md-9">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h4><span style="color:green">{{ucwords(Auth::user()->name)}}</span>, na
+                <div class="panel panel-primary">
+                    <div class="panel-heading"><h4><span style="color:#772953">{{ucwords(Auth::user()->name)}}</span>, na
                             tej stronie znajdują się oferty pracy, które mogą Cię zainteresować</h4></div>
                     <div class="col-md-12">
-                        <div class="col-md-5 pull-left">
+                        <div class="col-md-5 pull-right" style="margin: 20px">
                             <input class="form-control" type="text" v-model="search" placeholder="Szukaj ofert pracy">
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                                     <h5>Wymagana znajomość:</h5>
                                     <li style="list-style-type: none;"> <?php $skills = explode(',', "{{job.skills}}")?>
                                         @foreach($skills as $skill)
-                                            <div style="background-color:#283E4A; color:#fff; margin-top:5px; border-radius:10px; width:100%; float:left; padding:3px 15px 3px 15px">{{$skill}}</div>
+                                            <div style="background-color:#772953; color:#fff; margin-top:5px; border-radius:10px; width:100%; float:left; padding:3px 15px 3px 15px">{{$skill}}</div>
 
                                         @endforeach
                                         <a :href="'{{Config::get('url')}}/szczegolyOferty/' + job.id"

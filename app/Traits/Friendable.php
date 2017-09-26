@@ -18,6 +18,5 @@ trait Friendable
            return $Friendship;
        }
 
-       return 'falied';
     }
 }

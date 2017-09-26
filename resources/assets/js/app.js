@@ -32,6 +32,9 @@ const app = new Vue({
         bottom: false,
         answerData:'',
         api:'',
+        checks:[],
+        a: '',
+        b:'',
 
     },
     watch: {
@@ -42,6 +45,14 @@ const app = new Vue({
         }
     },
     created() {
+        axios.get('http://localhost:8000/czyWyslaneZapro')
+            .then(response => {
+            console.log(response);
+        app.checks = response.data;
+    })
+    .catch(function (error) {
+            console.log(error);
+        });
         window.addEventListener('scroll', () => {
             this.bottom = this.bottomVisible()
         })
@@ -238,6 +249,42 @@ const app = new Vue({
                 console.log(error); // run if we have error
             });
         },
+        deleteFromFriends(id) {
+            axios.get('http://localhost:8000/usun/' + id)
+                .then(response => {
+                console.log(response); // show if success
+            console.log('Znajomy został usuniety');
+            if (response.status === 200) {
+                app.a = '';
+                app.b='';
+                app.checks = response.data;
+
+
+
+            }
+        })
+        .catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        addFriends(id) {
+            axios.get('http://localhost:8000/dodajZnajomego/' + id)
+                .then(response => {
+                console.log(response); // show if success
+            console.log('Zaproszenie zostalo wyslane');
+            if (response.status === 200) {
+                app.a = '';
+                app.b='';
+                app.checks = response.data;
+
+
+            }
+        })
+        .catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+
 
     }
 });

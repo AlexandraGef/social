@@ -175,7 +175,7 @@
                             <div v-for="service in services">
                                 <div v-if="service.post != null">
                                     <div class="col-md-12">
-                                        <div class="panel panel-default" style="border: solid 2px #E95420">
+                                        <div class="panel panel-primary" style="border: solid 2px #E95420">
                                             <div
                                                     style="cursor: pointer" class="text-right text-danger"><a @click="deleteNoti(service.id)"><i
                                                             class="fa fa-trash-o text-danger"

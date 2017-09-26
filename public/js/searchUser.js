@@ -30295,6 +30295,7 @@ window.Vue = __webpack_require__(34);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+var i = 0;
 var searchUser = new Vue({
     el: '#searchUser',
     data: {
@@ -30302,29 +30303,94 @@ var searchUser = new Vue({
         allUsers: [],
         checks: [],
         a: '',
-        b: ''
+        b: '',
+        api: ''
+    },
+    watch: {
+        bottom: function bottom(_bottom) {
+            if (_bottom) {
+                this.Users();
+                this.filteredUsers();
+            }
+        }
     },
     created: function created() {
-        axios.get('http://localhost:8000/uzytkownicy').then(function (response) {
-            console.log(response);
-            searchUser.allUsers = response.data;
-        }).catch(function (error) {
-            console.log(error);
-        });
+        var _this = this;
+
         axios.get('http://localhost:8000/czyWyslaneZapro').then(function (response) {
             console.log(response);
             searchUser.checks = response.data;
         }).catch(function (error) {
             console.log(error);
         });
+        window.addEventListener('scroll', function () {
+            _this.bottom = _this.bottomVisible();
+        });
+        this.Users();
     },
 
     computed: {
         filteredUsers: function filteredUsers() {
-            var _this = this;
+            var _this2 = this;
 
             return this.allUsers.filter(function (user) {
-                return user.name.toLowerCase().match(_this.search.toLowerCase());
+                return user.name.toLowerCase().match(_this2.search.toLowerCase());
+            });
+        }
+    },
+    methods: {
+        bottomVisible: function bottomVisible() {
+            var scrollY = window.scrollY;
+            var visible = document.documentElement.clientHeight;
+            var pageHeight = document.documentElement.scrollHeight;
+            var bottomOfPage = visible + scrollY >= pageHeight;
+            return bottomOfPage || pageHeight < visible;
+        },
+        Users: function Users() {
+            var _this3 = this;
+
+            axios.get('http://localhost:8000/uzytkownicy').then(function (response) {
+                var api = response.data[i++];
+                var apiInfo = {
+                    id: api.id,
+                    about: api.about,
+                    city: api.city,
+                    country: api.country,
+                    name: api.name,
+                    pic: api.pic,
+                    slug: api.slug,
+                    user_id: api.user_id
+                };
+                _this3.allUsers.push(apiInfo);
+                if (_this3.bottomVisible()) {
+                    _this3.Users();
+                }
+            });
+        },
+        deleteFromFriends: function deleteFromFriends(id) {
+            axios.get('http://localhost:8000/usun/' + id).then(function (response) {
+                console.log(response); // show if success
+                console.log('Znajomy został usuniety');
+                if (response.status === 200) {
+                    searchUser.a = '';
+                    searchUser.b = '';
+                    searchUser.checks = response.data;
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        addFriends: function addFriends(id) {
+            axios.get('http://localhost:8000/dodajZnajomego/' + id).then(function (response) {
+                console.log(response); // show if success
+                console.log('Znajomy został usuniety');
+                if (response.status === 200) {
+                    searchUser.a = '';
+                    searchUser.b = '';
+                    searchUser.checks = response.data;
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
             });
         }
     }

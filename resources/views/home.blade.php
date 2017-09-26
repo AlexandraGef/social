@@ -25,7 +25,7 @@
                     </div>
                 @endif
 
-                <div class="panel panel-default" style="box-shadow: 5px 5px 10px #888888;">
+                <div class="panel panel-primary" style="box-shadow: 5px 5px 10px #888888;">
                     <div class="panel-body" style="margin-top: 20px;">
                         <div class="col-xs-1 ">
                             <img class="img-circle" src="{{ Auth::user()->pic }}" width="60" height="60"
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div v-for="post in posts">
-                    <div v-if="post.group_id == 0" class="panel panel-default"
+                    <div v-if="post.group_id == 0" class="panel panel-primary"
                          style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
                         <div class="col-md-12">
                             <div class="col-md-2 pull-left" style="margin-bottom: 10px;">
@@ -155,7 +155,7 @@
                                                 </figure>
                                             </div>
                                             <div class="col-md-10 col-sm-10">
-                                                <div class="panel panel-default arrow left">
+                                                <div class="panel panel-primary arrow left">
                                                     <div class="panel-body">
                                                         <header class="text-left">
                                                             <time class="comment-date"><i class="fa fa-clock-o"></i>@{{
@@ -212,7 +212,7 @@
                                                                                 </figure>
                                                                             </div>
                                                                             <div class="col-md-10 col-sm-10">
-                                                                                <div class="panel panel-default arrow left">
+                                                                                <div class="panel panel-primary arrow left">
                                                                                     <div class="panel-body">
                                                                                         <header class="text-left">
                                                                                             <time class="comment-date">

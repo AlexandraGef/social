@@ -25,7 +25,7 @@
                     @endif
                 @endforeach
                 <div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
-                    <div class="panel panel-default"
+                    <div class="panel panel-primary"
                          style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
                         <div class="panel-body">
                             <div class="media">
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                    <div class="panel panel-default"
+                    <div class="panel panel-primary"
                          style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
                         <div class="panel-body">
                             <div class="col-md-1 pull-right"
@@ -96,7 +96,7 @@
                         <div class="pull-right">
                                 <span>
                         <a href="{{ url('/zglosGrupe') }}/{{$uData->id}}" class="btn btn-link"
-                           style="text-decoration:none;"><i class="fa fa-lg fa-ban" aria-hidden="true"
+                           style="text-decoration:none;"><i class="fa fa-md fa-exclamation-triangle" aria-hidden="true"
                                                             data-toggle="tooltip" data-placement="bottom"
                                                             title="Zgłoś"></i></a>
                     </span>
@@ -113,7 +113,7 @@
                     <span style="visibility: hidden"> @{{ g = {!! $user->id !!} }}</span>
                 @endif
             @endforeach
-            <div class="panel panel-default" style="box-shadow: 5px 5px 10px #888888;"
+            <div class="panel panel-primary" style="box-shadow: 5px 5px 10px #888888;"
                  v-if="g == {{Auth::user()->id}}">
                 <div class="panel-body" style="margin-top: 20px;">
                     <div class="col-xs-12">
@@ -128,7 +128,7 @@
             </div>
             <div v-for="post in posts" v-if="g == {{Auth::user()->id}}">
                 <div v-if="post.group_id == {{$uData ->id}}">
-                    <div class="panel panel-default"
+                    <div class="panel panel-primary"
                          style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
                         <div class="col-md-12" class="panel-body">
                             <div class="col-md-2 pull-left" style="margin-bottom: 10px;">
@@ -247,7 +247,7 @@
                                                 </figure>
                                             </div>
                                             <div class="col-md-10 col-sm-10">
-                                                <div class="panel panel-default arrow left">
+                                                <div class="panel panel-primary arrow left">
                                                     <div class="panel-body">
                                                         <header class="text-left">
                                                             <time class="comment-date"><i
@@ -292,7 +292,7 @@
 
                                                                         <article class="row">
                                                                             <div class="col-md-2 col-sm-2 hidden-xs">
-                                                                                <figure class="thumbnail">
+                                                                                <figure class="thumbnail ">
                                                                                     <a :href="'{{Config::get('url')}}/profil/' + answer.user.slug"><img
                                                                                                 :src="'{{Config::get('url')}}' + answer.user.pic"
                                                                                                 class="img-circle"
@@ -306,7 +306,7 @@
                                                                                 </figure>
                                                                             </div>
                                                                             <div class="col-md-10 col-sm-10">
-                                                                                <div class="panel panel-default arrow left">
+                                                                                <div class="panel panel-primary arrow left">
                                                                                     <div class="panel-body">
                                                                                         <header class="text-left">
                                                                                             <time class="comment-date">

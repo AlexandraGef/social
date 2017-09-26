@@ -19,7 +19,7 @@
         <div clas="row">
             @foreach($userData as $uData)
                 <div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
-                    <div class="panel panel-default"
+                    <div class="panel panel-primary"
                          style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
                         <div class="panel-body">
                             <div class="media">
@@ -52,35 +52,63 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                    <div class="panel panel-default"
+                    <div class="panel panel-primary"
                          style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
                         <div class="panel-body">
-                    <span>
-                        <h1 class="panel-title pull-left" style="font-size:30px;">{{$uData->name}}</h1>
-
-                    </span>
+                            <div>
+                                <h1 class="panel-title pull-left" style="font-size:30px;">{{$uData->name}}</h1>
+                                @if ($uData->user_id != Auth::user()->id )
+                                    <div class="pull-right">
+                                        <div v-for="check in checks" style="visibility: hidden">
+                                            <div v-if="check.user_requested == {{$uData -> user_id}} && check.status == 0 ">
+                                                @{{ a = {!!$uData->user_id !!} }}
+                                            </div>
+                                            <div v-else-if="check.user_requested == {{$uData -> user_id}} && check.status == 1 || check.requester == {{$uData -> user_id}} && check.status == 1 ">
+                                                @{{ b = {!!$uData->user_id !!} }}
+                                            </div>
+                                        </div>
+                                        <div v-if="a != {{$uData -> user_id}} && b != {{$uData -> user_id}}">
+                                            <a @click="addFriends({{$uData -> user_id}})"
+                                               class="btn btn-success">Dodaj do
+                                                znajomych</a>
+                                        </div>
+                                        <div v-else-if="b == {{$uData -> user_id}} && a != {{$uData -> user_id}}">
+                                            <div class="caption form-inline">
+                                                <a @click="deleteFromFriends({{$uData -> user_id}})"
+                                                   class="btn btn-danger">Usuń ze znajomych</a>
+                                            </div>
+                                        </div>
+                                        <div v-else class="text-primary">
+                                            Wysłano zaproszenie do znajomych
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
                             <br><br><br><br>
                             <hr>
                             <span class="pull-left">
-                        <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-files-o"
-                                                                                          aria-hidden="true"></i> Posty <span
-                                    class="badge">@{{posts.length}}</span></a>
-                        <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-users"
-                                                                                          aria-hidden="true"></i> Znajomych <span
-                                    class="badge">@{{friends.length}}</span></a>
-                    </span>
-                            <span class="pull-right">
-                        <a href="{{url('/zglosProfil')}}/{{$uData->id}}" class="btn btn-link"
-                           style="text-decoration:none;"><i class="fa fa-lg fa-ban" aria-hidden="true"
-                                                            data-toggle="tooltip" data-placement="bottom"
-                                                            title="Zgłoś"></i></a>
-                    </span>
+    <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-files-o"
+                                                                      aria-hidden="true"></i> Posty <span
+                class="badge">@{{posts.length}}</span></a>
+    <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-users"
+                                                                      aria-hidden="true"></i> Znajomych <span
+                class="badge">@{{friends.length}}</span></a>
+</span>
+                            @if ($uData->user_id != Auth::user()->id )
+                                <span class="pull-right">
+    <a href="{{url('/zglosProfil')}}/{{$uData->id}}" class="btn btn-link"
+       style="text-decoration:none;"><i class="fa fa-md fa-exclamation-triangle" aria-hidden="true"
+                                        data-toggle="tooltip" data-placement="bottom"
+                                        title="Zgłoś"></i></a>
+</span>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                    <div  v-for="post in posts">
-                        <div v-if="post.group_id == 0" class="panel panel-default" v-if="{{$uData->user_id}} == post.user.id"
+                    <div v-for="post in posts">
+                        <div v-if="post.group_id == 0 && {{$uData->user_id}} == post.user.id"
+                             class="panel panel-primary"
                              style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
 
                             <div class="col-md-12" class="panel-body">
@@ -132,9 +160,9 @@
                                             <div class="modal-body" style="margin-bottom: 30px">
                                                 <form method="get" enctype=multipart/form-data"
                                                       v-on:submit.prevent="editPost(post.id)">
-                                        <textarea id="editBox" v-bind:placeholder="post.content" v-model="editContent"
-                                                  rows="5"
-                                                  style="min-width: 100%"></textarea><br><br>
+                    <textarea id="editBox" v-bind:placeholder="post.content" v-model="editContent"
+                              rows="5"
+                              style="min-width: 100%"></textarea><br><br>
                                                     <input type="submit" class="btn btn-success pull-right"
                                                            value="Edytuj">
                                                 </form>
@@ -209,11 +237,11 @@
                                                                 </time>
                                                             </header>
                                                             <header class="text-right">
-                                                <span style="cursor: pointer"
-                                                      v-if="comment.user_id == '{{Auth::user()->id}}' || '{{ Auth::user()->role_id}}' == 4"><a
-                                                            @click="deleteComment(comment.id)"><i
-                                                                class="fa fa-trash-o text-primary"
-                                                                aria-hidden="true"></i></a></span>
+                            <span style="cursor: pointer"
+                                  v-if="comment.user_id == '{{Auth::user()->id}}' || '{{ Auth::user()->role_id}}' == 4"><a
+                                        @click="deleteComment(comment.id)"><i
+                                            class="fa fa-trash-o text-primary"
+                                            aria-hidden="true"></i></a></span>
                                                                 <span style="cursor: pointer"
                                                                       v-if="comment.user_id != '{{Auth::user()->id}}' || '{{ Auth::user()->role_id}}' == 4"><a
                                                                             :href="'{{Config::get('url')}}/zglosKomentarz/' + comment.id"><i
@@ -234,8 +262,8 @@
                                                                 <div v-bind:id="['answers'+ comment.id]"
                                                                      class="panel-collapse collapse"
                                                                      style="margin-top:15px">
-                                                        <textarea class="form-control"
-                                                                  v-model="answerData"></textarea><br>
+                                    <textarea class="form-control"
+                                              v-model="answerData"></textarea><br>
                                                                     <button style="margin-bottom: 15px"
                                                                             class="btn btn-success pull-right btn-xs"
                                                                             @click="addAnswer(comment.id)">Odpowiedz
@@ -270,11 +298,11 @@
                                                                                                 </time>
                                                                                             </header>
                                                                                             <header class="text-right">
-                                                <span style="cursor: pointer"
-                                                      v-if="answer.user_id == '{{Auth::user()->id}}' || '{{ Auth::user()->role_id}}' == 4"><a
-                                                            @click="deleteAnswer(answer.id)"><i
-                                                                class="fa fa-trash-o text-primary"
-                                                                aria-hidden="true"></i></a></span>
+                            <span style="cursor: pointer"
+                                  v-if="answer.user_id == '{{Auth::user()->id}}' || '{{ Auth::user()->role_id}}' == 4"><a
+                                        @click="deleteAnswer(answer.id)"><i
+                                            class="fa fa-trash-o text-primary"
+                                            aria-hidden="true"></i></a></span>
                                                                                                 <span style="cursor: pointer"
                                                                                                       v-if="answer.user_id != '{{Auth::user()->id}}' || '{{ Auth::user()->role_id}}' == 4"><a
                                                                                                             :href="'{{Config::get('url')}}/zglosOdpowiedz/' + answer.id"><i

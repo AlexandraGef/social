@@ -58291,6 +58291,10 @@ module.exports = __webpack_require__(156);
 /* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var _data;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -58310,7 +58314,7 @@ window.Vue = __webpack_require__(34);
 var i = 0;
 var app = new Vue({
     el: '#app',
-    data: {
+    data: (_data = {
         posts: [],
         friends: [],
         content: '',
@@ -58321,9 +58325,9 @@ var app = new Vue({
         commentData: '',
         bottom: false,
         answerData: '',
-        api: ''
-
-    },
+        api: '',
+        checks: []
+    }, _defineProperty(_data, 'a', ''), _defineProperty(_data, 'b', ''), _data),
     watch: {
         bottom: function bottom(_bottom) {
             if (_bottom) {
@@ -58334,6 +58338,12 @@ var app = new Vue({
     created: function created() {
         var _this = this;
 
+        axios.get('http://localhost:8000/czyWyslaneZapro').then(function (response) {
+            console.log(response);
+            app.checks = response.data;
+        }).catch(function (error) {
+            console.log(error);
+        });
         window.addEventListener('scroll', function () {
             _this.bottom = _this.bottomVisible();
         });
@@ -58495,6 +58505,32 @@ var app = new Vue({
                 console.log('Odpowiedz została usunieta');
                 if (response.status === 200) {
                     app.posts = response.data;
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        deleteFromFriends: function deleteFromFriends(id) {
+            axios.get('http://localhost:8000/usun/' + id).then(function (response) {
+                console.log(response); // show if success
+                console.log('Znajomy został usuniety');
+                if (response.status === 200) {
+                    app.a = '';
+                    app.b = '';
+                    app.checks = response.data;
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        addFriends: function addFriends(id) {
+            axios.get('http://localhost:8000/dodajZnajomego/' + id).then(function (response) {
+                console.log(response); // show if success
+                console.log('Zaproszenie zostalo wyslane');
+                if (response.status === 200) {
+                    app.a = '';
+                    app.b = '';
+                    app.checks = response.data;
                 }
             }).catch(function (error) {
                 console.log(error); // run if we have error

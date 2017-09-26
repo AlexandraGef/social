@@ -5,7 +5,7 @@
         <div clas="row">
             @include('layouts.partials.sidebar')
             <div class="col-md-9">
-                <div class="panel panel-default">
+                <div class="panel panel-primary">
                     <div class="panel-heading">{{ucwords( Auth::user()->name )}}</div>
 
                     <div class="panel-body text-center">
@@ -34,13 +34,13 @@
                                 <div class="caption">
                                     <p>@{{uList.country}} - @{{uList.city}}</p>
                                     <div v-if="a != uList.id && b != uList.id">
-                                        <a :href="'{{Config::get('url')}}/dodajZnajomego/' + uList.id"
+                                        <a @click="addFriends(uList.id)"
                                            class="btn btn-success">Dodaj do
                                             znajomych</a>
                                     </div>
                                     <div v-else-if="b == uList.id && a != uList.id">
                                         <div class="caption form-inline">
-                                            <a :href="'{{Config::get('url')}}/usun/' + uList.id" class="btn btn-danger">Usuń ze znajomych</a>
+                                            <a  @click="deleteFromFriends(uList.id)" class="btn btn-danger">Usuń ze znajomych</a>
                                         </div>
                                     </div>
                                     <div v-else>

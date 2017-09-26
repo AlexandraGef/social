@@ -6,7 +6,7 @@
             @include('layouts.partials.sidebar')
             <div class="col-md-9">
                 @foreach($groups as $group)
-                    <div class="panel panel-default">
+                    <div class="panel panel-primary">
                         <div class="panel-heading">{{ $group->name }}</div>
                         <div class="panel-body text-center">
                             @if(session()->has('msg'))

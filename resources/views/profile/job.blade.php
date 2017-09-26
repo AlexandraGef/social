@@ -9,7 +9,7 @@
 
 
             <div class="col-md-9">
-                <div class="panel panel-default">
+                <div class="panel panel-primary">
                     <div class="panel-heading">{{Auth::user()->name}}, może zainteresujesz sie tą ofertą pracy
                         <br>
                         <a href="{{url('praca')}}">Wszystkie oferty pracy</a>

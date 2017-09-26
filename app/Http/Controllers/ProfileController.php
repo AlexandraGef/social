@@ -113,8 +113,18 @@ class ProfileController extends Controller
     public function sendRequest($id)
     {
         Auth::user()->addFriend($id);
+        $loggedUser = Auth::user()->id;
+        $allUsers = DB::table('profiles')
+            ->leftJoin('users', 'users.id', '=', 'profiles.user_id')
+            ->where('user_id', '!=', $loggedUser)->get();
 
-        return back();
+        foreach ($allUsers as $user) {
+            $check = DB::table('friendships')
+                ->where('requester', $loggedUser)
+                ->orWhere('user_requested', $loggedUser)
+                ->get();
+        }
+        return $check;
 
     }
 
@@ -197,12 +207,22 @@ class ProfileController extends Controller
             ->where('user_requested', $id)
             ->delete();
 
-        DB::table('friendships')
+      DB::table('friendships')
             ->where('requester', $id)
             ->where('user_requested', $loggedUser)
             ->delete();
 
-        return back()->with('msg', 'Usunięto użytkownika ze znajomych');
+        $allUsers = DB::table('profiles')
+            ->leftJoin('users', 'users.id', '=', 'profiles.user_id')
+            ->where('user_id', '!=', $loggedUser)->get();
+
+        foreach ($allUsers as $user) {
+            $check = DB::table('friendships')
+                ->where('requester', $loggedUser)
+                ->orWhere('user_requested', $loggedUser)
+                ->get();
+        }
+        return $check;
     }
 
     public function sendMessage(Request $request)

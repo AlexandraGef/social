@@ -5,7 +5,7 @@
         <div clas="row">
             @include('layouts.partials.sidebar')
             <div class="col-md-9">
-                <div class="panel panel-default">
+                <div class="panel panel-primary">
                     <div class="panel-body">
                         <form class="form-horizontal" action="{{url('/newGroup')}}" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
