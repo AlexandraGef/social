@@ -19,6 +19,12 @@
     a.anav {
         height: 60px;
     }
+
+    .scrollable-menu {
+        height: auto;
+        max-height: 300px;
+        overflow-x: hidden;
+    }
 </style>
 
 <div>
@@ -92,7 +98,7 @@
                                     ->get();
                                 ?>
 
-                                <ul class="dropdown-menu" role="menu" style="width:320px">
+                                <ul class="dropdown-menu scrollable-menu" role="menu" style="width:320px">
                                     @foreach($notes as $note)
                                         <a class="anav" href="{{url('/powiadomienia')}}/{{$note->id}}">
                                             @if($note->status==1)
@@ -106,9 +112,7 @@
                                                                  style="width:50px; padding:5px; background:#fff; border:1px solid #eee"
                                                                  class="img-rounded">
                                                         </div>
-
                                                         <div class="col-md-10">
-
                                                             <b style="color:orangered; font-size:90%">{{ucwords($note->name)}}</b>
                                                             <span style="color:#000; font-size:90%">{{$note->note}}</span>
                                                             <br/>
@@ -118,7 +122,6 @@
                                                                 at {{date('H: i', strtotime($note->created_at))}}
                                                             </small>
                                                         </div>
-
                                                     </div>
                                                 </li></a>
                                     @endforeach

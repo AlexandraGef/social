@@ -10,7 +10,7 @@
 
                     <div class="panel-body text-center">
                         @if(session()->has('msg'))
-                            <div class="alert alert-success">{{session()->get('msg')}}</div>
+                            <div class="alert alert-info">{{session()->get('msg')}}</div>
                         @endif
                         <h3>Powiadomienia</h3><br>
                         @foreach($notes as $note)
@@ -24,7 +24,7 @@
                                                                                            width="60" height="60"
                                                                                            style="margin-right: 10px;">{{$note->name}}
                                             </a>{{$note->note}}</p>
-
+                                        <a style="cursor:pointer" href="{{ url('/usunPowiadomienie') }}/{{$id}}"><i class="fa fa-trash-o text-primary"  aria-hidden="true"></i>Usuń powiadomienie</a>
                                     </li>
                                 </ul>
                             </div>

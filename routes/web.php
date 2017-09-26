@@ -68,7 +68,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/odrzuc/{id}', 'ProfileController@requestRemove');
 
-    Route::get('/powiadomienia/{id}', 'ProfileController@notifications');
+    Route::get('/powiadomienia/{id}', 'NotiController@notifications');
+
+    Route::get('/usunPowiadomienie/{id}', 'NotiController@deleteNotifications');
 
 
     Route::get('/usun/{id}', 'ProfileController@friendRemove');

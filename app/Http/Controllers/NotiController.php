@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\service;
 use DB;
+use Auth;
+use App\notifications;
 
 class NotiController extends Controller
 {
@@ -35,5 +37,30 @@ class NotiController extends Controller
             return $service;
 
         }
+    }
+
+    public function deleteNotifications($id)
+    {
+        $delete = DB::table('notifications')->where('id', $id)->delete();
+         if($delete)
+        return back()->with('msg','Powiadomienie zostało usunięte.');
+    }
+
+
+    public function notifications($id)
+    {
+        $uid = Auth::user()->id;
+        $notes = DB::table('notifications')
+            ->leftJoin('users', 'users.id', 'notifications.user_logged')
+            ->where('notifications.id', $id)
+            ->where('user_hero', $uid)
+            ->orderBy('notifications.created_at', 'desc')
+            ->get();
+
+        $updateNote = DB::table('notifications')
+            ->where('notifications.id', $id)
+            ->update(['status' => 0]);
+
+        return view('profile.notifications', compact('notes',$notes,'id',$id));
     }
 }

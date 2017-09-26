@@ -187,22 +187,6 @@ class ProfileController extends Controller
         return back()->with('msg', 'Odrzucono zaproszenie');
     }
 
-    public function notifications($id)
-    {
-        $uid = Auth::user()->id;
-        $notes = DB::table('notifications')
-            ->leftJoin('users', 'users.id', 'notifications.user_logged')
-            ->where('notifications.id', $id)
-            ->where('user_hero', $uid)
-            ->orderBy('notifications.created_at', 'desc')
-            ->get();
-
-        $updateNote = DB::table('notifications')
-            ->where('notifications.id', $id)
-            ->update(['status' => 0]);
-
-        return view('profile.notifications', compact('notes'));
-    }
 
     public function friendRemove($id)
     {
