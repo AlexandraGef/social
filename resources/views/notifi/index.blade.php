@@ -2,58 +2,52 @@
 
 @section('content')
     <style>
-        .nav.nav-justified > li > a {
-            position: relative;
+        .nav-tabs {
+            border-bottom: 2px solid #DDD;
         }
 
-        .nav.nav-justified > li > a:hover,
-        .nav.nav-justified > li > a:focus {
-            background-color: transparent;
+        .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+            border-width: 0;
         }
 
-        .nav.nav-justified > li > a > .quote {
+        .nav-tabs > li > a {
+            border: none;
+            color: #666;
+        }
+
+        .nav-tabs > li.active > a, .nav-tabs > li > a:hover {
+            border: none;
+            color: #E95420 !important;
+            background: transparent;
+        }
+
+        .nav-tabs > li > a::after {
+            content: "";
+            background: #E95420;
+            height: 2px;
             position: absolute;
-            right: 20px;
-            bottom: 0;
-            opacity: 0;
-            width: 30px;
-            height: 30px;
-            padding: 5px;
-            background-color: #E95420;
-            border-radius: 15px;
+            width: 100%;
+            left: 0px;
+            bottom: -1px;
+            transition: all 250ms ease 0s;
+            transform: scale(0);
+        }
+
+        .nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after {
+            transform: scale(1);
+        }
+
+        .tab-nav > li > a::after {
+            background: #E95420 none repeat scroll 0% 0%;
             color: #fff;
         }
 
-        .nav.nav-justified > li.active > a > .quote {
-            opacity: 1;
+        .tab-pane {
+            padding: 15px 0;
         }
 
-        .nav.nav-justified > li > a > img {
-            box-shadow: 0 0 0 5px #E95420;
-        }
-
-        .nav.nav-justified > li > a > img {
-            max-width: 150px;
-            min-height:90px;
-            opacity: .3;
-            -webkit-transform: scale(.8, .8);
-            transform: scale(.8, .8);
-            -webkit-transition: all 0.3s 0s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transition: all 0.3s 0s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .nav.nav-justified > li.active > a > img,
-        .nav.nav-justified > li:hover > a > img,
-        .nav.nav-justified > li:focus > a > img {
-            opacity: 1;
-            -webkit-transform: none;
-            transform: none;
-            -webkit-transition: all 0.3s 0s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transition: all 0.3s 0s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .tab-pane .tab-inner {
-            padding: 30px 0 20px;
+        .tab-content {
+            padding: 20px
         }
     </style>
     <div class="container" id="notifi">
@@ -61,30 +55,30 @@
             @include('layouts.partials.sidebar')
             <div class="col-md-9" role="tabpanel">
                 <!-- Nav tabs -->
-                <ul class="nav nav-justified" id="nav-tabs" role="tablist">
+                <ul class="nav nav-tabs" id="nav-tabs" role="tablist">
                     <li role="presentation" class="active">
                         <a href="#profil" aria-controls="profil" role="tab" data-toggle="tab">
-                            <img class="img-circle" src="http://localhost:8000/img/profile.png" alt="profile"/>
+                           Profile
                         </a>
                     </li>
                     <li role="presentation">
                         <a href="#grupy" aria-controls="grupy" role="tab" data-toggle="tab">
-                            <img class="img-circle" src="http://localhost:8000/img/grupy.png" alt="grupy"/>
+                            Grupy
                         </a>
                     </li>
                     <li role="presentation">
                         <a href="#posty" aria-controls="posty" role="tab" data-toggle="tab">
-                            <img class="img-circle" src="http://localhost:8000/img/posty.png" alt="posty"/>
+                          Posty
                         </a>
                     </li>
                     <li role="presentation">
                         <a href="#komentarze" aria-controls="komentarze" role="tab" data-toggle="tab">
-                            <img class="img-circle" src="http://localhost:8000/img/komentarze.png" alt="kometarze"/>
+                           Komentarze
                         </a>
                     </li>
                     <li role="presentation">
                         <a href="#odpowiedzi" aria-controls="odpowiedzi" role="tab" data-toggle="tab">
-                            <img class="img-circle" src="http://localhost:8000/img/odpowiedzi.png" alt="odpowiedzi"/>
+                            Odpowiedzi
                         </a>
                     </li>
                 </ul>
