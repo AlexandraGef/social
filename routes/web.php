@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 /*
- * gosc
+ *GUEST
  */
 
 
@@ -37,7 +37,7 @@ Route::group(['middleware' => 'guest'], function () {
 
 Auth::routes();
 /*
- * uzytkownik
+ * USER
  */
 Route::group(['middleware' => 'auth'], function () {
 
@@ -74,7 +74,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/usunPowiadomienie/{id}', 'NotiController@deleteNotifications');
 
-
     Route::get('/usun/{id}', 'ProfileController@friendRemove');
 
     Route::get('/usunZnajomego/{id}', 'ProfileController@friendRemove2');
@@ -88,7 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/dodajPost', 'PostsController@addPost');
 
     Route::post('/edytujPost', 'PostsController@editPost');
-
+    //NOTIFICATION
     Route::get('/zglosPost/{id}', function ($id) {
 
         return view('notifi.addNotiPosts', compact('id', $id));
@@ -97,37 +96,29 @@ Route::group(['middleware' => 'auth'], function () {
 
         return view('notifi.addNotiComment', compact('id', $id));
     });
-
     Route::get('/zglosProfil/{id}', function ($id) {
 
         return view('notifi.addNotiProfile', compact('id', $id));
     });
-
     Route::get('/zglosOdpowiedz/{id}', function ($id) {
 
         return view('notifi.addNotiAnswer', compact('id', $id));
     });
-
     Route::get('/zglosGrupe/{id}', function ($id) {
 
         return view('notifi.addNotiGroup', compact('id', $id));
     });
-
     Route::post('/dodajZgloszeniePostu', 'PostsController@addNotiPost');
-
     Route::post('/dodajZgloszenieKomentarza', 'PostsController@addNotiCom');
-
     Route::post('/dodajZgloszenieOdpowiedzi', 'PostsController@addNotiAnswer');
-
     Route::post('/dodajZgloszenieProfilu', 'ProfileController@addNotiProfile');
-
     Route::post('/dodajZgloszenieGrupy', 'GroupsController@addNotiGroup');
-
-    Route::get('/usunGrupe/{id}', 'GroupsController@deleteGroup');
-    //delete posts
     Route::get('/deletePost/{id}', 'PostsController@deletePost');
+    Route::get('/noti', 'NotiController@noti');
+    Route::get('/zgloszenia', 'NotiController@index');
+    Route::get('/usunZgloszenie/{id}', 'NotiController@deleteNoti');
     /*
-     * wiadomosci
+     *MESSAGES
      */
     Route::get('/wiadomosci', function () {
         return view('messages');
@@ -159,7 +150,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/noweWiadomosci', 'ProfileController@newMessage');
     Route::post('/wyslijNowaWiadomosc', 'ProfileController@sendNewMessage');
     /*
-     * oferty dla uzytkownikow
+     * JOBS OFFERS FOR USERS
      */
     Route::get('/praca', 'profileController@jobs');
     Route::get('/jobs', function () {
@@ -170,11 +161,11 @@ Route::group(['middleware' => 'auth'], function () {
     });
     Route::get('/szczegolyOferty/{id}', 'profileController@job');
     /*
-     * polubienia
+     * LIKES
      */
     Route::get('/lubie/{id}', 'PostsController@likePost');
     Route::get('/nielubie/{id}', 'PostsController@unlikePost');
-    //comments
+    //COMMENTS
     Route::post('dodajKomentarz', 'PostsController@addComment');
     Route::get('usunKomentarz/{id}', 'PostsController@deleteComment');
 
@@ -198,18 +189,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/aktualizujGrupe', 'GroupsController@updateGroup');
     Route::post('/wgrajAvatarGrupy', 'GroupsController@uploadAvatar');
     Route::post('/dodajPostGrupy', 'GroupsController@addGroupPost');
-    Route::get('/czlonkowieGrupy/{slug}', 'GroupsController@groupMembers');
-    Route::get('/countGroupMembers/{id}', 'GroupsController@countGroupMembers');
-
-    //zgłoszenia
-    Route::get('/noti', 'NotiController@noti');
-    Route::get('/zgloszenia', 'NotiController@index');
-    Route::get('/usunZgloszenie/{id}', 'NotiController@deleteNoti');
-
-
+    Route::get('/czlonkowieGrupy/{id}', 'GroupsController@groupMembers');
+    Route::get('/dolaczDoGrupy/{id}', 'GroupsController@joinToGroup');
+    Route::get('/mojeGrupy', 'GroupsController@myGroups');
 });
 /*
- * firma
+ * COMPANY
  */
 Route::group(['prefix' => 'firma', 'middleware' => ['auth', 'company']], function () {
     Route::get('/', 'companyController@index');

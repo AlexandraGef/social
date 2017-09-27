@@ -25,11 +25,26 @@ class GroupsController extends Controller
 
     public function group($slug)
     {
+        $members[] = 0;
         $groups = Groups::with('user', 'admins')
             ->where('slug', $slug)
             ->get();
-
         return view('group.index', compact('groups'));
+    }
+
+    public function groupMembers($id)
+    {
+        $groupMembers = DB::table('groupuser')->where('group_id', $id)->get();
+
+        foreach ($groupMembers as $user) {
+
+            if ($us = DB::table('users')->where('id', $user->user_id)->get()) {
+
+                $members[] = $us;
+            }
+
+        }
+        return $members;
     }
 
     public function joinToGroup($id)
@@ -50,6 +65,7 @@ class GroupsController extends Controller
     public function leaveGroup($id,$groupId)
     {
         $delete = DB::table('groupuser')->where('user_id', $id)->where('group_id', $groupId)->delete();
+        DB::table('groupadmins')->where('user_id', $id)->where('group_id', $groupId)->delete();
         if ($delete) {
             $groups = Groups::with('user', 'admins')
                 ->get();
@@ -151,33 +167,6 @@ class GroupsController extends Controller
         }
     }
 
-    public function groupMembers($slug)
-    {
-
-        $id = DB::table('groups')->where('slug', $slug)->value('id');
-
-        $groupMembers = DB::table('groupuser')->where('group_id', $id)->get();
-
-        foreach ($groupMembers as $user) {
-
-            if ($us = DB::table('users')->where('id', $user->user_id)->get()) {
-
-                $members[] = $us;
-            }
-
-        }
-
-        return view('group.groupMembers', compact('members'));
-    }
-
-    public function countGroupMembers($id)
-    {
-        $groupMembers = DB::table('groupuser')->where('group_id', $id)->get();
-        $countMembers = count($groupMembers);
-
-        return $countMembers;
-    }
-
     protected function createGroup(Request $request)
     {
         $name = $request->name;
@@ -194,5 +183,4 @@ class GroupsController extends Controller
 
         return redirect('/grupy')->with('msg', 'Twoja grupa została pomyślnie utworzona !');
     }
-
 }

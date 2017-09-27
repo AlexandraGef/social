@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 169);
+/******/ 	return __webpack_require__(__webpack_require__.s = 167);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -58293,17 +58293,16 @@ module.exports = {"version":"2017b","zones":["Africa/Abidjan|LMT GMT|g.8 0|01|-2
 /* 164 */,
 /* 165 */,
 /* 166 */,
-/* 167 */,
-/* 168 */,
-/* 169 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(170);
+module.exports = __webpack_require__(168);
 
 
 /***/ }),
-/* 170 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
+
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -58315,43 +58314,50 @@ __webpack_require__(10);
 
 window.Vue = __webpack_require__(34);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-// register globally
 var i = 0;
-var notifi = new Vue({
-    el: '#notifi',
+var groupIndex = new Vue({
+    el: '#groupIndex',
     data: {
-        services: [],
-        api: '',
-        msgPost: '',
-        msgCom: '',
-        msgAns: '',
-        msg: '',
-        seen: false,
-        seenPost: false,
-        seenCom: false,
-        seenAns: false
+        posts: [],
+        content: '',
+        editContent: '',
+        postId: '',
+        a: '',
+        successMsg: '',
+        commentData: '',
+        bottom: false,
+        answerData: '',
+        g: 0,
+        admin: 0,
+        members: [],
+        groupMem: [],
+        group: [],
+        checks: [],
+        c: '',
+        b: ''
     },
     watch: {
         bottom: function bottom(_bottom) {
             if (_bottom) {
                 this.Post();
+                this.member();
             }
         }
     },
     created: function created() {
         var _this = this;
 
+        axios.get('http://localhost:8000/czyWyslaneZapro').then(function (response) {
+            console.log(response);
+            groupIndex.checks = response.data;
+        }).catch(function (error) {
+            console.log(error);
+        });
         window.addEventListener('scroll', function () {
             _this.bottom = _this.bottomVisible();
         });
-        this.not();
+        this.Post();
     },
-
 
     methods: {
         bottomVisible: function bottomVisible() {
@@ -58361,42 +58367,141 @@ var notifi = new Vue({
             var bottomOfPage = visible + scrollY >= pageHeight;
             return bottomOfPage || pageHeight < visible;
         },
-        not: function not() {
+        Post: function Post() {
             var _this2 = this;
 
-            axios.get('http://localhost:8000/noti').then(function (response) {
+            axios.get('http://localhost:8000/posty').then(function (response) {
                 var api = response.data[i++];
                 var apiInfo = {
                     id: api.id,
-                    excuse: api.excuse,
+                    user_id: api.user_id,
+                    group_id: api.group_id,
+                    content: api.content,
+                    status: api.status,
                     created_at: api.created_at,
                     updated_at: api.updated_at,
                     user: api.user,
-                    profile: api.profile,
-                    post: api.post,
-                    comment: api.comment,
-                    answer: api.answer,
-                    group: api.group
+                    likes: api.likes,
+                    comments: api.comments
                 };
                 Vue.filter('myOwnTime', function (value) {
                     var moment = __webpack_require__(150);
                     moment.locale('pl');
                     return moment.utc(value).utcOffset("-240").fromNow();
                 });
-                _this2.services.push(apiInfo);
+
+                _this2.posts.push(apiInfo);
                 if (_this2.bottomVisible()) {
-                    _this2.not();
+                    _this2.Post();
                 }
             });
+        },
+        member: function member() {
+            var api = groupIndex.groupMem[i++];
+            var apiInfo = {
+                id: api.id,
+                city: api.city,
+                name: api.name,
+                pic: api.pic,
+                slug: api.slug
+            };
+
+            this.group.push(apiInfo);
+            if (this.bottomVisible()) {
+                this.member();
+            }
         },
         deletePost: function deletePost(id) {
             axios.get('http://localhost:8000/deletePost/' + id).then(function (response) {
                 console.log(response); // show if success
                 console.log('Post został usuniety');
                 if (response.status === 200) {
-                    notifi.services = response.data;
-                    notifi.seenPost = true;
-                    notifi.msgPost = 'Post został usunięty';
+                    groupIndex.posts = response.data;
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        groupMembers: function groupMembers(id) {
+            var _this3 = this;
+
+            axios.get('http://localhost:8000/czlonkowieGrupy/' + id).then(function (response) {
+                console.log(response); // show if success
+                console.log('Lista czlonkow');
+                if (response.status === 200) {
+                    groupIndex.members = response.data;
+                    groupIndex.members.forEach(function (obj) {
+                        groupIndex.groupMem = obj;
+                    });
+
+                    _this3.member();
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        editPost: function editPost(id) {
+            axios.post('http://localhost:8000/edytujPost', {
+                editContent: this.editContent,
+                id: id
+            }).then(function (response) {
+                console.log('Post został zedytowany');
+                if (response.status === 200) {
+                    groupIndex.posts = response.data;
+                    groupIndex.editContent = '';
+                    groupIndex.id = '';
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        addPostGroup: function addPostGroup(id) {
+            axios.post('http://localhost:8000/dodajPostGrupy', {
+                content: this.content,
+                id: id
+            }).then(function (response) {
+                console.log('Post został zedytowany');
+                if (response.status === 200) {
+                    groupIndex.posts = response.data;
+                    groupIndex.content = '';
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        likePost: function likePost(id) {
+            axios.get('http://localhost:8000/lubie/' + id).then(function (response) {
+                console.log(response); // show if success
+                console.log('Post został polubiony');
+                if (response.status === 200) {
+                    groupIndex.posts = response.data;
+                    groupIndex.a = id;
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        unlikePost: function unlikePost(id) {
+            axios.get('http://localhost:8000/nielubie/' + id).then(function (response) {
+                console.log(response); // show if success
+                console.log('Post został polubiony');
+                if (response.status === 200) {
+                    groupIndex.posts = response.data;
+                    groupIndex.a = 0;
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        addComment: function addComment(id) {
+            axios.post('http://localhost:8000/dodajKomentarz', {
+                comment: this.commentData,
+                id: id
+            }).then(function (response) {
+                console.log('saved successfully'); // show if success
+                if (response.status === 200) {
+                    groupIndex.posts = response.data;
+                    groupIndex.commentData = '';
                 }
             }).catch(function (error) {
                 console.log(error); // run if we have error
@@ -58407,9 +58512,21 @@ var notifi = new Vue({
                 console.log(response); // show if success
                 console.log('Komentarz został usuniety');
                 if (response.status === 200) {
-                    notifi.services = response.data;
-                    notifi.seenCom = true;
-                    notifi.msgCom = 'Komentarz został usunięty';
+                    groupIndex.posts = response.data;
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        addAnswer: function addAnswer(id) {
+            axios.post('http://localhost:8000/dodajOdpowiedz', {
+                comment: this.answerData,
+                id: id
+            }).then(function (response) {
+                console.log('saved successfully'); // show if success
+                if (response.status === 200) {
+                    groupIndex.posts = response.data;
+                    groupIndex.answerData = '';
                 }
             }).catch(function (error) {
                 console.log(error); // run if we have error
@@ -58418,32 +58535,70 @@ var notifi = new Vue({
         deleteAnswer: function deleteAnswer(id) {
             axios.get('http://localhost:8000/usunOdpowiedz/' + id).then(function (response) {
                 console.log(response); // show if success
-                console.log('Odpowiedź została usunieta');
+                console.log('Odpowiedz została usunieta');
                 if (response.status === 200) {
-
-                    notifi.services = response.data;
-                    notifi.seenAns = true;
-                    notifi.msgAns = 'Odpowiedź została usunięta';
+                    groupIndex.posts = response.data;
                 }
             }).catch(function (error) {
                 console.log(error); // run if we have error
             });
         },
-        deleteNoti: function deleteNoti(id) {
-            axios.get('http://localhost:8000/usunZgloszenie/' + id).then(function (response) {
-                console.log(response); // show if success
-                console.log('Zgloszenie zostalo usuniete');
-                if (response.status === 200) {
+        joinToGroup: function joinToGroup(id) {
+            var _this4 = this;
 
-                    notifi.services = response.data;
-                    notifi.seen = true;
-                    notifi.msg = 'Zgłoszenie zostało usunięte';
+            axios.get('http://localhost:8000/dolaczDoGrupy/' + id).then(function (response) {
+                console.log(response);
+                _this4.name = // show if success
+                console.log('Zostałes nowym czlonkiem grupy');
+                if (response.status === 200) {
+                    location.reload();
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        leaveGroup: function leaveGroup(id, groupid) {
+            var _this5 = this;
+
+            axios.get('http://localhost:8000/odejdzZGrupy/' + id + '/' + groupid).then(function (response) {
+                console.log(response);
+                _this5.name = // show if success
+                console.log('Zostałes usunięty z grupy grupy');
+                if (response.status === 200) {
+                    location.reload();
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        deleteFromFriends: function deleteFromFriends(id) {
+            axios.get('http://localhost:8000/usun/' + id).then(function (response) {
+                console.log(response); // show if success
+                console.log('Znajomy został usuniety');
+                if (response.status === 200) {
+                    groupIndex.c = '';
+                    groupIndex.b = '';
+                    groupIndex.checks = response.data;
+                }
+            }).catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+        addFriends: function addFriends(id) {
+            axios.get('http://localhost:8000/dodajZnajomego/' + id).then(function (response) {
+                console.log(response); // show if success
+                console.log('Zaproszenie zostalo wyslane');
+                if (response.status === 200) {
+                    groupIndex.c = '';
+                    groupIndex.b = '';
+                    groupIndex.checks = response.data;
                 }
             }).catch(function (error) {
                 console.log(error); // run if we have error
             });
         }
     }
+
 });
 
 /***/ })
