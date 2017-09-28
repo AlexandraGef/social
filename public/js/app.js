@@ -58291,10 +58291,6 @@ module.exports = __webpack_require__(156);
 /* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var _data;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -58312,9 +58308,10 @@ window.Vue = __webpack_require__(34);
  */
 // register globally
 var i = 0;
+var j = 0;
 var app = new Vue({
     el: '#app',
-    data: (_data = {
+    data: {
         posts: [],
         friends: [],
         content: '',
@@ -58325,19 +58322,25 @@ var app = new Vue({
         commentData: '',
         bottom: false,
         answerData: '',
-        api: '',
-        checks: []
-    }, _defineProperty(_data, 'a', ''), _defineProperty(_data, 'b', ''), _data),
+        checks: [],
+        c: '',
+        b: '',
+        id: '',
+        search: ''
+
+    },
     watch: {
         bottom: function bottom(_bottom) {
             if (_bottom) {
                 this.Post();
+                this.findFriend();
             }
         }
     },
     created: function created() {
         var _this = this;
 
+        this.Post();
         axios.get('http://localhost:8000/czyWyslaneZapro').then(function (response) {
             console.log(response);
             app.checks = response.data;
@@ -58347,10 +58350,18 @@ var app = new Vue({
         window.addEventListener('scroll', function () {
             _this.bottom = _this.bottomVisible();
         });
-        this.Post();
-        this.friend();
     },
 
+    computed: {
+        filteredFriends: function filteredFriends() {
+            var _this2 = this;
+
+            this.findFriend();
+            return this.friends.filter(function (user) {
+                return user.name.toLowerCase().match(_this2.search.toLowerCase());
+            });
+        }
+    },
 
     methods: {
         bottomVisible: function bottomVisible() {
@@ -58361,7 +58372,7 @@ var app = new Vue({
             return bottomOfPage || pageHeight < visible;
         },
         Post: function Post() {
-            var _this2 = this;
+            var _this3 = this;
 
             axios.get('http://localhost:8000/posty').then(function (response) {
                 var api = response.data[i++];
@@ -58383,19 +58394,34 @@ var app = new Vue({
                     return moment.utc(value).utcOffset("-240").fromNow();
                 });
 
-                _this2.posts.push(apiInfo);
-                if (_this2.bottomVisible()) {
-                    _this2.Post();
+                _this3.posts.push(apiInfo);
+                if (_this3.bottomVisible()) {
+                    _this3.Post();
                 }
             });
         },
-        friend: function friend() {
-            axios.get('http://localhost:8000/checkFriends').then(function (response) {
-                console.log(response);
-                app.friends = response.data;
-            }).catch(function (error) {
-                console.log(error);
+        findFriend: function findFriend() {
+            var _this4 = this;
+
+            axios.get('http://localhost:8000/checkFriends/' + this.id).then(function (response) {
+                var ap = response.data[j++];
+                var apiInfo = {
+                    id: ap.id,
+                    name: ap.name,
+                    pic: ap.pic,
+                    slug: ap.slug
+                };
+
+                _this4.friends.push(apiInfo);
+                if (_this4.bottomVisible()) {
+                    _this4.findFriend();
+                }
             });
+        },
+
+        friend: function friend(id) {
+            app.id = id;
+            this.findFriend();
         },
         deletePost: function deletePost(id) {
             axios.get('http://localhost:8000/deletePost/' + id).then(function (response) {

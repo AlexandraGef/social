@@ -7,35 +7,27 @@
                     <div class="card">
                         <div class="header">
                             <h4 class="title">Dodaj nową ofertę pracy</h4>
-
+                            <hr>
                         </div>
                         <div class="content">
                             @if(session()->has('msg'))
                                 <div class="alert alert-success">{{session()->get('msg')}}</div>
                             @endif
                             <div class="form-group">
-                                {{ Form::open(['url'=> 'firma/dodajOferteSubmit'])}}
+                                {{ Form::open(array('url'=> 'firma/dodajOferteSubmit', 'class'=>'form-group'))}}
 
                                 {{ Form::label('Szukam:')}}
-                                {{Form::text('job_title')}}
-                                <br><br>
-                                {{Form::label('Umiejętności')}}
+                                {{Form::text('job_title','', array('class' => 'form-control'))}}
                                 <br>
-                                {{Form::label('HTML')}}
-                                {{Form::checkbox('skills[]','HTML')}}
-
-                                {{Form::label('CSS')}}
-                                {{Form::checkbox('skills[]','CSS')}}
-
-                                {{Form::label('PHP')}}
-                                {{Form::checkbox('skills[]','PHP')}}
-                                <br><br>
-                                {{Form::label('Wymagania')}}
-                                {{Form::textarea('requirements')}}
-                                <br><br>
-                                {{ Form::label('Kontakt')}}
-                                {{Form::text('contact_email')}}
-                                <br><br>
+                                {{Form::label('Umiejętności kandydata')}}
+                                {{Form::textarea('skills','', array('class' => 'form-control','size' => '30x3'))}}
+                                <br>
+                                {{Form::label('Opis stanowiska')}}
+                                {{Form::textarea('requirements','', array('class' => 'form-control','size' => '30x8'))}}
+                                <br>
+                                {{ Form::label('Kontakt email')}}
+                                {{Form::text('contact_email','', array('class' => 'form-control'))}}
+                                <br>
                                 {{Form::submit('Dodaj ofertę pracy', array('class' => 'btn btn-success'))}}
 
                                 {{ Form::close()}}

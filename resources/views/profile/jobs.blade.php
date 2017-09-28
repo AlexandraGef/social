@@ -24,10 +24,9 @@
                             </p>
                         @endif
 
-                        <div v-for="job in filteredJobs">
-                            <div class="col-md-4">
-                                <div class="jobDiv  col-md-12"
-                                     style="border:solid #eeeeee 1px; height: 400px; padding: 10px;">
+                        <div v-for="job in filteredJobs" div class="col-md-4 ">
+                            <div class="col-md-12 panel panel-primary">
+                                <div style="height: 400px; padding: 10px">
                                     <a :href="'{{Config::get('url')}}/szczegolyOferty/' + job.id"><img
                                                 :src="'{{Config::get('url')}}' + job.pic" class="img-circle"
                                                 :alt="job.job_title" width="50" height="50"/></a>

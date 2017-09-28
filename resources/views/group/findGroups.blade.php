@@ -1,56 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <style>
-        .nav-tabs {
-            border-bottom: 2px solid #DDD;
-        }
-
-        .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
-            border-width: 0;
-        }
-
-        .nav-tabs > li > a {
-            border: none;
-            color: #666;
-        }
-
-        .nav-tabs > li.active > a, .nav-tabs > li > a:hover {
-            border: none;
-            color: #E95420 !important;
-            background: transparent;
-        }
-
-        .nav-tabs > li > a::after {
-            content: "";
-            background: #E95420;
-            height: 2px;
-            position: absolute;
-            width: 100%;
-            left: 0px;
-            bottom: -1px;
-            transition: all 250ms ease 0s;
-            transform: scale(0);
-        }
-
-        .nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after {
-            transform: scale(1);
-        }
-
-        .tab-nav > li > a::after {
-            background: #E95420 none repeat scroll 0% 0%;
-            color: #fff;
-        }
-
-        .tab-pane {
-            padding: 15px 0;
-        }
-
-        .tab-content {
-            padding: 20px
-        }
-
-    </style>
     <div class="container" id="group">
         <div clas="row">
             @include('layouts.partials.sidebar')
@@ -70,7 +20,7 @@
                         @endif
                         <div role="tabpanel" class="tab-pane active" id="grupy">
                             <div class="panel panel-primary">
-                                <div class="panel-heading text-center" data-toggle="collapse" style="cursor:pointer"
+                                <div class="panel-heading text-center panel-search" data-toggle="collapse"
                                      data-target="#search">Szukaj grupy
                                 </div>
                                 <div class="panel-collapse collapse" id="search">
@@ -121,17 +71,17 @@
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="mojegrupy">
-                            <div class="panel " style="position: relative;">
+                            <div class="panel ">
                                 <a :href="'{{Config::get('url')}}/utworzGrupe'"
                                    class="btn btn-info"
-                                   style="position:absolute;top: -25px; ">Utwórz nową grupę</a></div>
+                                  >Utwórz nową grupę</a></div>
                             <div class="caption form-inline">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading text-center" data-toggle="collapse" style="cursor:pointer"
                                          data-target="#searchMy">Szukaj grupy
                                     </div>
                                     <div class="panel-collapse collapse" id="searchMy">
-                                        <input class="form-control" style="width: 100%" type="text" v-model="search"
+                                        <input class="form-control" type="text" v-model="search"
                                                placeholder="Szukaj grupy">
                                     </div>
                                 </div>

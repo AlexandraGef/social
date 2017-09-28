@@ -58330,8 +58330,6 @@ var groupIndex = new Vue({
         g: 0,
         admin: 0,
         members: [],
-        groupMem: [],
-        group: [],
         checks: [],
         c: '',
         b: ''
@@ -58340,7 +58338,6 @@ var groupIndex = new Vue({
         bottom: function bottom(_bottom) {
             if (_bottom) {
                 this.Post();
-                this.member();
             }
         }
     },
@@ -58396,21 +58393,6 @@ var groupIndex = new Vue({
                 }
             });
         },
-        member: function member() {
-            var api = groupIndex.groupMem[i++];
-            var apiInfo = {
-                id: api.id,
-                city: api.city,
-                name: api.name,
-                pic: api.pic,
-                slug: api.slug
-            };
-
-            this.group.push(apiInfo);
-            if (this.bottomVisible()) {
-                this.member();
-            }
-        },
         deletePost: function deletePost(id) {
             axios.get('http://localhost:8000/deletePost/' + id).then(function (response) {
                 console.log(response); // show if success
@@ -58423,18 +58405,11 @@ var groupIndex = new Vue({
             });
         },
         groupMembers: function groupMembers(id) {
-            var _this3 = this;
-
             axios.get('http://localhost:8000/czlonkowieGrupy/' + id).then(function (response) {
                 console.log(response); // show if success
                 console.log('Lista czlonkow');
                 if (response.status === 200) {
                     groupIndex.members = response.data;
-                    groupIndex.members.forEach(function (obj) {
-                        groupIndex.groupMem = obj;
-                    });
-
-                    _this3.member();
                 }
             }).catch(function (error) {
                 console.log(error); // run if we have error
@@ -58544,11 +58519,11 @@ var groupIndex = new Vue({
             });
         },
         joinToGroup: function joinToGroup(id) {
-            var _this4 = this;
+            var _this3 = this;
 
             axios.get('http://localhost:8000/dolaczDoGrupy/' + id).then(function (response) {
                 console.log(response);
-                _this4.name = // show if success
+                _this3.name = // show if success
                 console.log('Zostałes nowym czlonkiem grupy');
                 if (response.status === 200) {
                     location.reload();
@@ -58558,11 +58533,11 @@ var groupIndex = new Vue({
             });
         },
         leaveGroup: function leaveGroup(id, groupid) {
-            var _this5 = this;
+            var _this4 = this;
 
             axios.get('http://localhost:8000/odejdzZGrupy/' + id + '/' + groupid).then(function (response) {
                 console.log(response);
-                _this5.name = // show if success
+                _this4.name = // show if success
                 console.log('Zostałes usunięty z grupy grupy');
                 if (response.status === 200) {
                     location.reload();

@@ -26,8 +26,6 @@ const groupIndex = new Vue({
         g:0,
         admin:0,
         members:[],
-        groupMem:[],
-        group:[],
         checks:[],
         c: '',
         b:'',
@@ -36,7 +34,6 @@ const groupIndex = new Vue({
         bottom(bottom) {
             if (bottom) {
                 this.Post();
-                this.member();
             }
         }
     },
@@ -93,22 +90,7 @@ const groupIndex = new Vue({
         })
 
         },
-        member() {
-            let api = groupIndex.groupMem[i++];
-            let apiInfo = {
-                id: api.id,
-                city: api.city,
-                name: api.name,
-                pic: api.pic,
-                slug: api.slug,
-            };
 
-            this.group.push(apiInfo)
-            if (this.bottomVisible()) {
-                this.member();
-            }
-
-        },
 
         deletePost(id) {
             axios.get('http://localhost:8000/deletePost/' + id)
@@ -131,11 +113,6 @@ const groupIndex = new Vue({
             console.log('Lista czlonkow');
             if (response.status === 200) {
              groupIndex.members = response.data;
-                groupIndex.members.forEach(function(obj) {
-                    groupIndex.groupMem = obj;
-                })
-
-                    this.member();
 
             }
         })

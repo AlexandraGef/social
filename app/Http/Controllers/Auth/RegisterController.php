@@ -52,6 +52,7 @@ class RegisterController extends Controller
             'name' => 'required|string|max:60',
             'gender' => 'required|string|max:60',
             'role' => 'required|string|max:60',
+            'birthday'=> 'required|date',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -83,6 +84,7 @@ class RegisterController extends Controller
             'gender' => $data['gender'],
             'role_id' => $role,
             'pic' => $pic_path,
+            'birthday' => $data['birthday'],
             'slug' => str_slug($data['name'], '-').$rand,
             'email' => $data['email'],
             'password' => bcrypt($data['password']),

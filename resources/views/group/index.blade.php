@@ -1,68 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <style>
-
-        #commentBox li {
-            list-style: none;
-            padding: 10px;
-            border-bottom: 1px solid #ddd
-        }
-
-        .comment_form {
-            padding: 10px;
-            margin: 30px
-        }
-
-        .nav-tabs {
-            border-bottom: 2px solid #DDD;
-        }
-
-        .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
-            border-width: 0;
-        }
-
-        .nav-tabs > li > a {
-            border: none;
-            color: #666;
-        }
-
-        .nav-tabs > li.active > a, .nav-tabs > li > a:hover {
-            border: none;
-            color: #E95420 !important;
-            background: transparent;
-        }
-
-        .nav-tabs > li > a::after {
-            content: "";
-            background: #E95420;
-            height: 2px;
-            position: absolute;
-            width: 100%;
-            left: 0px;
-            bottom: -1px;
-            transition: all 250ms ease 0s;
-            transform: scale(0);
-        }
-
-        .nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after {
-            transform: scale(1);
-        }
-
-        .tab-nav > li > a::after {
-            background: #E95420 none repeat scroll 0% 0%;
-            color: #fff;
-        }
-
-        .tab-pane {
-            padding: 15px 0;
-        }
-
-        .tab-content {
-            padding: 20px
-        }
-
-    </style>
     <div class="container" id="groupIndex">
         <div clas="row">
             @foreach($groups as $uData)
@@ -72,13 +10,12 @@
                     @endif
                 @endforeach
                 <div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
-                    <div class="panel panel-primary"
-                         style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
+                    <div class="panel panel-primary index">
                         <div class="panel-body">
                             <div class="media">
                                 <div align="center">
-                                    <img class="img-circle img-responsive" alt="{{$uData->name }}"
-                                         src="{{ $uData->pic }}" width="300px" height="300px">
+                                    <img class="img-circle" alt="{{$uData->name }}"
+                                         src="{{ $uData->pic }}" width="200" height="200">
                                 </div>
                                 <div class="media-body">
                                     <hr>
@@ -95,20 +32,18 @@
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                    <div class="panel panel-primary"
-                         style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
+                    <div class="panel panel-primary index">
                         <div class="panel-body">
                             <div class="col-md-1 pull-right"
                                  v-if="admin == {{Auth::user()->id}} || {{Auth::user()->role_id }}== 4">
-                                <span style="cursor: pointer"><a
+                                <span><a
                                             href="{{ url('/usunGrupe') }}/{{$uData->id}}"><i
                                                 class="fa fa-trash-o text-primary"
                                                 aria-hidden="true"></i></a></span>
                             </div>
 
 
-                            <h1 class="panel-title pull-left"
-                                style="font-size:30px;">{{$uData->name}}</h1>
+                            <h1 class="panel-title pull-left group-name">{{ucwords($uData->name)}}</h1>
 
                             <div style="margin-top: 50px">
                                 @foreach($uData->user as $user)
@@ -129,8 +64,8 @@
                                     </div>
                                 @endif
                             </div>
-                            <div style="text-align: center; margin-top: 30px;"
-                                 v-if="admin != {{Auth::user()->id}} ">
+                            <div
+                                    v-if="admin != {{Auth::user()->id}} ">
                                 <div class="pull-right">
                                 <span>
                         <a href="{{ url('/zglosGrupe') }}/{{$uData->id}}" class="btn btn-link"
@@ -149,23 +84,24 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#posty" aria-controls="posty" role="tab"
                                                           data-toggle="tab"><i class="fa fa-fw fa-files-o"
-                                                                               aria-hidden="true"></i>Posty <span
-                                class="badge"></span></a></li>
-                <li @click="groupMembers({{$uData->id}})"role="presentation"><a href="#czlonkowie" aria-controls="czlonkowie" role="tab"
-                                           data-toggle="tab"><i class="fa fa-fw fa-users"
-                                                                aria-hidden="true"></i>Członkowie<span
-                                class="badge"></span></a></li>
+                                                                               aria-hidden="true"></i>Posty</a></li>
+                <li @click="groupMembers({{$uData->id}})" role="presentation"><a href="#czlonkowie"
+                                                                                 aria-controls="czlonkowie" role="tab"
+                                                                                 data-toggle="tab"><i
+                                class="fa fa-fw fa-users"
+                                aria-hidden="true"></i>Członkowie <span
+                                class="badge">{{count($uData->user)}}</span></a></li>
             </ul>
             <div class="tab-content  ">
-                <div role="tabpanel" class="tab-pane active" id="posty" style="margin-top: -30px;">
+                <div role="tabpanel" class="tab-pane  index group active" id="posty">
                     @foreach($uData->user as $user)
                         @if($user->id == Auth::user()->id)
                             <span style="visibility: hidden"> @{{ g = {!! $user->id !!} }}</span>
                         @endif
                     @endforeach
-                    <div class="panel panel-primary" style="box-shadow: 5px 5px 10px #888888;"
+                    <div class="panel panel-primary group-index"
                          v-if="g == {{Auth::user()->id}}">
-                        <div class="panel-body" style="margin-top: 20px;">
+                        <div class="panel-body group-body">
                             <div class="col-xs-12">
                                 <form method="post" enctype="multipart/form-data"
                                       v-on:submit.prevent="addPostGroup({{$uData->id}})">
@@ -178,8 +114,7 @@
                     </div>
                     <div v-for="post in posts" v-if="g == {{Auth::user()->id}}">
                         <div v-if="post.group_id == {{$uData ->id}}">
-                            <div class="panel panel-primary"
-                                 style="margin-bottom:15px;background-color: white; padding:10px;box-shadow: 5px 5px 10px #888888;">
+                            <div class="panel panel-primary index">
                                 <div class="col-md-12" class="panel-body">
                                     <div class="col-md-2 pull-left" style="margin-bottom: 10px;">
                                         <a :href="'{{Config::get('url')}}/profil/' + post.user.slug"><img
@@ -196,7 +131,7 @@
                                         <a href="#" data-toggle="dropdown" aria-haspopup="true"><i class="fa fa-cog"
                                                                                                    aria-hidden="true"></i></a>
                                         <div class="dropdown-menu" id="dropdown">
-                                            <div style="cursor: pointer; text-align: center">
+                                            <div class="dropdown-service">
                                                 <li v-if="'{{Auth::user()->id}}' == post.user.id || '{{ Auth::user()->role_id}}' == 4">
                                                     <a data-toggle="modal"
                                                        :data-target="'#modal' + post.id"><i
@@ -276,7 +211,7 @@
 
                                 <div v-if="post.comments.length != 0">
                                     <a class="btn btn-primary btn-xs" data-toggle="collapse"
-                                       style="cursor: pointer;margin-right:20px"
+                                       style="cursor: pointer;margin-right:20px;"
                                        :data-target="'#comments' + post.id">Pokaż komentarze</a><i
                                             class="fa fa-comment text-primary" aria-hidden="true">@{{
                                         post.comments.length }}</i>
@@ -408,50 +343,52 @@
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="czlonkowie" style="margin-top: -10px;">
+                <div role="tabpanel" class="tab-pane index" id="czlonkowie" >
                     <div v-if="g == {{Auth::user()->id}}">
-                        <div v-for="mem in group" >
+                        <div v-for="mem in members">
                             <div v-for="uList in mem" class="panel panel-primary">
-                            <div class="panel-body">
-                                <div class="col-md-8">
-                                    <div class="col-md-3">
-                                        <a :href="'{{Config::get('url')}}/profil/' + uList.slug"><img
-                                                    :src="'{{Config::get('url')}}' + uList.pic" class="img-circle"
-                                                    :alt="uList.name" width="65" height="65"/></a>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <a :href="'{{Config::get('url')}}/profil/' + uList.slug"><h4>@{{uList.name}}</h4>
-                                        </a>
-                                        <p>@{{uList.city}}</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-4" v-if="{{Auth::user()->id}} != uList.id">
-                                    <div v-for="check in checks" style="visibility: hidden">
-                                        <div v-if="check.user_requested == uList.id && check.status == 0 ">
-                                            @{{ c = uList.id }}
+                                <div class="panel-body">
+                                    <div class="col-md-8">
+                                        <div class="col-md-3">
+                                            <a :href="'{{Config::get('url')}}/profil/' + uList.slug"><img
+                                                        :src="'{{Config::get('url')}}' + uList.pic" class="img-circle"
+                                                        :alt="uList.name" width="65" height="65"/></a>
                                         </div>
-                                        <div v-else-if="check.user_requested == uList.id && check.status == 1 || check.requester == uList.id && check.status == 1 ">
-                                            @{{ b = uList.id }}
+                                        <div class="col-md-5">
+                                            <a :href="'{{Config::get('url')}}/profil/' + uList.slug"><h4>
+                                                    @{{uList.name}}</h4>
+                                            </a>
+                                            <p>@{{uList.city}}</p>
                                         </div>
                                     </div>
-                                    <div>
-                                        <div v-if="c != uList.id && b != uList.id">
-                                            <a @click="addFriends(uList.id)"
-                                               class="btn btn-success btn-sm" style="width: 150px">Dodaj do
-                                                znajomych</a>
+                                    <div class="col-md-4" v-if="{{Auth::user()->id}} != uList.id">
+                                        <div v-for="check in checks" style="visibility: hidden">
+                                            <div v-if="check.user_requested == uList.id && check.status == 0 ">
+                                                @{{ c = uList.id }}
+                                            </div>
+                                            <div v-else-if="check.user_requested == uList.id && check.status == 1 || check.requester == uList.id && check.status == 1 ">
+                                                @{{ b = uList.id }}
+                                            </div>
                                         </div>
-                                        <div v-else-if="b == uList.id && c != uList.id">
-                                            <a @click="deleteFromFriends(uList.id)" class="btn btn-danger btn-sm" style="width: 150px">Usuń ze
-                                                znajomych</a>
-                                        </div>
-                                        <div v-else>
-                                            Wysłano zaproszenie do znajomych
+                                        <div>
+                                            <div v-if="c != uList.id && b != uList.id">
+                                                <a @click="addFriends(uList.id)"
+                                                   class="btn btn-success btn-sm" style="width: 150px">Dodaj do
+                                                    znajomych</a>
+                                            </div>
+                                            <div v-else-if="b == uList.id && c != uList.id">
+                                                <a @click="deleteFromFriends(uList.id)" class="btn btn-danger btn-sm"
+                                                   style="width: 150px">Usuń ze
+                                                    znajomych</a>
+                                            </div>
+                                            <div v-else>
+                                                Wysłano zaproszenie do znajomych
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>

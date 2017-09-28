@@ -38,10 +38,10 @@ class GroupsController extends Controller
 
         foreach ($groupMembers as $user) {
 
-            if ($us = DB::table('users')->where('id', $user->user_id)->get()) {
+                if ($user = DB::table('users')->where('id', $user->user_id)->get()) {
 
-                $members[] = $us;
-            }
+                    $members[] = $user;
+                }
 
         }
         return $members;

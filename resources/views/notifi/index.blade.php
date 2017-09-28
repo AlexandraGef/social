@@ -1,55 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <style>
-        .nav-tabs {
-            border-bottom: 2px solid #DDD;
-        }
-
-        .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
-            border-width: 0;
-        }
-
-        .nav-tabs > li > a {
-            border: none;
-            color: #666;
-        }
-
-        .nav-tabs > li.active > a, .nav-tabs > li > a:hover {
-            border: none;
-            color: #E95420 !important;
-            background: transparent;
-        }
-
-        .nav-tabs > li > a::after {
-            content: "";
-            background: #E95420;
-            height: 2px;
-            position: absolute;
-            width: 100%;
-            left: 0px;
-            bottom: -1px;
-            transition: all 250ms ease 0s;
-            transform: scale(0);
-        }
-
-        .nav-tabs > li.active > a::after, .nav-tabs > li:hover > a::after {
-            transform: scale(1);
-        }
-
-        .tab-nav > li > a::after {
-            background: #E95420 none repeat scroll 0% 0%;
-            color: #fff;
-        }
-
-        .tab-pane {
-            padding: 15px 0;
-        }
-
-        .tab-content {
-            padding: 20px
-        }
-    </style>
     <div class="container" id="notifi">
         <div class="row">
             @include('layouts.partials.sidebar')
@@ -58,7 +9,7 @@
                 <ul class="nav nav-tabs" id="nav-tabs" role="tablist">
                     <li role="presentation" class="active">
                         <a href="#profil" aria-controls="profil" role="tab" data-toggle="tab">
-                           Profile
+                            Profile
                         </a>
                     </li>
                     <li role="presentation">
@@ -68,12 +19,12 @@
                     </li>
                     <li role="presentation">
                         <a href="#posty" aria-controls="posty" role="tab" data-toggle="tab">
-                          Posty
+                            Posty
                         </a>
                     </li>
                     <li role="presentation">
                         <a href="#komentarze" aria-controls="komentarze" role="tab" data-toggle="tab">
-                           Komentarze
+                            Komentarze
                         </a>
                     </li>
                     <li role="presentation">
@@ -94,11 +45,12 @@
                             <div v-for="service in services">
                                 <div v-if="service.profile != null">
                                     <div class="col-md-12">
-                                        <div class="panel panel-default" style="border: solid 2px #E95420">
-                                            <div
-                                                    style="cursor: pointer" class="text-right text-danger" @click="deleteNoti(service.id)"><a><i
+                                        <div class="panel panel-primary">
+                                            <div class="notifi-panel text-right text-danger"
+                                                 @click="deleteNoti(service.id)"><a><i
                                                             class="fa fa-trash-o text-danger"
-                                                            aria-hidden="true"></i></a>Usuń zgłoszenie</div>
+                                                            aria-hidden="true"></i></a>Usuń zgłoszenie
+                                            </div>
                                             <div class="panel-body text-center">
                                                 <h3 style="cursor:pointer" data-toggle="collapse"
                                                     :data-target="'#profile' + service.profile.id">Zgłoszony profil:
@@ -130,11 +82,12 @@
                             <div v-for="service in services">
                                 <div v-if="service.group != null">
                                     <div class="col-md-12">
-                                        <div class="panel panel-default" style="border: solid 2px #E95420">
-                                            <div
-                                                    style="cursor: pointer" class="text-right text-danger"><a @click="deleteNoti(service.id)"><i
+                                        <div class="panel panel-primary">
+                                            <div class="notifi-panel text-right text-danger"><a
+                                                        @click="deleteNoti(service.id)"><i
                                                             class="fa fa-trash-o text-danger"
-                                                            aria-hidden="true"></i></a>Usuń zgłoszenie</div>
+                                                            aria-hidden="true"></i></a>Usuń zgłoszenie
+                                            </div>
                                             <div class="panel-body text-center">
                                                 <h3 style="cursor:pointer" data-toggle="collapse"
                                                     :data-target="'#group' + service.group.id">Zgłoszona grupa:
@@ -169,11 +122,12 @@
                             <div v-for="service in services">
                                 <div v-if="service.post != null">
                                     <div class="col-md-12">
-                                        <div class="panel panel-primary" style="border: solid 2px #E95420">
-                                            <div
-                                                    style="cursor: pointer" class="text-right text-danger"><a @click="deleteNoti(service.id)"><i
+                                        <div class="panel panel-primary">
+                                            <div class="notifi-panel text-right text-danger"><a
+                                                        @click="deleteNoti(service.id)"><i
                                                             class="fa fa-trash-o text-danger"
-                                                            aria-hidden="true"></i></a>Usuń zgłoszenie</div>
+                                                            aria-hidden="true"></i></a>Usuń zgłoszenie
+                                            </div>
                                             <div class="panel-body text-center">
                                                 <h3 style="cursor:pointer" data-toggle="collapse"
                                                     :data-target="'#post' + service.post.id">Zgłoszony post użytkownika:
@@ -193,12 +147,15 @@
                                                     <div>
                                                         <h4>Treść postu:
                                                             <div
-                                                                    style="cursor: pointer" class="text-right"><h5><a @click="deletePost(service.post.id)"><i
-                                                                            class="fa fa-trash-o text-primary"
-                                                                            aria-hidden="true"></i>Usuń post</a></h5></div>
+                                                                    style="cursor: pointer" class="text-right"><h5><a
+                                                                            @click="deletePost(service.post.id)"><i
+                                                                                class="fa fa-trash-o text-primary"
+                                                                                aria-hidden="true"></i>Usuń post</a>
+                                                                </h5></div>
                                                         </h4>
                                                     </div>
-                                                    <div class="col-md-12 text-danger"><h4>@{{ service.post.content }}</h4></div>
+                                                    <div class="col-md-12 text-danger"><h4>@{{ service.post.content
+                                                            }}</h4></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -218,14 +175,16 @@
                             <div v-for="service in services">
                                 <div v-if="service.comment != null">
                                     <div class="col-md-12">
-                                        <div class="panel panel-default" style="border: solid 2px #E95420">
-                                            <div
-                                                    style="cursor: pointer" class="text-right text-danger"><a @click="deleteNoti(service.id)"><i
+                                        <div class="panel panel-primary">
+                                            <div class="notifi-panel text-right text-danger"><a
+                                                        @click="deleteNoti(service.id)"><i
                                                             class="fa fa-trash-o text-danger"
-                                                            aria-hidden="true"></i></a>Usuń zgłoszenie</div>
+                                                            aria-hidden="true"></i></a>Usuń zgłoszenie
+                                            </div>
                                             <div class="panel-body text-center">
                                                 <h3 style="cursor:pointer" data-toggle="collapse"
-                                                    :data-target="'#comment' + service.comment.id">Zgłoszony komentarz użytkownika:
+                                                    :data-target="'#comment' + service.comment.id">Zgłoszony komentarz
+                                                    użytkownika:
                                                     <a class="text-danger"
                                                        :href="'{{Config::get('url')}}/profil/' + service.comment.user.slug">@{{
                                                         service.comment.user.name }}</a></h3>
@@ -242,12 +201,15 @@
                                                     <div>
                                                         <h4>Treść komentarza:
                                                             <div
-                                                                    style="cursor: pointer" class="text-right"><h5><a @click="deleteComment(service.comment.id)"><i
-                                                                            class="fa fa-trash-o text-primary"
-                                                                            aria-hidden="true"></i>Usuń komentarz</a></h5></div>
+                                                                    style="cursor: pointer" class="text-right"><h5><a
+                                                                            @click="deleteComment(service.comment.id)"><i
+                                                                                class="fa fa-trash-o text-primary"
+                                                                                aria-hidden="true"></i>Usuń
+                                                                        komentarz</a></h5></div>
                                                         </h4>
                                                     </div>
-                                                    <div class="col-md-12 text-danger"><h4>@{{ service.comment.comment }}</h4></div>
+                                                    <div class="col-md-12 text-danger"><h4>@{{ service.comment.comment
+                                                            }}</h4></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -267,14 +229,16 @@
                             <div v-for="service in services">
                                 <div v-if="service.answer != null">
                                     <div class="col-md-12">
-                                        <div class="panel panel-default" style="border: solid 2px #E95420">
-                                            <div
-                                                    style="cursor: pointer" class="text-right text-danger"><a @click="deleteNoti(service.id)"><i
+                                        <div class="panel panel-primary">
+                                            <div class="notifi-panel text-right text-danger"><a
+                                                        @click="deleteNoti(service.id)"><i
                                                             class="fa fa-trash-o text-danger"
-                                                            aria-hidden="true"></i></a>Usuń zgłoszenie</div>
+                                                            aria-hidden="true"></i></a>Usuń zgłoszenie
+                                            </div>
                                             <div class="panel-body text-center">
                                                 <h3 style="cursor:pointer" data-toggle="collapse"
-                                                    :data-target="'#answer' + service.answer.id">Zgłoszona odpowiedź na komentarz użytkownika:
+                                                    :data-target="'#answer' + service.answer.id">Zgłoszona odpowiedź na
+                                                    komentarz użytkownika:
                                                     <a class="text-danger"
                                                        :href="'{{Config::get('url')}}/profil/' + service.answer.user.slug">@{{
                                                         service.answer.user.name }}</a></h3>
@@ -291,12 +255,15 @@
                                                     <div>
                                                         <h4>Treść odpowiedzi:
                                                             <div
-                                                                    style="cursor: pointer" class="text-right"><h5><a @click="deleteAnswer(service.answer.id)"><i
-                                                                            class="fa fa-trash-o text-primary"
-                                                                            aria-hidden="true"></i>Usuń odpowiedź</a></h5></div>
+                                                                    style="cursor: pointer" class="text-right"><h5><a
+                                                                            @click="deleteAnswer(service.answer.id)"><i
+                                                                                class="fa fa-trash-o text-primary"
+                                                                                aria-hidden="true"></i>Usuń
+                                                                        odpowiedź</a></h5></div>
                                                         </h4>
                                                     </div>
-                                                    <div class="col-md-12 text-danger"><h4>@{{ service.answer.answer }}</h4></div>
+                                                    <div class="col-md-12 text-danger"><h4>@{{ service.answer.answer
+                                                            }}</h4></div>
                                                 </div>
                                             </div>
                                         </div>

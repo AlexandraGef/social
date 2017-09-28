@@ -3,10 +3,10 @@
     "/css/app.css": "/css/app.css",
     "/js/notifi.js": "/js/notifi.js",
     "/js/groupIndex.js": "/js/groupIndex.js",
-    "/js/group.js": "/js/group.js",
     "/js/searchUser.js": "/js/searchUser.js",
     "/js/searchJobs.js": "/js/searchJobs.js",
     "/js/profile.js": "/js/profile.js",
+    "/js/group.js": "/js/group.js",
     "/js/friends.js": "/js/friends.js",
     "/js/start.js": "/js/start.js"
 }

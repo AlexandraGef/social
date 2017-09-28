@@ -55,10 +55,8 @@ class ProfileController extends Controller
         return back();
     }
 
-    public function checkFriends()
+    public function checkFriends($uid)
     {
-        $uid = Auth::user()->id;
-
         $friends1 = DB::table('friendships')
             ->leftJoin('users', 'users.id', 'friendships.user_requested')//wysylajacy zaproszenie
             ->where('status', 1)
@@ -360,7 +358,7 @@ class ProfileController extends Controller
                 ->value('name');
             $notifications = new notifications;
             $notifications->user_hero = $friend_id;
-            $notifications->note = 'Masz nową wiadomość od uzytkwnika ' . $name;
+            $notifications->note = 'masz nową wiadomość od tego użytkownika';
             $notifications->user_logged = $myID;
             $notifications->status = '1'; // nieodczytane powiadomienie
             $notifications->save();

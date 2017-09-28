@@ -18,6 +18,7 @@ window.Vue = require('vue');
  */
 // register globally
 var i = 0;
+var j = 0;
 const app = new Vue({
     el: '#app',
     data: {
@@ -31,20 +32,24 @@ const app = new Vue({
         commentData: '',
         bottom: false,
         answerData:'',
-        api:'',
         checks:[],
-        a: '',
+        c: '',
         b:'',
+        id:'',
+        search:'',
+
 
     },
     watch: {
         bottom(bottom) {
             if (bottom) {
                 this.Post();
+                this.findFriend();
             }
         }
     },
     created() {
+        this.Post();
         axios.get('http://localhost:8000/czyWyslaneZapro')
             .then(response => {
             console.log(response);
@@ -56,8 +61,17 @@ const app = new Vue({
         window.addEventListener('scroll', () => {
             this.bottom = this.bottomVisible()
         })
-        this.Post();
-        this.friend();
+
+
+    },
+    computed: {
+        filteredFriends: function () {
+            this.findFriend();
+            return this.friends.filter((user) => {
+                return user.name.toLowerCase().match(this.search.toLowerCase());
+
+        })
+        }
     },
 
     methods: {
@@ -98,15 +112,28 @@ const app = new Vue({
                 })
 
         },
-        friend() {
-            axios.get('http://localhost:8000/checkFriends')
+        findFriend() {
+            axios.get('http://localhost:8000/checkFriends/' + this.id)
                 .then(response => {
-                console.log(response);
-            app.friends = response.data;
+                let ap = response.data[j++];
+            let apiInfo = {
+                id: ap.id,
+                name: ap.name,
+                pic: ap.pic,
+                slug: ap.slug,
+            };
+
+            this.friends.push(apiInfo)
+            if (this.bottomVisible()) {
+                this.findFriend();
+            }
+
         })
-        .catch(function (error) {
-                console.log(error);
-            });
+
+        },
+        friend: function (id) {
+        app.id = id;
+        this.findFriend();
         },
         deletePost(id) {
             axios.get('http://localhost:8000/deletePost/' + id)

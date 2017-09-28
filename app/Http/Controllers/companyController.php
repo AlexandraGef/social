@@ -15,7 +15,7 @@ class companyController extends Controller
 
     public function addJobSubmit(Request $r)
     {
-        $skills = implode($r->skills, ',');
+        $skills = $r->skills;
         $contact_email = $r->contact_email;
         $job_title = $r->job_title;
         $requirements = $r->requirements;

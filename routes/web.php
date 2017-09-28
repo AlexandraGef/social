@@ -66,7 +66,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/moiZnajomi', 'ProfileController@myFriends');
 
-    Route::get('/checkFriends', 'ProfileController@checkFriends');
+    Route::get('/checkFriends/{id}', 'ProfileController@checkFriends');
 
     Route::get('/odrzuc/{id}', 'ProfileController@requestRemove');
 
@@ -205,11 +205,11 @@ Route::group(['prefix' => 'firma', 'middleware' => ['auth', 'company']], functio
 
     Route::post('/dodajOferteSubmit', 'companyController@addJobSubmit');
     Route::get('/OfertyPracy', 'companyController@viewJobs');
+    Route::get('/pokazSzczegolyOfert', 'companyController@offersDetal');
 
 });
-/*
- * admin
- */
+
+
 
 
 
