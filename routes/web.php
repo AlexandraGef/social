@@ -192,6 +192,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/czlonkowieGrupy/{id}', 'GroupsController@groupMembers');
     Route::get('/dolaczDoGrupy/{id}', 'GroupsController@joinToGroup');
     Route::get('/mojeGrupy', 'GroupsController@myGroups');
+    Route::get('usunGrupe/{id}', 'GroupsController@deleteGroup');
 });
 /*
  * COMPANY

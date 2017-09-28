@@ -81,7 +81,7 @@
                                          data-target="#searchMy">Szukaj grupy
                                     </div>
                                     <div class="panel-collapse collapse" id="searchMy">
-                                        <input class="form-control" type="text" v-model="search"
+                                        <input style="width:100%" class="form-control" type="text" v-model="search"
                                                placeholder="Szukaj grupy">
                                     </div>
                                 </div>

@@ -357,7 +357,7 @@
                         <div role="tabpanel" class="tab-pane index" id="znajomi">
                             <div class="panel panel-primary">
                                 <div class="panel-heading text-center" data-toggle="collapse" style="cursor:pointer"
-                                     data-target="#search">Szukaj wśród @{{ filteredFriends.length }} znajomych.
+                                     data-target="#search">Szukaj wśród znajomych
                                 </div>
                                 <div class="panel-collapse collapse" id="search">
                                     <input class="form-control" type="text" v-model="search" placeholder="Szukaj znajomych">
