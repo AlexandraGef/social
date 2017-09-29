@@ -5,7 +5,6 @@
  */
 
 require('./bootstrap');
-
 window.Vue = require('vue');
 
 
@@ -34,6 +33,7 @@ const app = new Vue({
         answerData:'',
         checks:[],
         c: '',
+        queryString: '',
         b:'',
         id:'',
         search:'',
@@ -75,6 +75,17 @@ const app = new Vue({
     },
 
     methods: {
+        getResult() {
+            axios.get('http://localhost:8000/search')
+                .then(response => {
+                console.log(response); // show if success
+            console.log(response.data);
+        })
+        .catch(function (error) {
+                console.log(error); // run if we have error
+            });
+        },
+
         bottomVisible() {
             const scrollY = window.scrollY
             const visible = document.documentElement.clientHeight

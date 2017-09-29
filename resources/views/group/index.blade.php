@@ -85,7 +85,7 @@
                 <li role="presentation" class="active"><a href="#posty" aria-controls="posty" role="tab"
                                                           data-toggle="tab"><i class="fa fa-fw fa-files-o"
                                                                                aria-hidden="true"></i>Posty</a></li>
-                <li @click="groupMembers({{$uData->id}})" role="presentation"><a href="#czlonkowie"
+                <li @click="gMem({{$uData->id}})" role="presentation"><a href="#czlonkowie"
                                                                                  aria-controls="czlonkowie" role="tab"
                                                                                  data-toggle="tab"><i
                                 class="fa fa-fw fa-users"
@@ -345,6 +345,14 @@
                 </div>
                 <div role="tabpanel" class="tab-pane index" id="czlonkowie" >
                     <div v-if="g == {{Auth::user()->id}}">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading text-center" data-toggle="collapse" style="cursor:pointer"
+                                 data-target="#search">Szukaj członków grupy
+                            </div>
+                            <div class="panel-collapse collapse" id="search">
+                                <input class="form-control" type="text" v-model="search" placeholder="Szukaj...">
+                            </div>
+                        </div>
                         <div v-for="mem in members">
                             <div v-for="uList in mem" class="panel panel-primary">
                                 <div class="panel-body">

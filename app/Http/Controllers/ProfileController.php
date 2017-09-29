@@ -358,7 +358,7 @@ class ProfileController extends Controller
                 ->value('name');
             $notifications = new notifications;
             $notifications->user_hero = $friend_id;
-            $notifications->note = 'masz nową wiadomość od tego użytkownika';
+            $notifications->note = ' - masz nową wiadomość od tego użytkownika';
             $notifications->user_logged = $myID;
             $notifications->status = '1'; // nieodczytane powiadomienie
             $notifications->save();

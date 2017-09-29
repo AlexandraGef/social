@@ -10,8 +10,10 @@
     "require": {
         "php": ">=7.0.0",
         "dwij/laraadmin": "1.0.40",
+        "elasticsearch/elasticsearch": "^5.3",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
+        "laravel/scout": "^3.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.5",
         "tcg/voyager": "dev-master"

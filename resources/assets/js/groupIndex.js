@@ -8,9 +8,8 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-
-
 var i = 0;
+var j = 0;
 const groupIndex = new Vue({
     el: '#groupIndex',
     data: {
@@ -29,14 +28,20 @@ const groupIndex = new Vue({
         checks:[],
         c: '',
         b:'',
+        search:'',
+        id:'',
+
     },
     watch: {
         bottom(bottom) {
             if (bottom) {
                 this.Post();
+                this.groupMembers();
             }
         }
     },
+
+
     created() {
         axios.get('http://localhost:8000/czyWyslaneZapro')
             .then(response => {
@@ -106,13 +111,17 @@ const groupIndex = new Vue({
                 console.log(error); // run if we have error
             });
         },
-        groupMembers(id) {
-            axios.get('http://localhost:8000/czlonkowieGrupy/' + id)
+        groupMembers() {
+            axios.get('http://localhost:8000/czlonkowieGrupy/' + groupIndex.id)
                 .then(response => {
                 console.log(response); // show if success
             console.log('Lista czlonkow');
             if (response.status === 200) {
-             groupIndex.members = response.data;
+               let ap = response.data[j++]
+                    this.members.push(ap)
+                    if (this.bottomVisible()) {
+                        this.groupMembers();
+                    }
 
             }
         })
@@ -120,7 +129,10 @@ const groupIndex = new Vue({
                 console.log(error); // run if we have error
             });
         },
-
+        gMem: function (id) {
+            groupIndex.id = id;
+            this.groupMembers();
+        },
         editPost(id) {
             axios.post('http://localhost:8000/edytujPost',{
                 editContent: this.editContent,

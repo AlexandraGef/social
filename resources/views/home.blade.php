@@ -15,7 +15,7 @@
         }
 
     </style>
-    <div class="container" id="app">
+    <div class="container" >
         <div class="row">
             @include('layouts.partials.sidebar')
             <div class="col-md-9">

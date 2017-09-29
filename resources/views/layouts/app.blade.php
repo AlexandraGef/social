@@ -11,6 +11,7 @@
     <title>Bevy</title>
 
     <!-- Styles -->
+    <link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
@@ -28,7 +29,7 @@
 </style>
 
 <div>
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-default navbar-static-top" id="app" >
         <div class="container">
             <div class="navbar-header">
 
@@ -57,6 +58,7 @@
                                        font-size:16px">({{App\friendships::where('status', 0)
                                                   ->where('user_requested', Auth::user()->id)
                                                   ->count()}})</span></a></li>
+
                     @endif
                     @if(Auth::check() && Auth::user()->role_id == "3")
                         <li><a class="anav" href="{{ url('/firma') }}">Firma</a></li>
@@ -64,6 +66,7 @@
                     @if(Auth::check() && Auth::user()->role_id == "4")
                         <li><a class="anav" href="{{ url('/zgloszenia') }}">Zgłoszenia</a></li>
                     @endif
+                        <li ><input type="text" name="queryString" v-model="queryString" v-on:keyup="getResult()"></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -158,6 +161,7 @@
             </div>
         </div>
     </nav>
+
     @yield('content')
 </div>
 
