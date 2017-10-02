@@ -68,8 +68,12 @@
                         <li class="input"><input class="form-control" placeholder="Szukaj znajomych i grup" type="text" v-model="queryString" v-on:keyup="getResult()">
                             <div class="panel panel-primary search" v-if="us.length != 0">
                                 <ul class="list-group" >
-                                    <li v-for="u in us"><a :href="'{{Config::get('url')}}/profil/' + u.slug" class="list-group-item" ><img :src="'{{Config::get('url')}}' + u.pic" class="img-circle img-search"
-                                                                                                                                                    :alt="u.name" width="35" height="35"/>@{{u.name}}</a></li>
+                                    <li v-for="u in us">
+                                        <a v-if="u.description == null" :href="'{{Config::get('url')}}/profil/' + u.slug" class="list-group-item" ><img :src="'{{Config::get('url')}}' + u.pic" class="img-circle img-search"
+                                                                                                                                                    :alt="u.name" width="35" height="35"/>@{{u.name}}</a>
+                                        <a v-if="u.description != null":href="'{{Config::get('url')}}/grupa/' + u.slug" class="list-group-item" ><img :src="'{{Config::get('url')}}' + u.pic" class="img-circle img-search"
+                                                                                                                                                      :alt="u.name" width="35" height="35"/>@{{u.name}}</a>
+                                    </li>
                                 </ul>
                             </div>
                         <li>
