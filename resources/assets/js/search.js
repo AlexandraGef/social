@@ -17,17 +17,28 @@ window.Vue = require('vue');
 // register globally
 
 const search = new Vue({
-    el: '#search',
+    el: '#search-nav',
     data: {
         queryString: '',
+        us:[],
     },
 
     methods: {
-        getResult(){
-            axios.get('http://localhost:8000/search',{params:{queryString: search.queryString}}).then(response => {
-                console.log(response.data);
-        });
-        }
+        getResult() {
+            axios.post('http://localhost:8000/api/search', {
+                queryString: search.queryString,
+            })
+                .then(function (response) {
+                    console.log('uzytkownicy'); // show if success
+                    if (response.status === 200) {
+                        search.us = response.data;
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error); // run if we have error
+                });
+
+        },
     }
 
 });

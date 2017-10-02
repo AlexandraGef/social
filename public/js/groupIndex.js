@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 171);
+/******/ 	return __webpack_require__(__webpack_require__.s = 165);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -58291,20 +58291,14 @@ module.exports = {"version":"2017b","zones":["Africa/Abidjan|LMT GMT|g.8 0|01|-2
 /* 162 */,
 /* 163 */,
 /* 164 */,
-/* 165 */,
-/* 166 */,
-/* 167 */,
-/* 168 */,
-/* 169 */,
-/* 170 */,
-/* 171 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(172);
+module.exports = __webpack_require__(166);
 
 
 /***/ }),
-/* 172 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -58345,7 +58339,6 @@ var groupIndex = new Vue({
         bottom: function bottom(_bottom) {
             if (_bottom) {
                 this.Post();
-                this.groupMembers();
             }
         }
     },
@@ -58365,6 +58358,15 @@ var groupIndex = new Vue({
         this.Post();
     },
 
+    computed: {
+        filteredMembers: function filteredMembers() {
+            var _this2 = this;
+
+            return this.members.filter(function (user) {
+                return user.name.toLowerCase().match(_this2.search.toLowerCase());
+            });
+        }
+    },
     methods: {
         bottomVisible: function bottomVisible() {
             var scrollY = window.scrollY;
@@ -58374,7 +58376,7 @@ var groupIndex = new Vue({
             return bottomOfPage || pageHeight < visible;
         },
         Post: function Post() {
-            var _this2 = this;
+            var _this3 = this;
 
             axios.get('http://localhost:8000/posty').then(function (response) {
                 var api = response.data[i++];
@@ -58396,9 +58398,9 @@ var groupIndex = new Vue({
                     return moment.utc(value).utcOffset("-240").fromNow();
                 });
 
-                _this2.posts.push(apiInfo);
-                if (_this2.bottomVisible()) {
-                    _this2.Post();
+                _this3.posts.push(apiInfo);
+                if (_this3.bottomVisible()) {
+                    _this3.Post();
                 }
             });
         },
@@ -58414,16 +58416,19 @@ var groupIndex = new Vue({
             });
         },
         groupMembers: function groupMembers() {
-            var _this3 = this;
+            var _this4 = this;
 
             axios.get('http://localhost:8000/czlonkowieGrupy/' + groupIndex.id).then(function (response) {
                 console.log(response); // show if success
                 console.log('Lista czlonkow');
                 if (response.status === 200) {
-                    var ap = response.data[j++];
-                    _this3.members.push(ap);
-                    if (_this3.bottomVisible()) {
-                        _this3.groupMembers();
+                    response.data.forEach(function (user) {
+                        user.forEach(function (us) {
+                            groupIndex.members.push(us);
+                        });
+                    });
+                    if (_this4.bottomVisible()) {
+                        _this4.groupMembers();
                     }
                 }
             }).catch(function (error) {
@@ -58539,11 +58544,11 @@ var groupIndex = new Vue({
             });
         },
         joinToGroup: function joinToGroup(id) {
-            var _this4 = this;
+            var _this5 = this;
 
             axios.get('http://localhost:8000/dolaczDoGrupy/' + id).then(function (response) {
                 console.log(response);
-                _this4.name = // show if success
+                _this5.name = // show if success
                 console.log('Zostałes nowym czlonkiem grupy');
                 if (response.status === 200) {
                     location.reload();
@@ -58553,11 +58558,11 @@ var groupIndex = new Vue({
             });
         },
         leaveGroup: function leaveGroup(id, groupid) {
-            var _this5 = this;
+            var _this6 = this;
 
             axios.get('http://localhost:8000/odejdzZGrupy/' + id + '/' + groupid).then(function (response) {
                 console.log(response);
-                _this5.name = // show if success
+                _this6.name = // show if success
                 console.log('Zostałes usunięty z grupy grupy');
                 if (response.status === 200) {
                     location.reload();

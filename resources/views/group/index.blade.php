@@ -86,8 +86,8 @@
                                                           data-toggle="tab"><i class="fa fa-fw fa-files-o"
                                                                                aria-hidden="true"></i>Posty</a></li>
                 <li @click="gMem({{$uData->id}})" role="presentation"><a href="#czlonkowie"
-                                                                                 aria-controls="czlonkowie" role="tab"
-                                                                                 data-toggle="tab"><i
+                                                                         aria-controls="czlonkowie" role="tab"
+                                                                         data-toggle="tab"><i
                                 class="fa fa-fw fa-users"
                                 aria-hidden="true"></i>Członkowie <span
                                 class="badge">{{count($uData->user)}}</span></a></li>
@@ -343,7 +343,7 @@
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane index" id="czlonkowie" >
+                <div role="tabpanel" class="tab-pane index" id="czlonkowie">
                     <div v-if="g == {{Auth::user()->id}}">
                         <div class="panel panel-primary">
                             <div class="panel-heading text-center" data-toggle="collapse" style="cursor:pointer"
@@ -353,45 +353,43 @@
                                 <input class="form-control" type="text" v-model="search" placeholder="Szukaj...">
                             </div>
                         </div>
-                        <div v-for="mem in members">
-                            <div v-for="uList in mem" class="panel panel-primary">
-                                <div class="panel-body">
-                                    <div class="col-md-8">
-                                        <div class="col-md-3">
-                                            <a :href="'{{Config::get('url')}}/profil/' + uList.slug"><img
-                                                        :src="'{{Config::get('url')}}' + uList.pic" class="img-circle"
-                                                        :alt="uList.name" width="65" height="65"/></a>
+                        <div v-for="uList in filteredMembers" class="panel panel-primary">
+                            <div class="panel-body">
+                                <div class="col-md-8">
+                                    <div class="col-md-3">
+                                        <a :href="'{{Config::get('url')}}/profil/' + uList.slug"><img
+                                                    :src="'{{Config::get('url')}}' + uList.pic" class="img-circle"
+                                                    :alt="uList.name" width="65" height="65"/></a>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <a :href="'{{Config::get('url')}}/profil/' + uList.slug"><h4>
+                                                @{{uList.name}}</h4>
+                                        </a>
+                                        <p>@{{uList.city}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" v-if="{{Auth::user()->id}} != uList.id">
+                                    <div v-for="check in checks" style="visibility: hidden">
+                                        <div v-if="check.user_requested == uList.id && check.status == 0 ">
+                                            @{{ c = uList.id }}
                                         </div>
-                                        <div class="col-md-5">
-                                            <a :href="'{{Config::get('url')}}/profil/' + uList.slug"><h4>
-                                                    @{{uList.name}}</h4>
-                                            </a>
-                                            <p>@{{uList.city}}</p>
+                                        <div v-else-if="check.user_requested == uList.id && check.status == 1 || check.requester == uList.id && check.status == 1 ">
+                                            @{{ b = uList.id }}
                                         </div>
                                     </div>
-                                    <div class="col-md-4" v-if="{{Auth::user()->id}} != uList.id">
-                                        <div v-for="check in checks" style="visibility: hidden">
-                                            <div v-if="check.user_requested == uList.id && check.status == 0 ">
-                                                @{{ c = uList.id }}
-                                            </div>
-                                            <div v-else-if="check.user_requested == uList.id && check.status == 1 || check.requester == uList.id && check.status == 1 ">
-                                                @{{ b = uList.id }}
-                                            </div>
+                                    <div>
+                                        <div v-if="c != uList.id && b != uList.id">
+                                            <a @click="addFriends(uList.id)"
+                                               class="btn btn-success btn-sm" style="width: 150px">Dodaj do
+                                                znajomych</a>
                                         </div>
-                                        <div>
-                                            <div v-if="c != uList.id && b != uList.id">
-                                                <a @click="addFriends(uList.id)"
-                                                   class="btn btn-success btn-sm" style="width: 150px">Dodaj do
-                                                    znajomych</a>
-                                            </div>
-                                            <div v-else-if="b == uList.id && c != uList.id">
-                                                <a @click="deleteFromFriends(uList.id)" class="btn btn-danger btn-sm"
-                                                   style="width: 150px">Usuń ze
-                                                    znajomych</a>
-                                            </div>
-                                            <div v-else>
-                                                Wysłano zaproszenie do znajomych
-                                            </div>
+                                        <div v-else-if="b == uList.id && c != uList.id">
+                                            <a @click="deleteFromFriends(uList.id)" class="btn btn-danger btn-sm"
+                                               style="width: 150px">Usuń ze
+                                                znajomych</a>
+                                        </div>
+                                        <div v-else>
+                                            Wysłano zaproszenie do znajomych
                                         </div>
                                     </div>
                                 </div>

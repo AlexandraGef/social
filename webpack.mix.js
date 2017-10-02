@@ -14,7 +14,6 @@ const mix = require('laravel-mix');
 mix.js('resources/assets/js/app.js', 'public/js')
 mix.js('resources/assets/js/profile.js', 'public/js')
 mix.js('resources/assets/js/start.js', 'public/js')
-mix.js('resources/assets/js/searchUser.js', 'public/js')
 mix.js('resources/assets/js/searchJobs.js', 'public/js')
 mix.js('resources/assets/js/group.js', 'public/js')
 mix.js('resources/assets/js/groupIndex.js', 'public/js')

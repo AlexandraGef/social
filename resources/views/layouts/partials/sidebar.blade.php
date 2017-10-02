@@ -17,10 +17,6 @@
             <a class="list-group-item" href="{{url('/wiadomosci')}}"> <img src="{{Config::get('url')}}/img/msg.png"
                                                                            width="32"/>
                 Wiadomości</a>
-            <a class="list-group-item" href="{{url('/znajdzZnajomych')}}"> <img
-                        src="{{Config::get('url')}}/img/search.png"
-                        width="32"/>
-                Poszukaj znajomych</a>
             <a class="list-group-item" href="{{url('/praca')}}"> <img src="{{Config::get('url')}}/img/jobs.png"
                                                                       width="32"/>
                 Przeglądaj oferty pracy</a>

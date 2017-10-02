@@ -29,7 +29,7 @@
 </style>
 
 <div>
-    <nav class="navbar navbar-default navbar-static-top" id="app" >
+    <nav class="navbar navbar-default navbar-static-top" id="search-nav">
         <div class="container">
             <div class="navbar-header">
 
@@ -53,12 +53,10 @@
                 <ul class="nav navbar-nav">
                     @if(Auth::check())
                         <li><a class="anav" href="{{ url('/home') }}">Tablica</a></li>
-                        <li><a class="anav" href="{{ url('/znajdzZnajomych') }}">Znajdź znajomych</a></li>
                         <li><a class="anav" href="{{ url('/zaproszenia') }}">Moje zaproszenia <span style="color:#772953; font-weight:bold;
                                        font-size:16px">({{App\friendships::where('status', 0)
                                                   ->where('user_requested', Auth::user()->id)
                                                   ->count()}})</span></a></li>
-
                     @endif
                     @if(Auth::check() && Auth::user()->role_id == "3")
                         <li><a class="anav" href="{{ url('/firma') }}">Firma</a></li>
@@ -66,9 +64,17 @@
                     @if(Auth::check() && Auth::user()->role_id == "4")
                         <li><a class="anav" href="{{ url('/zgloszenia') }}">Zgłoszenia</a></li>
                     @endif
-                        <li ><input type="text" name="queryString" v-model="queryString" v-on:keyup="getResult()"></li>
+                    @if(Auth::check())
+                        <li class="input"><input class="form-control" placeholder="Szukaj znajomych i grup" type="text" v-model="queryString" v-on:keyup="getResult()">
+                            <div class="panel panel-primary search" v-if="us.length != 0">
+                                <ul class="list-group" >
+                                    <li v-for="u in us"><a :href="'{{Config::get('url')}}/profil/' + u.slug" class="list-group-item" ><img :src="'{{Config::get('url')}}' + u.pic" class="img-circle img-search"
+                                                                                                                                                    :alt="u.name" width="35" height="35"/>@{{u.name}}</a></li>
+                                </ul>
+                            </div>
+                        <li>
+                    @endif
                 </ul>
-
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right" style="height: 100%">
                     <!-- Authentication Links -->
@@ -96,7 +102,6 @@
                                 $notes = DB::table('users')
                                     ->leftJoin('notifications', 'users.id', 'notifications.user_logged')
                                     ->where('user_hero', Auth::user()->id)
-                                    // ->where('status', 1)
                                     ->orderBy('notifications.created_at', 'desc')
                                     ->get();
                                 ?>
@@ -160,8 +165,8 @@
                 </ul>
             </div>
         </div>
+        <script src="{{ asset('js/search.js') }}"></script>
     </nav>
-
     @yield('content')
 </div>
 

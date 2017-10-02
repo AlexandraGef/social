@@ -160,6 +160,32 @@ GROUP
   border: solid #E95420 1px !important;
 }
 
+.panel.panel-primary.search {
+  position: absolute;
+  min-width: 94%;
+}
+
+.panel.panel-primary.search ul {
+  height: auto;
+  max-height: 300px;
+  overflow-x: hidden;
+  list-style: none;
+}
+
+.panel.panel-primary.search ul a:hover {
+  background: #E95420;
+  color: white;
+  font-weight: bold;
+}
+
+.panel.panel-primary.search ul .img-circle.img-search {
+  margin-right: 15px;
+}
+
+li.input {
+  padding: 9px;
+}
+
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.

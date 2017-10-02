@@ -36,7 +36,7 @@ const groupIndex = new Vue({
         bottom(bottom) {
             if (bottom) {
                 this.Post();
-                this.groupMembers();
+
             }
         }
     },
@@ -56,6 +56,14 @@ const groupIndex = new Vue({
     });
         this.Post();
 
+    },
+    computed: {
+        filteredMembers: function () {
+            return this.members.filter((user) => {
+                return user.name.toLowerCase().match(this.search.toLowerCase());
+
+        })
+        }
     },
     methods:{
         bottomVisible() {
@@ -117,13 +125,18 @@ const groupIndex = new Vue({
                 console.log(response); // show if success
             console.log('Lista czlonkow');
             if (response.status === 200) {
-               let ap = response.data[j++]
-                    this.members.push(ap)
-                    if (this.bottomVisible()) {
-                        this.groupMembers();
-                    }
+              response.data.forEach((user)=>{
+                  user.forEach((us)=> {
+                  groupIndex.members.push(us);
+                })
+
+              })
+                if (this.bottomVisible()) {
+                    this.groupMembers();
+                }
 
             }
+
         })
         .catch(function (error) {
                 console.log(error); // run if we have error

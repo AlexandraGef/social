@@ -135,3 +135,26 @@ GROUP
 .thumbnail{
   border: solid #E95420 1px !important;
 }
+.panel.panel-primary.search{
+  position: absolute;
+  min-width: 94%;
+  ul{
+    height: auto;
+    max-height: 300px;
+    overflow-x: hidden;
+    list-style: none;
+    a:hover{
+      background: #E95420;
+      color:white;
+      font-weight:bold;
+    }
+    .img-circle.img-search{
+      margin-right: 15px;
+    }
+  }
+}
+
+li.input{
+  padding: 9px;
+
+}

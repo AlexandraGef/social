@@ -27,46 +27,37 @@
                                     <input class="form-control" type="text" v-model="search" placeholder="Szukaj grupy">
                                 </div>
                             </div>
-                            <div class="panel panel-primary" v-for="group in filteredGroups">
-                                <div class="panel-body text-center">
-                                    <a :href="'{{Config::get('url')}}/grupa/' + group.slug">
-                                        <div class="col-md-12">
-                                            <div class="col-md-8">
-                                                <div class="col-md-3">
-                                                    <img class="img-circle" :src="'{{Config::get('url')}}' + group.pic"
-                                                         width="60"
-                                                         height="60"/>
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <h3>@{{ group.name }}</h3>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div v-for="us in group.user" style="visibility: hidden">
-                                                    <div v-if="{{Auth::user()->id}} == us.id">
-                                                        @{{ g = group.id }}
+                            <div v-for="group in filteredGroups">
+                                <div v-for="us in group.user" style="visibility: hidden;height: 0">
+                                    <div v-if="{{Auth::user()->id}} == us.id">
+                                        @{{ g = group.id }}
+                                    </div>
+                                </div>
+                                <div class="panel panel-primary" v-if="g == group.id">
+                                    <div class="panel-body text-center" >
+                                        <a :href="'{{Config::get('url')}}/grupa/' + group.slug">
+                                            <div class="col-md-12">
+                                                <div class="col-md-8">
+                                                    <div class="col-md-3">
+                                                        <img class="img-circle"
+                                                             :src="'{{Config::get('url')}}' + group.pic"
+                                                             width="60"
+                                                             height="60"/>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <h3>@{{ group.name }}</h3>
                                                     </div>
                                                 </div>
-                                                <div v-if="group.user.length == 0">
+                                                <div class="col-md-4">
                                                     <div class="caption form-inline">
-                                                        <a @click="joinToGroup(group.id)"
-                                                           class="btn btn-success btn-sm">Dołącz</a>
-                                                    </div>
-                                                </div>
-                                                <div v-else>
-                                                    <div class="caption form-inline" v-if="g != group.id">
-                                                        <a @click="joinToGroup(group.id)"
-                                                           class="btn btn-success btn-sm">Dołącz</a>
-                                                    </div>
-                                                    <div class="caption form-inline" v-else>
                                                         <a @click="leaveGroup({{Auth::user()->id}},group.id)"
                                                            class="btn btn-danger btn-sm">Odejdź</a>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
+                                        </a>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +65,7 @@
                             <div class="panel ">
                                 <a :href="'{{Config::get('url')}}/utworzGrupe'"
                                    class="btn btn-info"
-                                  >Utwórz nową grupę</a></div>
+                                >Utwórz nową grupę</a></div>
                             <div class="caption form-inline">
                                 <div class="panel panel-primary">
                                     <div class="panel-heading text-center" data-toggle="collapse" style="cursor:pointer"

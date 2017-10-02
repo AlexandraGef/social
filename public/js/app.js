@@ -58323,7 +58323,6 @@ var app = new Vue({
         answerData: '',
         checks: [],
         c: '',
-        queryString: '',
         b: '',
         id: '',
         search: ''
@@ -58364,14 +58363,6 @@ var app = new Vue({
     },
 
     methods: {
-        getResult: function getResult() {
-            axios.get('http://localhost:8000/search').then(function (response) {
-                console.log(response); // show if success
-                console.log(response.data);
-            }).catch(function (error) {
-                console.log(error); // run if we have error
-            });
-        },
         bottomVisible: function bottomVisible() {
             var scrollY = window.scrollY;
             var visible = document.documentElement.clientHeight;

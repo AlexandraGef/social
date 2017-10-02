@@ -75,23 +75,6 @@ class ProfileController extends Controller
 
     }
 
-    public function findFriends()
-    {
-        $uid = Auth::user()->id;
-        $allUsers = DB::table('profiles')
-            ->leftJoin('users', 'users.id', '=', 'profiles.user_id')
-            ->where('user_id', '!=', $uid)->get();
-
-        foreach ($allUsers as $user) {
-            $check = DB::table('friendships')
-                ->where('user_requested', '=', $user->id)
-                ->where('requester', '=', $uid)
-                ->first();
-        }
-
-        return view('profile.findFriends', compact('check'));
-    }
-
     public function sendReq()
     {
         $uid = Auth::user()->id;

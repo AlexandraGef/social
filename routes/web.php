@@ -52,8 +52,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/aktualizujProfil', 'ProfileController@updateProfile');
 
-    Route::get('/znajdzZnajomych', 'ProfileController@findFriends');
-
     Route::get('/czyWyslaneZapro', 'ProfileController@sendReq');
 
     Route::get('/dodajZnajomego/{id}', 'ProfileController@sendRequest');
@@ -193,12 +191,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/dolaczDoGrupy/{id}', 'GroupsController@joinToGroup');
     Route::get('/mojeGrupy', 'GroupsController@myGroups');
     Route::get('usunGrupe/{id}', 'GroupsController@deleteGroup');
-  //search
-    Route::get('/search', function(){
-        $queryString = Input::get('name','queryString');
-        $users = App\User::where('name','like','%'.$queryString.'%')->get();
-        return response()->json($users);
-    });
+
 });
 /*
  * COMPANY
