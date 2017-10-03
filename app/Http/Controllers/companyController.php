@@ -44,5 +44,45 @@ class companyController extends Controller
         return view('company.jobs', compact('jobs'));
     }
 
+    public function deleteJob($id)
+    {
+        $delete = DB::table('jobs')->where('id', $id)->delete();
+
+        if ($delete)
+            return back()->with('msg', 'Oferta została usunięta ');
+    }
+
+    public function editJob($id)
+    {
+        $job = DB::table('jobs')
+            ->where('id', $id)
+            ->get();
+
+        return view('company.editJob', compact('job'));
+    }
+
+    public function editJobSubmit(Request $r)
+    {
+        $skills = $r->skills;
+        $contact_email = $r->contact_email;
+        $job_title = $r->job_title;
+        $requirements = $r->requirements;
+        $com_id = Auth::user()->id;
+
+       $edit= DB::table('jobs')
+            ->where('company_id', $com_id)->update([
+                'skills' => $skills,
+                'contact_email' => $contact_email,
+                'job_title' => $job_title,
+                'requirements' => $requirements,
+                'company_id' => $com_id,
+                'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
+                ]);
+
+
+        if ($edit) {
+            return back()->with('msg', 'Oferta pracy została pomyślnie edytowana !');
+        }
+    }
 
 }

@@ -30,6 +30,8 @@ const groupIndex = new Vue({
         b:'',
         search:'',
         id:'',
+        Info:'',
+        ap:''
 
     },
     watch: {
@@ -127,10 +129,11 @@ const groupIndex = new Vue({
             if (response.status === 200) {
               response.data.forEach((user)=>{
                   user.forEach((us)=> {
-                  groupIndex.members.push(us);
-                })
+                  groupIndex.members = user[us]
 
-              })
+                })
+            })
+
                 if (this.bottomVisible()) {
                     this.groupMembers();
                 }

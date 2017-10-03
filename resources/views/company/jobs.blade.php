@@ -15,7 +15,7 @@
                         </div>
                         <div class="content">
                             @if(session()->has('msg'))
-                                <div class="alert alert-success">{{session()->get('msg')}}</div>
+                                <div class="alert alert-info">{{session()->get('msg')}}</div>
                             @endif
                             <div class="form-group">
 
@@ -41,6 +41,12 @@
                                             <th>
                                                 Data publikacji
                                             </th>
+                                            <th>
+                                                Edytuj
+                                            </th>
+                                            <th>
+                                                Usuń
+                                            </th>
                                         </tr>
                                         @foreach($jobs as $job)
                                             <tr>
@@ -61,7 +67,16 @@
                                                 <td>
                                                     {{$job->created_at}}
                                                 </td>
-
+                                                <td>
+                                                    <a class="btn btn-info" href="{{url('/firma/edytujOfertePracy')}}/{{$job->id}}">
+                                                        <i class="text-info"></i>Edytuj
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-danger" href="{{url('/firma/usunOfertePracy')}}/{{$job->id}}">
+                                                        <i class="text-danger"></i>Usuń
+                                                    </a>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </table>

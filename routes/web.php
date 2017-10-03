@@ -206,6 +206,9 @@ Route::group(['prefix' => 'firma', 'middleware' => ['auth', 'company']], functio
     Route::post('/dodajOferteSubmit', 'companyController@addJobSubmit');
     Route::get('/OfertyPracy', 'companyController@viewJobs');
     Route::get('/pokazSzczegolyOfert', 'companyController@offersDetal');
+    Route::get('/usunOfertePracy/{id}', 'companyController@deleteJob');
+    Route::get('/edytujOfertePracy/{id}', 'companyController@editJob');
+    Route::post('/edytujOferteSubmit', 'companyController@editJobSubmit');
 
 });
 

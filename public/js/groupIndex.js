@@ -58332,7 +58332,9 @@ var groupIndex = new Vue({
         c: '',
         b: '',
         search: '',
-        id: ''
+        id: '',
+        Info: '',
+        ap: ''
 
     },
     watch: {
@@ -58424,9 +58426,10 @@ var groupIndex = new Vue({
                 if (response.status === 200) {
                     response.data.forEach(function (user) {
                         user.forEach(function (us) {
-                            groupIndex.members.push(us);
+                            groupIndex.members = user[us];
                         });
                     });
+
                     if (_this4.bottomVisible()) {
                         _this4.groupMembers();
                     }

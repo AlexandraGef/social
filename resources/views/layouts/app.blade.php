@@ -169,8 +169,8 @@
                 </ul>
             </div>
         </div>
-        <script src="{{ asset('js/search.js') }}"></script>
     </nav>
+    <script src="{{ asset('js/search.js') }}"></script>
     @yield('content')
 </div>
 
