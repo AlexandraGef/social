@@ -1,96 +1,65 @@
 <!doctype html>
 <html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Bevy</title>
+    <title>Bevy</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
+    <!-- Styles -->
+    <link href="{{ asset('css/welcome.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/welcome.js') }}"></script>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Tablica</a>
-                        <a href="{{ url('/profil') }}/{{Auth::user()->slug}}">Profil</a>
-                    @else
-                        <a href="{{ route('login') }}">Logowanie</a>
-                        <a href="{{ route('register') }}">Rejestracja</a>
+</head>
+<body>
+<div class="flex-center position-ref full-height">
+    @if (Route::has('login'))
+        <div class="top-right links">
+            @auth
+                <a href="{{ url('/home') }}">Tablica</a>
+                <a href="{{ url('/profil') }}/{{Auth::user()->slug}}">Profil</a>
+                @else
+                    <a href="{{ route('login') }}">Logowanie</a>
+                    <a href="{{ route('register') }}">Rejestracja</a>
                     @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div id="app">
-
+        </div>
+    @endif
+    <div class="page">
+        <div id="home-news">
+            <div class="home_header">
+                <strong>Bevy</strong>
+                <span>Twoje miejsce w sieci</span>
             </div>
-                <div class="title m-b-md">
-                    Bevy
-                </div>
-
-                <div class="links">
-                  <p>Najlepszy portal społecznościowy...</p>
-                    <p>Jaki kiedykolwiek powstał !</p>
-                </div>
+            <div class="home_header">
+                <strong>Znajdź znajomych.</strong>
+                <span>Znajdź pracę !</span>
+            </div>
+            <div class="home_header">
+                <span>Rozmawiaj. Poznawaj.</span>
+                <strong>Dziel się !</strong>
             </div>
         </div>
-    </body>
+    </div>
+
+    <div id="isthisweird" class="aleksandra">
+        <div class="face"></div>
+        <div class="hair-back"></div>
+        <div class="hair-front"></div>
+        <div class="mouth">
+            <div class="teeth"></div>
+        </div>
+        <div class="moustache"></div>
+        <div class="beard"></div>
+    </div>
+
+    <h1></h1>
+</div>
+</body>
 </html>

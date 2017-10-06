@@ -1,0 +1,613 @@
+html, body {
+  background-color: #fff;
+  color: #636b6f;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 100;
+  height: 100vh;
+  margin: 0;
+}
+
+.full-height {
+  height: 100vh;
+}
+
+.flex-center {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.position-ref {
+  position: relative;
+}
+
+.top-right {
+  position: absolute;
+  right: 10px;
+  top: 18px;
+}
+
+
+
+.links > a {
+  color: #636b6f;
+  padding: 0 25px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .1rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+
+*:before, *:after {
+  position: absolute;
+  display: block;
+  content: '';
+}
+
+h1 {
+  font-weight: normal;
+  position: absolute;
+  display: block;
+  bottom: 0;
+  right: 1em;
+  text-align: right;
+  text-transform: capitalize;
+  width: 100%;
+  z-index: 1;
+  color: #464646;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Weird Thing */
+#isthisweird /*?*/
+{
+  z-index: 2;
+  position: absolute;
+  width: 185px;
+  height: 250px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* This is so sweet */
+.face {
+  width: 185px;
+  height: 250px;
+  background: #fece04;
+  border-radius: 185px;
+}
+
+/* Eyes man, eyes! */
+#isthisweird:before {
+  width: 16px;
+  height: 16px;
+  top: 140px;
+  left: 50%;
+  margin-left: -8px;
+  border-radius: 14px;
+  box-shadow: 71px 0 0 #fff,
+  -71px 0 0 #fff,
+    /* and ears */ 92px 0 0 8px #fece04,
+  -92px 0 0 8px #fece04;
+}
+
+/* Neck. */
+#isthisweird:after {
+  width: 40px;
+  height: 50px;
+  top: 100%;
+  left: 50%;
+  margin: -2px 0 0 -20px;
+  background: #fece04;
+}
+
+/* Hair */
+.hair-back,
+.hair-front {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hair-back {
+  z-index: -1
+}
+
+/* Mouth */
+.mouth {
+  z-index: 2;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.mouth:before {
+  top: 0;
+  left: 50%;
+  width: 72px;
+  height: 30px;
+  background: #fece04;
+  border-radius: 7px 7px 30px 30px;
+  transform: translateX(-50%);
+}
+
+.mouth:after {
+  z-index: 1;
+  top: 0;
+  left: 50%;;
+  width: 100%;
+  height: 100%;
+  background: #cca503;
+  transform: translateX(-50%);
+}
+
+.teeth {
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 28px;
+  height: 16px;
+  margin-left: -14px;
+  background: #fff;
+  border-radius: 0 0 16px 16px;
+}
+
+/* Moustache */
+.moustache {
+  position: absolute;
+  top: 158px;
+  left: 50%;
+  width: 74px;
+  height: 30px;
+  border-radius: 30px 30px 0 0;
+  transform: translateX(-50%);
+}
+
+/* Beard */
+.beard {
+  z-index: 1;
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 74px;
+  height: 30px;
+  border-radius: 30px 30px 0 0;
+  transform: translateX(-50%);
+}
+
+/* aleksandra */
+.aleksandra#isthisweird:before {
+  box-shadow: 71px 0 0 #fff,
+  -71px 0 0 #fff;
+}
+
+.aleksandra .hair-back {
+  opacity: 0;
+}
+
+.aleksandra .hair-front {
+  width: 240px;
+  height: 120px;
+  background: #4E342E;
+  border-radius: 700px 500px 300px 0;
+}
+
+.aleksandra .mouth {
+  top: 184px;
+  width: 54px;
+  height: 28px;
+  border-radius: 0 0 28px 28px;
+}
+
+.aleksandra .mouth:after {
+  border-radius: 0 0 28px 28px;
+}
+
+/* anielka */
+.anielka#isthisweird:before {
+  box-shadow: 71px 0 0 #fff,
+  -71px 0 0 #fff;
+}
+
+.anielka .hair-back {
+  width: 245px;
+  height: 295px;
+  background: #FFFF8D;
+  border-radius: 90px 90px 10px 10px;
+}
+
+.anielka .hair-front {
+  width: 245px;
+  height: 125px;
+  background: #FFFF8D;
+  border-radius: 90px 90px 0 0;
+}
+
+.anielka .mouth {
+  top: 184px;
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+}
+
+.anielka .mouth:after {
+  border-radius: 100%;
+}
+
+.anielka .teeth {
+  opacity: 0;
+}
+
+/* radek */
+.radek .hair-back {
+  opacity: 0;
+}
+
+.radek .hair-front {
+  opacity: 0;
+}
+
+.radek .hair-front:before {
+  bottom: -80px;
+  left: 0;
+  width: 11px;
+  height: 80px;
+  background: #de7b18;
+}
+
+.radek .hair-front:after {
+  bottom: -80px;
+  right: 30px;
+  width: 11px;
+  height: 150px;
+  background: #de7b18;
+}
+
+.radek .moustache {
+  background: #de7b18;
+}
+
+.radek .mouth {
+  top: 184px;
+  width: 54px;
+  height: 28px;
+  border-radius: 0 0 28px 28px;
+}
+
+.radek .mouth:after {
+  width: 50px;
+  height: 20px;
+  border-radius: 0 0 50px 50px;
+}
+
+.radek .teeth {
+  height: 13px;
+}
+
+.radek .beard {
+  width: 182px;
+  height: 82px;
+  background: #de7b18;
+  border-radius: 0 0 134px 134px;
+}
+
+/* joanna */
+.joanna#isthisweird:before {
+  box-shadow: 71px 0 0 #fff,
+  -71px 0 0 #fff;
+}
+
+.joanna .hair-back {
+  width: 245px;
+  height: 228px;
+  background: #DD2C00;
+  border-radius: 90px 90px 80px 80px;
+}
+
+.joanna .hair-front {
+  overflow: hidden;
+  width: 245px;
+  height: 132px;
+  border-radius: 90px 90px 0 0;
+}
+
+.joanna .hair-front:before {
+  width: 70px;
+  height: 100%;
+  background: #DD2C00;
+  border-radius: 0 0 35px 0;
+}
+
+.joanna .hair-front:after {
+  left: 60px;
+  width: 190px;
+  height: 100%;
+  background: #de7b18;
+  border-radius: 0 0 0 35px;
+}
+
+.joanna .mouth {
+  top: 184px;
+  width: 54px;
+  height: 28px;
+  border-radius: 0 0 28px 28px;
+}
+
+.joanna .mouth:after {
+  border-radius: 0 0 28px 28px;
+}
+
+.joanna .teeth {
+  opacity: 0;
+}
+
+/* paulina */
+.paulina#isthisweird:before {
+  box-shadow: 71px 0 0 #fff,
+  -71px 0 0 #fff;
+}
+
+.paulina .hair-back {
+  width: 247px;
+  height: 170px;
+  background: #00BCD4;
+  border-radius: 85px 85px 80px 80px;
+}
+
+.paulina .hair-back:after {
+  top: 128px;
+  left: 50%;
+  width: 240px;
+  height: 46px;
+  margin-left: -120px;
+  background: #00BCD4;
+  border-radius: 22px;
+}
+
+.paulina .hair-front {
+  overflow: hidden;
+  width: 247px;
+  height: 105px;
+  border-radius: 85px 85px 0 0;
+}
+
+.paulina .hair-front:after {
+  top: 0;
+  left: 50%;
+  width: 46px;
+  height: 100%;
+  margin-left: -23px;
+  background: #00BCD4;
+  border-radius: 0 0 22px 22px;
+  box-shadow: 46px 0 0 #80DEEA,
+  92px 0 0 #00BCD4,
+  -46px 0 0 #80DEEA,
+  -92px 0 0 #00BCD4;
+}
+
+.paulina .mouth {
+  top: 184px;
+  width: 54px;
+  height: 28px;
+  border-radius: 0 0 28px 28px;
+}
+
+.paulina .mouth:after {
+  border-radius: 0 0 28px 28px;
+}
+
+/* tomasz */
+.tomasz .hair-front {
+  top: 70px;
+  width: 11px;
+  height: 106px;
+  border-radius: 9px;
+  box-shadow: 87px 0 0 #000000, -86px 0 0 #000000;
+}
+
+.tomasz .hair-front:before {
+  top: -70px;
+  left: -110px;
+  width: 130px;
+  height: 105px;
+  background: #000000;
+  border-radius: 85px 0 85px 0;
+}
+
+.tomasz .hair-front:after {
+  top: -70px;
+  right: -110px;
+  width: 130px;
+  height: 105px;
+  background: #000000;
+  border-radius: 0 85px 0 85px;
+}
+
+.tomasz .mouth {
+  top: 184px;
+  width: 54px;
+  height: 28px;
+  border-radius: 0 0 28px 28px;
+}
+
+.tomasz .mouth:after {
+  border-radius: 0 0 28px 28px;
+}
+
+.tomasz .teeth {
+  height: 13px;
+}
+
+.tomasz .beard {
+  width: 182px;
+  height: 82px;
+  background: #000000;
+  border-radius: 0 0 134px 134px;
+}
+
+/* jurek */
+.jurek .hair-back {
+  opacity: 0;
+}
+
+.jurek .hair-front {
+  width: 216px;
+  height: 98px;
+  margin-left: 15px;
+  background: #6200EA;
+  border-radius: 90px 0 90px 0;
+}
+
+.jurek .hair-front:before {
+  bottom: -80px;
+  left: 0;
+  width: 11px;
+  height: 80px;
+  background: #6200EA;
+}
+
+.jurek .hair-front:after {
+  bottom: -80px;
+  right: 30px;
+  width: 11px;
+  height: 150px;
+  background: #6200EA;
+}
+
+.jurek .moustache {
+  background: #6200EA;
+}
+
+.jurek .mouth {
+  top: 184px;
+  width: 54px;
+  height: 28px;
+  border-radius: 0 0 28px 28px;
+}
+
+.jurek .mouth:after {
+  width: 50px;
+  height: 20px;
+  border-radius: 0 0 50px 50px;
+}
+
+.jurek .teeth {
+  height: 13px;
+}
+
+/* damian */
+.damian .hair-back {
+  opacity: 0;
+}
+
+.damian .hair-front {
+  width: 216px;
+  height: 105px;
+  margin-left: -16px;
+  background: #333;
+  border-radius: 0 90px 0 90px;
+}
+
+.damian .mouth {
+  top: 184px;
+  width: 54px;
+  height: 28px;
+  border-radius: 0 0 28px 28px;
+}
+
+.damian .mouth:after {
+  width: 50px;
+  height: 20px;
+  border-radius: 0 0 50px 50px;
+}
+
+.damian .teeth {
+  height: 13px;
+}
+
+.page {
+  margin-right: auto;
+  width: 800px;
+  margin-left: auto;
+  margin-top: -25em;
+}
+
+#home-news {
+  font-size: 40px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #464646;
+  height: 45px;
+  line-height: 45px;
+  overflow: hidden;
+  position: relative;
+  font-weight: bold;
+}
+
+.home_header {
+  position: absolute;
+  width: 100%;
+  z-index: 99;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.home_header_on {
+  z-index: 100;
+}
+
+.home_header strong {
+  color: #E95420;
+}
+
+.home_header span, .home_header strong {
+  position: relative;
+  top: -50px;
+}
+
+.home_header_on *:nth-child(1) {
+  top: 0;
+  -webkit-transition: top .6s ease-in-out;
+  -moz-transition: top .6s ease-in-out;
+  transition: top .6s ease-in-out;
+}
+
+.home_header_on *:nth-child(2) {
+  top: 0;
+  -webkit-transition: top .6s ease-in-out .15s;
+  -moz-transition: top .6s ease-in-out .15s;
+  transition: top .6s ease-in-out .15s;
+}
+
+.home_header_on *:nth-child(3) {
+  top: 0;
+  -webkit-transition: top .6s ease-in-out .3s;
+  -moz-transition: top .6s ease-in-out .3s;
+  transition: top .6s ease-in-out .3s;
+}
+
+.home_header_out *:nth-child(1) {
+  top: 50px;
+  -webkit-transition: top .6s ease-in-out;
+  -webkit-transition: top .6s ease-in-out;
+  -moz-transition: top .6s ease-in-out;
+}
+
+.home_header_out *:nth-child(2) {
+  top: 50px;
+  -webkit-transition: top .6s ease-in-out .15s;
+  -moz-transition: top .6s ease-in-out .15s;
+  transition: top .6s ease-in-out .15s;
+}
+
+.home_header_out *:nth-child(3) {
+  top: 50px;
+  -webkit-transition: top .6s ease-in-out .3s;
+  -moz-transition: top .6s ease-in-out .3s;
+  transition: top .6s ease-in-out .3s;
+}

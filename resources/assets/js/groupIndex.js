@@ -30,20 +30,16 @@ const groupIndex = new Vue({
         b:'',
         search:'',
         id:'',
-        Info:'',
-        ap:''
 
     },
     watch: {
         bottom(bottom) {
             if (bottom) {
                 this.Post();
-
+                this.membersIndex();
             }
         }
     },
-
-
     created() {
         axios.get('http://localhost:8000/czyWyslaneZapro')
             .then(response => {
@@ -63,7 +59,6 @@ const groupIndex = new Vue({
         filteredMembers: function () {
             return this.members.filter((user) => {
                 return user.name.toLowerCase().match(this.search.toLowerCase());
-
         })
         }
     },
@@ -124,21 +119,12 @@ const groupIndex = new Vue({
         groupMembers() {
             axios.get('http://localhost:8000/czlonkowieGrupy/' + groupIndex.id)
                 .then(response => {
-                console.log(response); // show if success
-            console.log('Lista czlonkow');
-            if (response.status === 200) {
               response.data.forEach((user)=>{
-                  user.forEach((us)=> {
-                  groupIndex.members = user[us]
-
-                })
+                  user.forEach((us)=>{
+                groupIndex.members.push(us);
+            })
             })
 
-                if (this.bottomVisible()) {
-                    this.groupMembers();
-                }
-
-            }
 
         })
         .catch(function (error) {

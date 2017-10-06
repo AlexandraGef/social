@@ -13,6 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
 mix.js('resources/assets/js/profile.js', 'public/js')
+mix.js('resources/assets/js/welcome.js', 'public/js')
 mix.js('resources/assets/js/start.js', 'public/js')
 mix.js('resources/assets/js/searchJobs.js', 'public/js')
 mix.js('resources/assets/js/group.js', 'public/js')
@@ -20,4 +21,5 @@ mix.js('resources/assets/js/groupIndex.js', 'public/js')
 mix.js('resources/assets/js/search.js', 'public/js')
 mix.js('resources/assets/js/notifi.js', 'public/js')
 mix.js('resources/assets/js/friends.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+   .sass('resources/assets/sass/app.scss', 'public/css')
+   .sass('resources/assets/sass/welcome.scss', 'public/css');
