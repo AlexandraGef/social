@@ -115,7 +115,7 @@
                     </ul>
                     <div class="tab-content  ">
                         <div role="tabpanel" class="tab-pane index active" id="posty">
-                            <div v-for="post in posts">
+                            <div v-for="post,key in posts">
                                 <div v-if="post.group_id == 0 && {{$uData->user_id}} == post.user.id"
                                      class="panel panel-primary index">
 
@@ -211,9 +211,9 @@
                                         </div>
                                     </div>
                                     <div class="comment_form ">
-                                        <textarea class="form-control" v-model="commentData"></textarea><br>
+                                        <textarea class="form-control" v-model="commentData[key]"></textarea><br>
                                         <button style="margin-bottom: 15px" class="btn btn-success pull-right"
-                                                @click="addComment(post.id)">Wyślij
+                                                @click="addComment(post,key)">Wyślij
                                         </button>
                                     </div>
 

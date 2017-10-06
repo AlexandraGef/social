@@ -58325,7 +58325,7 @@ var groupIndex = new Vue({
         postId: '',
         a: '',
         successMsg: '',
-        commentData: '',
+        commentData: {},
         bottom: false,
         answerData: '',
         g: 0,
@@ -58487,10 +58487,10 @@ var groupIndex = new Vue({
                 console.log(error); // run if we have error
             });
         },
-        addComment: function addComment(id) {
+        addComment: function addComment(post, key) {
             axios.post('http://localhost:8000/dodajKomentarz', {
-                comment: this.commentData,
-                id: id
+                comment: this.commentData[key],
+                id: post.id
             }).then(function (response) {
                 console.log('saved successfully'); // show if success
                 if (response.status === 200) {

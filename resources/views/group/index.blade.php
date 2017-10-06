@@ -112,7 +112,7 @@
                             </div>
                         </div>
                     </div>
-                    <div v-for="post in posts" v-if="g == {{Auth::user()->id}}">
+                    <div v-for="post,key in posts" v-if="g == {{Auth::user()->id}}">
                         <div v-if="post.group_id == {{$uData ->id}}">
                             <div class="panel panel-primary index">
                                 <div class="col-md-12" class="panel-body">
@@ -203,9 +203,9 @@
                                     </div>
                                 </div>
                                 <div class="comment_form ">
-                                    <textarea class="form-control" v-model="commentData"></textarea><br>
+                                    <textarea class="form-control" v-model="commentData[key]"></textarea><br>
                                     <button style="margin-bottom: 15px" class="btn btn-success pull-right"
-                                            @click="addComment(post.id)">Wyślij
+                                            @click="addComment(post,key)">Wyślij
                                     </button>
                                 </div>
 
