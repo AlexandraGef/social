@@ -51,7 +51,7 @@ class PostsController extends Controller
     {
         $delete = DB::table('posts')->where('id', $id)->delete();
 
-        DB::table('services')->where('post_id',$id)->delete();
+        DB::table('services')->where('post_id', $id)->delete();
 
         if ($delete) {
             return posts::with('user', 'likes', 'comments.user', 'comments.answers.user')
@@ -105,7 +105,7 @@ class PostsController extends Controller
     public function deleteComment($id)
     {
         $delete = DB::table('comments')->where('id', $id)->delete();
-        DB::table('services')->where('comment_id',$id)->delete();
+        DB::table('services')->where('comment_id', $id)->delete();
         if ($delete) {
             return posts::with('user', 'likes', 'comments.user', 'comments.answers.user')
                 ->orderBy('created_at', 'DESC')
@@ -133,7 +133,7 @@ class PostsController extends Controller
     public function deleteAnswer($id)
     {
         $delete = DB::table('answers')->where('id', $id)->delete();
-        DB::table('services')->where('answer_id',$id)->delete();
+        DB::table('services')->where('answer_id', $id)->delete();
         if ($delete) {
             return posts::with('user', 'likes', 'comments.user', 'comments.answers.user')
                 ->orderBy('created_at', 'DESC')

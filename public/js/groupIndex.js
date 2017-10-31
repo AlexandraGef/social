@@ -58342,7 +58342,6 @@ var groupIndex = new Vue({
         bottom: function bottom(_bottom) {
             if (_bottom) {
                 this.Post();
-                this.membersIndex();
             }
         }
     },

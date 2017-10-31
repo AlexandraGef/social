@@ -30297,7 +30297,9 @@ var group = new Vue({
         search: '',
         groups: [],
         successMsg: '',
-        bottom: false
+        bottom: false,
+        admin: '',
+        g: ''
     },
     watch: {
         bottom: function bottom(_bottom) {

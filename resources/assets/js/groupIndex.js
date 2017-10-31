@@ -36,7 +36,6 @@ const groupIndex = new Vue({
         bottom(bottom) {
             if (bottom) {
                 this.Post();
-                this.membersIndex();
             }
         }
     },
@@ -124,8 +123,6 @@ const groupIndex = new Vue({
                 groupIndex.members.push(us);
             })
             })
-
-
         })
         .catch(function (error) {
                 console.log(error); // run if we have error

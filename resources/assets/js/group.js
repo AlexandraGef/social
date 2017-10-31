@@ -18,6 +18,8 @@ const group = new Vue({
         groups: [],
         successMsg: '',
         bottom: false,
+        admin:'',
+        g:''
     },
     watch: {
         bottom(bottom) {

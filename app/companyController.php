@@ -69,7 +69,7 @@ class companyController extends Controller
         $requirements = $r->requirements;
         $com_id = Auth::user()->id;
 
-       $edit= DB::table('jobs')
+        $edit = DB::table('jobs')
             ->where('company_id', $com_id)->update([
                 'skills' => $skills,
                 'contact_email' => $contact_email,
@@ -77,7 +77,7 @@ class companyController extends Controller
                 'requirements' => $requirements,
                 'company_id' => $com_id,
                 'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
-                ]);
+            ]);
 
 
         if ($edit) {

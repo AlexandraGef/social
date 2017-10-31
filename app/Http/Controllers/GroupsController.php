@@ -38,10 +38,10 @@ class GroupsController extends Controller
 
         foreach ($groupMembers as $user) {
 
-                if ($user = DB::table('users')->where('id', $user->user_id)->get()) {
+            if ($user = DB::table('users')->where('id', $user->user_id)->get()) {
 
-                    $members[] = $user;
-                }
+                $members[] = $user;
+            }
 
         }
         return $members;
@@ -62,7 +62,7 @@ class GroupsController extends Controller
 
     }
 
-    public function leaveGroup($id,$groupId)
+    public function leaveGroup($id, $groupId)
     {
         $delete = DB::table('groupuser')->where('user_id', $id)->where('group_id', $groupId)->delete();
         DB::table('groupadmins')->where('user_id', $id)->where('group_id', $groupId)->delete();
@@ -94,7 +94,7 @@ class GroupsController extends Controller
 
             $notifications = new notifications;
             $notifications->user_hero = $mod;
-            $notifications->note = 'Zgłoszenie grupy: '.$name.', treść: ' . $text;
+            $notifications->note = 'Zgłoszenie grupy: ' . $name . ', treść: ' . $text;
             $notifications->user_logged = Auth::user()->id;
             $notifications->status = '1'; // nieodczytane powiadomienie
             $notifications->save();
@@ -107,7 +107,7 @@ class GroupsController extends Controller
     public function deleteGroup($id)
     {
         $delete = DB::table('groups')->where('id', $id)->delete();
-        DB::table('services')->where('group_id',$id)->delete();
+        DB::table('services')->where('group_id', $id)->delete();
 
         return redirect('/grupy')->with('msg', 'Twoja grupa została usunięta');
 

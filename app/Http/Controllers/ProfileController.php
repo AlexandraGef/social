@@ -152,6 +152,7 @@ class ProfileController extends Controller
 
         return view('profile.friends');
     }
+
     public function myFriends()
     {
         $uid = Auth::user()->id;
@@ -172,6 +173,7 @@ class ProfileController extends Controller
 
         return $friends;
     }
+
     public function requestRemove($id)
     {
         DB::table('friendships')

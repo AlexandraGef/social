@@ -187,7 +187,8 @@
                                                                 comment.answers.length }}</i>
                                                             <div v-bind:id="['answers'+ comment.id]"
                                                                  class="panel-collapse collapse"
-                                                                 style="margin-top:15px">
+                                                     -if="answer.user_id != '{{Auth::user()->id}}' || '{{ Auth::user()->role_id}}' == 4"><a
+                                                                                                        style="margin-top:15px">
                                                         <textarea class="form-control"
                                                                   v-model="answerData"></textarea><br>
                                                                 <button style="margin-bottom: 15px"
@@ -230,8 +231,7 @@
                                                                 class="fa fa-trash-o text-primary"
                                                                 aria-hidden="true"></i></a></span>
                                                                                             <span style="cursor: pointer"
-                                                                                                  v-if="answer.user_id != '{{Auth::user()->id}}' || '{{ Auth::user()->role_id}}' == 4"><a
-                                                                                                        :href="'{{Config::get('url')}}/zglosOdpowiedz/' + answer.id"><i
+                                                                                                  v    :href="'{{Config::get('url')}}/zglosOdpowiedz/' + answer.id"><i
                                                                                                             class="fa fa-exclamation-triangle text-danger"
                                                                                                             title="Zgłoś odpowiedź"
                                                                                                             aria-hidden="true"></i></a></span>
